@@ -7,4 +7,7 @@ Nutzen:
 
 - isolierte Entwicklungsstraenge -> Aenderungen am Code ohne Hauptcode zu beeintraechtigen  
 - paralleles Arbeiten moeglich  
-- testen von neuem code + bugfix Bereinigung ohne Hauptcode zu veraendern -> Integration in Hauptcode nach erfolgreichem Test 
+- testen von neuem code + bugfix Bereinigung ohne Hauptcode zu veraendern -> Integration in Hauptcode nach erfolgreichem Test  
+
+Branch erstellen:
+<p><code>git checkout -b neuer-branch-name</code></p>
