@@ -2,7 +2,7 @@
 Moderne Softwareentwicklung
 
 Branches:
-![image](images\branch.jpg)
+![image info](./images/branch.jpg)
 Nutzen:
 
 - isolierte Entwicklungsstraenge -> Aenderungen am Code ohne Hauptcode zu beeintraechtigen  
