@@ -1,16 +1,10 @@
 # MS
 ## Was ist Git und warum sollte es verwendet werden?
-- ständigen Änderungen bei Softwareprojekten (Beheben von Fehlern, Hinzufügen von Funktionen, strukturelle Verbesserungen) --> Versionen
-- Versionskontrollprogramm
-- Verzeichnisbäume verfolgen, verwalten und teilen
-- Unterschiede bei Dateiänderungen verfolgen/vollständigen Verlauf aller Änderungen
-- Snapshot der Dateien
-- lokale Arbeit
-- Funktionalität einer Zeitmaschine (Synchronisierung)
-- Änderungen wieder rückgängig machen
-- auf Performance, Sicherheit und Flexibilität ausgerichtet
-- am weitesten verbreitetes Tool
-- viele Softwaretools und -services von Drittanbietern bereits in Git integriert
+Softwareprojekte unterliegen ständigen Änderungen durch das Beheben von Fehlern, die Weiterentwicklung und das Hinzufügen von Funktionen sowie durch struktuelle Veränderungen der Software. Um alle Änderungen zu protokollieren und nachvollziehen zu können, ist die Nutzung eines Versionskontrollprograms erforderlich. Zusätzlich ist es wichtig, dass Teams gemeinsam an einem Projekt arbeiten können, ohne dass es zu Konflikten kommt oder Änderungen verloren gehen.
+
+Git ist ein Open-Source-Revisionskontrollsystem und das bisher am weitesten verbreitete Tool für die Versionskontrolle von Softwareprojekten. In Git werden nicht nur die Änderungen eines Projekts gespeichert, sondern Snapshots der Dateien erstellt, wodurch Dateiänderungen besser nachvollzogen und ggf. wieder rückgängig gemacht werden können. Zusätzlich sind in Git viele Softwaretools von Drittanbietern integriert und die Funktionalitäten sind auf Performance, Sicherheit und Flexibilität ausgerichtet. 
+
+Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geworden und wird in vielen Unternehmen als Standard eingesetzt.
 ## Grundlegende Git-Befehle
 ### Repositories anlegen
 - git init [project-name]: Legt ein neues lokales Repository mit dem angegebenen Namen an
