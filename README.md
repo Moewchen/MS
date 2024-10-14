@@ -48,7 +48,7 @@ Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geword
 -   Git Dokumentation: https://git-scm.com/doc
 -   Git Sheet: https://training.github.com/downloads/de/github-git-cheat-sheet/
 
-## Branches und ihre Nutzung, Umgang mit Merge-Konflikten
+## Branches und ihre Nutzung, Umgang mit Merge-Konflikten (Jana Hesse)
 
 ### Branches
 
@@ -158,9 +158,10 @@ abgeschlossen.
 
 ## Git mit IntelliJ
 
-## Nützliche Git-Tools und Plattformen
 
-Git hat sich als eines der wichtigsten Versionskontrollsysteme etabliert und ist ein unverzichtbares Werkzeug für Entwickler und Teams, die an Softwareprojekten arbeiten. Die Wahl der richtigen Tools und Plattformen kann den Entwicklungsprozess erheblich erleichtern und die Zusammenarbeit verbessern. In diesem Text werden nützliche Git-Tools und Plattformen vorgestellt, die dir helfen können, deine Projekte effizient zu verwalten und den Überblick über Änderungen und Versionen zu behalten.
+## Nützliche Git-Tools und Plattformen (Martin Henn)
+
+Git hat sich als eines der wichtigsten Versionskontrollsysteme etabliert und ist ein unverzichtbares Werkzeug für Entwickler und Teams, die an Softwareprojekten arbeiten. Die Wahl der richtigen Tools und Plattformen kann den Entwicklungsprozess erheblich erleichtern und die Zusammenarbeit verbessern. Im Folgenden werden nützliche Git-Tools und Plattformen vorgestellt, dabei helfen Projekte effizient zu verwalten und den Überblick über Änderungen und Versionen zu behalten.
 
 ### Git-Plattformen
 
@@ -177,7 +178,7 @@ Git-Plattformen bieten Hosting-Dienste für Git-Repositories und ermöglichen di
 
 ### Git-Tools
 
-Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es durch grafische Benutzeroberflächen oder zusätzliche Funktionen. Hier sind einige nützliche Git-Tools, die dir helfen können, deine Repositories effektiv zu verwalten:
+Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es durch grafische Benutzeroberflächen oder zusätzliche Funktionen. Hier sind einige nützliche Git-Tools, die dabei helfen können, die Repositories effektiv zu verwalten:
 
 1. **SourceTree**
    SourceTree ist ein kostenloser Git-Client für Windows und macOS, der eine grafische Oberfläche für Git bietet. Es erleichtert das Management von Repositories, Branches und Commits, ohne dass die Kommandozeile benötigt wird.
@@ -196,3 +197,4 @@ Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es 
 
 6. **Git Command Line**
    Die Git-Befehlszeile ist ein unverzichtbares Tool für Entwickler, die tiefere Kontrolle über ihre Repositories benötigen. Sie bietet die größte Flexibilität und ist für viele fortgeschrittene Operationen notwendig.
+
