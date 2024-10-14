@@ -154,8 +154,6 @@ abgeschlossen.
 
 Das lokale Repository ist eine Kopie des Projekts, die auf dem Computer gespeichert wird und alle Versionen und Historien der Dateien enthält. Auf das lokale Repository kann direkt und ohne Internetverbindung zugegriffen werden. Ein entferntes Repository hingegen ist ein Repository, das auf Plattformen wie GitHub, GitLab oder Bitbucket gespeichert ist. Für den Zugriff auf das entfernte Repository und die Synchronisierung von Änderungen ist eine Internetverbindung erforderlich. Änderungen, die im lokalen Repository vorgenommen wurden, können an das Remote-Repository übertragen werden, damit andere Teammitglieder darauf zugreifen können.
 
-Mit IntelliJ/PyCharm werden die folgenden Schritte verwendet, um Local und Remote Repository zu erstellen:
-
 ### 1. **Git installieren**
 
 - Zunächst sollte man sicherstellen, dass Git bereits auf dem System installiert ist. Dies prüft man mit der Eingabe `git --version` im Terminal. Nun sollte `git version XXXXX`angezeigt werden, wobei XXXXXX für die Versionsnummer steht.
@@ -240,8 +238,6 @@ Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es 
 
 6. **Git Command Line**
    Die Git-Befehlszeile ist ein unverzichtbares Tool für Entwickler, die tiefere Kontrolle über ihre Repositories benötigen. Sie bietet die größte Flexibilität und ist für viele fortgeschrittene Operationen notwendig.
-
-## Was ist Git und warum sollte es verwendet werden? (Philine Wolf)
 
 ## Quellen
 
