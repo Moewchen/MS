@@ -70,11 +70,12 @@ Weitere Tipps zum Umgang mit Merge-Konflikten:
 - Konflikte frueh erkennen und haeufig pullen um sie direkt zu loesen bevor es grosse Konflikte werden
 - kleinteilige Commits um den neu erstellten Codekontext zu vertehen
 
-#Git mit IntelliJ
+## Git mit IntelliJ/PyCharm benutzen: Local Repository und Remote Repository
 
-## Nützliche Git-Tools und Plattformen
 
-Git hat sich als eines der wichtigsten Versionskontrollsysteme etabliert und ist ein unverzichtbares Werkzeug für Entwickler und Teams, die an Softwareprojekten arbeiten. Die Wahl der richtigen Tools und Plattformen kann den Entwicklungsprozess erheblich erleichtern und die Zusammenarbeit verbessern. In diesem Text werden nützliche Git-Tools und Plattformen vorgestellt, die dir helfen können, deine Projekte effizient zu verwalten und den Überblick über Änderungen und Versionen zu behalten.
+## Nützliche Git-Tools und Plattformen (Martin Henn)
+
+Git hat sich als eines der wichtigsten Versionskontrollsysteme etabliert und ist ein unverzichtbares Werkzeug für Entwickler und Teams, die an Softwareprojekten arbeiten. Die Wahl der richtigen Tools und Plattformen kann den Entwicklungsprozess erheblich erleichtern und die Zusammenarbeit verbessern. Im Folgenden werden nützliche Git-Tools und Plattformen vorgestellt, dabei helfen Projekte effizient zu verwalten und den Überblick über Änderungen und Versionen zu behalten.
 
 ### Git-Plattformen
 
@@ -91,7 +92,7 @@ Git-Plattformen bieten Hosting-Dienste für Git-Repositories und ermöglichen di
 
 ### Git-Tools
 
-Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es durch grafische Benutzeroberflächen oder zusätzliche Funktionen. Hier sind einige nützliche Git-Tools, die dir helfen können, deine Repositories effektiv zu verwalten:
+Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es durch grafische Benutzeroberflächen oder zusätzliche Funktionen. Hier sind einige nützliche Git-Tools, die dabei helfen können, die Repositories effektiv zu verwalten:
 
 1. **SourceTree**
    SourceTree ist ein kostenloser Git-Client für Windows und macOS, der eine grafische Oberfläche für Git bietet. Es erleichtert das Management von Repositories, Branches und Commits, ohne dass die Kommandozeile benötigt wird.
