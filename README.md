@@ -12,35 +12,35 @@ Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geword
 
 ### Repositories anlegen
 
--   git init [project-name]: Legt ein neues lokales Repository mit dem angegebenen Namen an
--   git clone [url]: Klont ein Projekt und lädt seine gesamte Versionshistorie herunter
+- git init [project-name]: Legt ein neues lokales Repository mit dem angegebenen Namen an
+- git clone [url]: Klont ein Projekt und lädt seine gesamte Versionshistorie herunter
 
 ### Änderungen vornehmen
 
--   git status: Listet alle zum Commit bereiten neuen oder geänderten Dateien auf
--   git diff: Zeigt noch nicht indizierte Dateiänderungen an
--   git add [file]: Indiziert den derzeitigen Stand der Datei für die Versionierung
--   git commit -m"[descriptive message]": Nimmt alle derzeit indizierten Dateien permanent in die Versionshistorie auf
+- git status: Listet alle zum Commit bereiten neuen oder geänderten Dateien auf
+- git diff: Zeigt noch nicht indizierte Dateiänderungen an
+- git add [file]: Indiziert den derzeitigen Stand der Datei für die Versionierung
+- git commit -m"[descriptive message]": Nimmt alle derzeit indizierten Dateien permanent in die Versionshistorie auf
 
 ### Änderungen gruppieren
 
--   git branch: Listet alle lokalen Branches im aktuellen Repository auf
--   git branch [branch-name]: Erzeugt einen neuen Branch
--   git merge [branch-name]: Fasst die Historie des angegeben Branches mit der des aktuell ausgecheckten Branches zusammen
+- git branch: Listet alle lokalen Branches im aktuellen Repository auf
+- git branch [branch-name]: Erzeugt einen neuen Branch
+- git merge [branch-name]: Fasst die Historie des angegeben Branches mit der des aktuell ausgecheckten Branches zusammen
 
 ### Dateinamen refaktorisieren
 
--   git rm [file]: Löscht die Datei aus dem Arbeitsverzeichnis und wird im Index zur Löschung markiert, dadurch wird die Datei beim nächsten commit aus der Versionskontrolle gelöscht
--   git mv [file-original] [file-renamed]: Ändert den Namen der Datei und bereitet diese für den Commit vor
+- git rm [file]: Löscht die Datei aus dem Arbeitsverzeichnis und wird im Index zur Löschung markiert, dadurch wird die Datei beim nächsten commit aus der Versionskontrolle gelöscht
+- git mv [file-original] [file-renamed]: Ändert den Namen der Datei und bereitet diese für den Commit vor
 
 ### Historie überprüfen
 
--   git log: Listet die Versionshistorie für den aktuellen Branch auf
+- git log: Listet die Versionshistorie für den aktuellen Branch auf
 
 ### Änderungen synchronisieren
 
--   git push [remote] [branch]: Pusht alle Commits auf dem lokalen Branch zu GitHub
--   git pull: Pullt die Historie vom externen Repository und integriert die Änderungen
+- git push [remote] [branch]: Pusht alle Commits auf dem lokalen Branch zu GitHub
+- git pull: Pullt die Historie vom externen Repository und integriert die Änderungen
 
 ## Branches und ihre Nutzung, Umgang mit Merge-Konflikten (Jana Hesse)
 
@@ -51,11 +51,11 @@ Ein Branch ist ein unabhängiger Entwicklungsstrang der parallel zum Hauptstrang
 
 ### Nutzen
 
--   isolierte Entwicklungsstränge (Branch) -> Änderungen am Code ohne den Hauptcode zu beeinträchtigen,
+- isolierte Entwicklungsstränge (Branch) -> Änderungen am Code ohne den Hauptcode zu beeinträchtigen,
 
--   paralleles Arbeiten möglich und
+- paralleles Arbeiten möglich und
 
--   testen von neuem Code und Bugbereinigung ohne den Hauptcode zu verändern -> Integration in den Hauptcode nach erfolgreichem Test.
+- testen von neuem Code und Bugbereinigung ohne den Hauptcode zu verändern -> Integration in den Hauptcode nach erfolgreichem Test.
 
 ### Branch erstellen
 
@@ -144,14 +144,63 @@ abgeschlossen.
 
 ### Weitere Tipps zum Umgang mit Merge-Konflikten:
 
--   Verwendung von Diff-Tools (Datenvergleichsprogramme) um Unterschiede und Konflikte übersichtlich darzustellen
+- Verwendung von Diff-Tools (Datenvergleichsprogramme) um Unterschiede und Konflikte übersichtlich darzustellen
 
--   Konflikte früh erkennen und häufig pullen um sie direkt zu lösen bevor größere Konflikte entstehen
+- Konflikte früh erkennen und häufig pullen um sie direkt zu lösen bevor größere Konflikte entstehen
 
--   kleinteilige Commits, um den neu erstellten Codekontext zu verstehen
+- kleinteilige Commits, um den neu erstellten Codekontext zu verstehen
 
-## Git mit IntelliJ/PyCharm benutzen: Local Repository und Remote Repository
+## Git mit IntelliJ/PyCharm benutzen: Local Repository und Remote Repository (Zhasmina Dimova)
 
+Das lokale Repository ist eine Kopie des Projekts, die auf dem Computer gespeichert wird und alle Versionen und Historien der Dateien enthält. Auf das lokale Repository kann direkt und ohne Internetverbindung zugegriffen werden. Ein entferntes Repository hingegen ist ein Repository, das auf Plattformen wie GitHub, GitLab oder Bitbucket gespeichert ist. Für den Zugriff auf das entfernte Repository und die Synchronisierung von Änderungen ist eine Internetverbindung erforderlich. Änderungen, die im lokalen Repository vorgenommen wurden, können an das Remote-Repository übertragen werden, damit andere Teammitglieder darauf zugreifen können.
+
+Mit IntelliJ/PyCharm werden die folgenden Schritte verwendet, um Local und Remote Repository zu erstellen:
+
+### 1. **Git installieren**
+
+- Zunächst sollte man sicherstellen, dass Git bereits auf dem System installiert ist. Dies prüft man mit der Eingabe `git --version` im Terminal. Nun sollte `git version XXXXX`angezeigt werden, wobei XXXXXX für die Versionsnummer steht.
+
+### 2. **Projekt erstellen oder öffnen**
+
+- Als nächstes IntelliJ oder PyCharm starten und ein neues Projekt erstellen oder ein bestehendes Projekt öffnen.
+
+### 3. **Lokales Repository initialisieren**
+
+- In der oberen Menüleiste unter `VCS` (Version Control System) `Enable Version Control Integration` wählen.
+
+- Als nächstes `Git` aus der Liste wählen und auf `OK` klicken.
+
+- Dadurch wird ein lokales Git-Repository in dem Projektverzeichnis erstellt.
+
+### 4. **Änderungen verfolgen**
+
+- Um Dateien zum Tracking hinzuzufügen, mit der rechten Maustaste auf die Dateien im Projektbaum klicken und `Git` > `Add` wählen.
+
+- Um Änderungen zu committen, in der oberen Menüleiste `VCS` > `Commit…` wählen und eine Commit-Nachricht hinzufügen. Anschließend auf `Commit` klicken.
+
+### 5. **Remote Repository hinzufügen**
+
+- Zunächst muss ein Repository auf einer Plattform wie GitHub, GitLab oder Bitbucket erstellt werden.
+
+- Anschließend muss die URL des Remote-Repositories kopiert werden.
+
+- In IntelliJ/PyCharm unter `VCS` > `Git` auf `Remotes…` gehen und dort auf `+` klicken und dort die URL des Remote-Repositories hinzufügen.
+
+### 6. **Änderungen pushen**
+
+- Lokalen Commits kann man unter `VCS` > `Git` > `Push…` an das Remote-Repository senden.
+
+- Hierfür muss der entsprechende Branch ausgewählt werden und anschließend auf `Push` geklickt werden.
+
+### 7. **Änderungen vom Remote Repository abrufen**
+
+- Die neuesten Änderungen aus dem Remote-Repository kann man per `VCS` > `Git` > `Pull…` ziehen.
+
+### 8. **Zusätzliche Tipps**
+
+- Mit Hilfe der Versionshistorie, kann man frühere Commits überprüfen. Dies findet man unter `VCS` > `Git` > `Show History`.
+
+- Die Git-Einstellungen (z.B. Benutzername, E-Mail) kann man unter `File` > `Settings` > `Version Control` > `Git` finden.
 
 ## Nützliche Git-Tools und Plattformen (Martin Henn)
 
@@ -192,9 +241,10 @@ Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es 
 6. **Git Command Line**
    Die Git-Befehlszeile ist ein unverzichtbares Tool für Entwickler, die tiefere Kontrolle über ihre Repositories benötigen. Sie bietet die größte Flexibilität und ist für viele fortgeschrittene Operationen notwendig.
 
+## Was ist Git und warum sollte es verwendet werden? (Philine Wolf)
 
 ## Quellen
 
--   Studienmodul MS: https://moodle.oncampus.de/mod/loop/view.php?id=1303451
--   Git Dokumentation: https://git-scm.com/doc
--   Git Sheet: https://training.github.com/downloads/de/github-git-cheat-sheet/
+- Studienmodul MS: https://moodle.oncampus.de/mod/loop/view.php?id=1303451
+- Git Dokumentation: https://git-scm.com/doc
+- Git Sheet: https://training.github.com/downloads/de/github-git-cheat-sheet/
