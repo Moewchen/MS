@@ -52,51 +52,53 @@ Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geword
 
 ### Branches
 
+Ein Branch ist ein unabhängiger Entwicklungsstrang der parallel zum Hauptstrang bearbeitet werden kann ohne das Hauptprojekt zu verändern.
 ![image info](./images/branch.jpg)
 
 ### Nutzen
 
--   isolierte Entwicklungsstränge -> Änderungen am Code ohne den Hauptcode zu beeinträchtigen,
+-   isolierte Entwicklungsstränge (Branch) -> Änderungen am Code ohne den Hauptcode zu beeinträchtigen,
 
 -   paralleles Arbeiten möglich und
 
--   testen von neuen Code und Bugfixbereinigung ohne den Hauptcode zu verändern -> Integration in den Hauptcode nach erfolgreichem Test
+-   testen von neuem Code und Bugbereinigung ohne den Hauptcode zu verändern -> Integration in den Hauptcode nach erfolgreichem Test.
 
 ### Branch erstellen
 
-Der Branch wird inhaltlich aus dem Branch erstellt, von dem er erzeugt wird. Nach der Erstellung wechselt man direkt hinein.
+Ein neuer Branch wird inhaltlich aus einem vorhandenen Branch erstellt. Nach der Erstellung wechselt man direkt in den neuen Branch.
 
 Mit
 
 > git checkout -b [neuer-branch-name]
 
-wird ein neuer Branch erstellt. Dieser ist vorerst nur lokal gesichert. Danach muss der Branch in git hochgeladen werden:
+wird ein neuer Branch erstellt. Dieser ist vorerst nur lokal gesichert. Danach muss der Branch in Git hochgeladen werden:
 
 > git push -u origin [neuer-branch-name]
 
-Mit
+Mit:
 
 > git checkout [branch-name]
 
-wird in den angegebenen branch gewechselt.
-Mit
+wird in den angegebenen Branch gewechselt.
+
+Mit:
 
 > git fetch --all
 
-werden alle Branches aus GitHub geholt.
+werden alle Branches aus GitHub mit allen zugehörigen Commits und Dateien heruntergeladen.
 
 ### Merge
 
 Nach der Funktionserweiterung oder Bugbehebung wird der Branch wieder in den Hauptstrang gemerged.
-Hierfür muss man sich in dem Ziel-Branch befinden in dem die Änderungen gemerged werden sollen.
-Bevor ein Merge stattfindet sollte mit einem
+Hierfür muss man sich in dem Ziel-Branch befinden in den die Änderungen gemerged werden sollen.
+Bevor ein Merge stattfindet sollte mit:
 
 > git pull origin main
 
-die neusten Änderungen gezogen werden, um sicher zu gehen, dass der lokale Branch auf dem neusten Stand ist.
-Danach wir mit einem
+die neusten Änderungen heruntergeladen werden, um sicher zu gehen, dass der lokale Branch auf dem neusten Stand ist.
+Danach wird mit:
 
-> git merge [branch-name]
+> git merge [quell-branch-name]
 
 der Quell-Branch in den Ziel-Branch germerged.
 
@@ -104,7 +106,7 @@ der Quell-Branch in den Ziel-Branch germerged.
 
 Es kann durchaus vorkommen, dass Merge-Konflikte entstehen. Meistens dann, wenn zwei Branches gleichzeitig Änderungen an der selben Datei vornehmen und Git diese nicht automatisch zusammen führen kann.
 Passiert dies, erkennt Git Konflikte und zeigt die betroffenen Dateien.
-In den betroffenen Dateien sind die folgenden Zeichen zu sehen
+In den betroffenen Dateien sind die folgenden Zeichen zu sehen:
 
 > "<<<<<<<", "======="
 
@@ -123,35 +125,36 @@ und
 stammt von dem aktuellen Ziel-Branch und alles zwischen
 
 > "========"
->
-> und
+
+und
+
 > ">>>>>>>"
 
 stammt vom Quell-Branch.
 
-Die Konflikte müssen manuell gelöst werden. Die Änderungen müssen händisch zusammen gefügt werden oder einer der Blöke muss entfernt werden.
-Danach muss die Datei mit einem
+Die Konflikte müssen manuell gelöst werden. Die Änderungen müssen händisch zusammen gefügt oder einer der Blöcke muss entfernt werden.
+Danach muss die Datei mit:
 
 > git add [dateiname]
 
 dem Ziel-Branch hinzugefügt werden.
-Der Merge wird danach per
+Der Merge wird danach per:
 
 > git commit
 
-und bei einem Remote-Repository mit
+und bei einem Remote-Repository mit:
 
-> git push origin [ziel-branch ]
+> git push origin [ziel-branch]
 
 abgeschlossen.
 
 ### Weitere Tipps zum Umgang mit Merge-Konflikten:
 
--   Verwendung von Diff-Tools um Unterschiede und Konflikte übersichtlich darzustellen
+-   Verwendung von Diff-Tools (Datenvergleichsprogramme) um Unterschiede und Konflikte übersichtlich darzustellen
 
--   Konflikte früh erkennen und häufig pullen um sie direkt zu lösen bevor es große Konflikte werden
+-   Konflikte früh erkennen und häufig pullen um sie direkt zu lösen bevor größere Konflikte entstehen
 
--   kleinteilige Commits um den neu erstellten Codekontext zu verstehen
+-   kleinteilige Commits, um den neu erstellten Codekontext zu verstehen
 
 ## Git mit IntelliJ
 
