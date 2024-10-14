@@ -1,6 +1,6 @@
 # Moderne Softwareentwicklung
 
-## Was ist Git und warum sollte es verwendet werden?
+## Was ist Git und warum sollte es verwendet werden? (Philine Wolf)
 
 Softwareprojekte unterliegen ständigen Änderungen durch das Beheben von Fehlern, die Weiterentwicklung und das Hinzufügen von Funktionen sowie durch struktuelle Veränderungen der Software. Um alle Änderungen zu protokollieren und nachvollziehen zu können, ist die Nutzung eines Versionskontrollprograms erforderlich. Zusätzlich ist es wichtig, dass Teams gemeinsam an einem Projekt arbeiten können, ohne dass es zu Konflikten kommt oder Änderungen verloren gehen.
 
@@ -8,7 +8,7 @@ Git ist ein Open-Source-Revisionskontrollsystem und das bisher am weitesten verb
 
 Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geworden und wird in vielen Unternehmen als Standard eingesetzt.
 
-## Grundlegende Git-Befehle
+## Grundlegende Git-Befehle (Philine Wolf)
 
 ### Repositories anlegen
 
@@ -41,12 +41,6 @@ Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geword
 
 -   git push [remote] [branch]: Pusht alle Commits auf dem lokalen Branch zu GitHub
 -   git pull: Pullt die Historie vom externen Repository und integriert die Änderungen
-
-## Quellen
-
--   Studienmodul MS: https://moodle.oncampus.de/mod/loop/view.php?id=1303451
--   Git Dokumentation: https://git-scm.com/doc
--   Git Sheet: https://training.github.com/downloads/de/github-git-cheat-sheet/
 
 ## Branches und ihre Nutzung, Umgang mit Merge-Konflikten (Jana Hesse)
 
@@ -156,7 +150,7 @@ abgeschlossen.
 
 -   kleinteilige Commits, um den neu erstellten Codekontext zu verstehen
 
-## Git mit IntelliJ
+## Git mit IntelliJ/PyCharm benutzen: Local Repository und Remote Repository
 
 
 ## Nützliche Git-Tools und Plattformen (Martin Henn)
@@ -198,3 +192,9 @@ Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es 
 6. **Git Command Line**
    Die Git-Befehlszeile ist ein unverzichtbares Tool für Entwickler, die tiefere Kontrolle über ihre Repositories benötigen. Sie bietet die größte Flexibilität und ist für viele fortgeschrittene Operationen notwendig.
 
+
+## Quellen
+
+-   Studienmodul MS: https://moodle.oncampus.de/mod/loop/view.php?id=1303451
+-   Git Dokumentation: https://git-scm.com/doc
+-   Git Sheet: https://training.github.com/downloads/de/github-git-cheat-sheet/
