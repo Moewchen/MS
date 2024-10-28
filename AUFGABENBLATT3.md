@@ -27,7 +27,7 @@
   + Ärzte können die Behandlungen ihrer Patienten aktualisieren.
 
 ## 2. Domänenmodell erstellen
-
+![image info](./images/Klassendiagramm.png)
 ## 3. Bounded Context identifizieren
 + Patientenverwaltung 
   + Zuständig für die Verwaltung von Patientendaten und umfasst das Hinzufügen, Einsehen, Aktualisieren und Entfernen von Patientendaten. 
