@@ -130,4 +130,4 @@ Die Implementierungsstrategie umfasst die folgenden Schritte:
 
 #### Beispiel: Implementierung für die Arztverwaltung
 
-![image info](./images/Arztverwaltungsserver)
+![image info](./images/Arztverwaltungsserver.png)
