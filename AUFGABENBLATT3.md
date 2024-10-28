@@ -1,5 +1,5 @@
-# Übung 3: Systemarchitektur Ihres Projektes modellieren
-## Event Storming durchführen
+# Übung 3: Systemarchitektur des Projekts "MediTrack: Patientendatenverwaltung und –überwachung"
+## 1. Event Storming durchführen
 + Vitaldaten erfassen
   + Ärzte können neue Vitaldaten für ihre Patienten erfassen und korrigieren.
   + Ein Patient kann die eigenen Vitaldaten erfassen und korrigieren.
@@ -26,10 +26,9 @@
 + Behandlung aktualisieren 
   + Ärzte können die Behandlungen ihrer Patienten aktualisieren.
 
-## Domänenmodell erstellen
+## 2. Domänenmodell erstellen
 
-## Bounded Context identifizieren
-
+## 3. Bounded Context identifizieren
 + Patientenverwaltung 
   + Zuständig für die Verwaltung von Patientendaten und umfasst das Hinzufügen, Einsehen, Aktualisieren und Entfernen von Patientendaten. 
 + Arztverwaltung 
@@ -39,9 +38,9 @@
 + Vitaldatenmanagement 
   + Zuständig für die Verwaltung von Vitaldaten und umfasst das Erfassen, Einsehen, Abfragen und Übermitteln von Vitaldaten.
 
-## Entitäten und Aggregates definieren
+## 4. Entitäten und Aggregates definieren
 
-## Domain Services und Repositories
+## 5. Domain Services und Repositories
 ### Domainservices:
 + Patientenverwaltungsservice 
   + Verantwortlich für die Verwaltung der Patientendaten (Patient anlagen, Patient löschen, Pflege der Grunddaten usw.)
@@ -80,7 +79,7 @@
 + updateVitaldaten(String Id)
 + createVitaldaten(Vitaldaten vitaldaten)
 
-## Implementierungsstrategie
+## 6. Implementierungsstrategie
 Die Implementierungsstrategie umfasst die folgenden Schritte:
 + Festlegung zur Benutzung eines Frameworks -> Spring Boot 
 + Festlegen der SQL-Datenbank -> PostgreSQL 
