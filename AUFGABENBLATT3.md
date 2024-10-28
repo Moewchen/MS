@@ -25,6 +25,8 @@
   + Patienten können die eigenen Behandlungen einsehen. 
 + Behandlung aktualisieren 
   + Ärzte können die Behandlungen ihrer Patienten aktualisieren.
+ 
+![image info](./images/UseCase.png)
 
 ## 2. Domänenmodell erstellen
 ![image info](./images/Klassendiagramm.png)
@@ -37,6 +39,8 @@
   + Zuständig für das Management von Behandlungen und umfasst das Erfassen, Einsehen und Aktualisieren von Behandlungen. 
 + Vitaldatenmanagement 
   + Zuständig für die Verwaltung von Vitaldaten und umfasst das Erfassen, Einsehen, Abfragen und Übermitteln von Vitaldaten.
+ 
+![image info](./images/Paketdiagramm.png)
 
 ## 4. Entitäten und Aggregates definieren
 + Patientenverwaltung 
