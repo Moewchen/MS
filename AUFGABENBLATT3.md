@@ -39,6 +39,18 @@
   + Zuständig für die Verwaltung von Vitaldaten und umfasst das Erfassen, Einsehen, Abfragen und Übermitteln von Vitaldaten.
 
 ## 4. Entitäten und Aggregates definieren
++ Patientenverwaltung 
+  + Entität: Patient 
+  + Aggregate: Enthält alle Daten zum Patienten (siehe Klassen Nutzer und Patient)
++ Arztverwaltung 
+  + Entität: Arzt 
+  + Aggregate: Enthält alle Daten zum Arzt (siehe Klassen Nutzer und Arzt)
++ Behandlungsmanagement 
+  + Entität: Behandlung 
+  + Aggregate: Enthält alle Daten zur Behandlung (siehe Klasse Behandlung)
++ Vitaldatenmanagement 
+  + Entität: Vitaldaten 
+  + Aggregate: Enthält alle Informationen zu den Vitaldaten (siehe Klasse Vitaldaten)
 
 ## 5. Domain Services und Repositories
 ### Domainservices:
