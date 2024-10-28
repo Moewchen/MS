@@ -80,7 +80,7 @@
 + getPatientBy(Date geburtsdatum)
 + cratePatient(Patient patient)
 + deletePatient(String Id)
-+ updatePatient(String Id)
++ updatePatient(Patient patient)
 #### ArztRepository
 + getArztById(String Id)
 + getArztByName(String name)
@@ -88,11 +88,11 @@
 #### BehandlungRepository
 + getBehandlungByPatientenId(String Id)
 + createBehandlung(Behandlung behandlung)
-+ updateBehandlung (String Id)
++ updateBehandlung(Behandlung behandlung)
 #### VitaldatenRepository
 + getVitaldatenByPatientenId(String Id)
 + getVitaldatenByID(String Id)
-+ updateVitaldaten(String Id)
++ updateVitaldaten(Vitaldaten vitaldaten)
 + createVitaldaten(Vitaldaten vitaldaten)
 
 ## 6. Implementierungsstrategie
