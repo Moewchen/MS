@@ -110,18 +110,8 @@ Die Implementierungsstrategie umfasst die folgenden Schritte:
   + Erstellen von Methoden zum Speichern, Ändern und Löschen der Entitäten
 
 
-Beispiel: Implementierung für die Arztverwaltung
-public class Arztverwaltungsservice {
-    private ArztRepository arztRepository;
-        public Arztverwaltungsservice(ArztRepository arztRepository){
-            this.arztRepository = arztRepository;
-        }
-        public void getArztById(...){
-        }
-        public void getArztByName(...){
-        }
-        public void getArztByFachrichtung(...){
-        }
-}
+#### Beispiel: Implementierung für die Arztverwaltung
+
+![image info](./images/Implementierung.png)
 
 
