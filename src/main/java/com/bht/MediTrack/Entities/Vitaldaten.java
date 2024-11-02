@@ -7,13 +7,14 @@ import jakarta.persistence.TemporalType;
 import jakarta.persistence.Id;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "vitaldaten")
 public class Vitaldaten {
 
     @Id
-    private String id;
+    private UUID id;
     private byte herzfrequenz;
     private byte atemfrequenz;
     private byte systolisch;
@@ -25,7 +26,7 @@ public class Vitaldaten {
 
     public Vitaldaten() {}
 
-    public Vitaldaten(String id, byte herzfrequenz, byte atemfrequenz, byte systolisch, byte diastolisch, byte temperatur, Date datum) {
+    public Vitaldaten(UUID id, byte herzfrequenz, byte atemfrequenz, byte systolisch, byte diastolisch, byte temperatur, Date datum) {
         this.id = id;
         this.herzfrequenz = herzfrequenz;
         this.atemfrequenz = atemfrequenz;
@@ -36,10 +37,10 @@ public class Vitaldaten {
 
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
     public byte getHerzfrequenz() {

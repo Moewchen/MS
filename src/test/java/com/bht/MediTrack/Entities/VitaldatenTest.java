@@ -4,17 +4,19 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
-import java.util.Objects;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class VitaldatenTest {
 
-    Vitaldaten vitaldaten;
+    //Vitaldaten vitaldaten;
 
-    private static String PATTERN = "^[0-9a-fA-F]{4}-[0-9a-fA-F]{5}$";
-    private static Pattern REGEX = Pattern.compile(PATTERN);
+    private static final String UUID_PATTERN = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
+    private static final Pattern UUID_REGEX = Pattern.compile(UUID_PATTERN);
+
+    //TODO Vitaldaten von - bis PATTERNS
 
     /*
     @Before
@@ -25,12 +27,12 @@ class VitaldatenTest {
     @Test
     void testSetId(){
         Vitaldaten vitaldaten = new Vitaldaten();
-        String testid = "2024-12e4a";
+        UUID testId = UUID.fromString("e58ed763-928c-4155-bee9-fdbaaadc15f3");
 
-        vitaldaten.setId(testid);
-        assertEquals(testid, vitaldaten.getId(),"getter error");
+        vitaldaten.setId(testId);
+        assertEquals(testId, vitaldaten.getId(),"getter error");
 
-        assertTrue(REGEX.matcher(vitaldaten.getId()).matches(), "REGEX error");
+        assertTrue(UUID_REGEX.matcher(vitaldaten.getId().toString()).matches(), "REGEX error");
 
     }
 
@@ -44,14 +46,13 @@ class VitaldatenTest {
             byte actualHerzfrequenz = vitaldaten.getHerzfrequenz();
             assertEquals(expectedHerzfrequenz, actualHerzfrequenz, "set/get error");
 
-
-
     }
 
     @Test
     void testToString() {
+        UUID id = UUID.fromString("e58ed763-928c-4155-bee9-fdbaaadc15f3");
         Vitaldaten vitaldaten = new Vitaldaten(
-                "12345",
+                 id,
                 (byte) 75,
                 (byte) 16,
                 (byte) 120,
@@ -60,7 +61,7 @@ class VitaldatenTest {
                 new Date()
         );
 
-        String expected = "Vitaldaten{id='12345', herzfrequenz=75, atemfrequenz=16, systolisch=120, diastolisch=80, temperatur=37, datum=" + vitaldaten.getDatum() + "}";
+        String expected = "Vitaldaten{id='e58ed763-928c-4155-bee9-fdbaaadc15f3', herzfrequenz=75, atemfrequenz=16, systolisch=120, diastolisch=80, temperatur=37, datum=" + vitaldaten.getDatum() + "}";
         String actual = vitaldaten.toString();
         assertEquals(expected, actual);
     }
