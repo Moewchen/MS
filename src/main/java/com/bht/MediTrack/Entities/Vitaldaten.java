@@ -15,18 +15,18 @@ public class Vitaldaten {
 
     @Id
     private UUID id;
-    private byte herzfrequenz;
+    private short herzfrequenz;
     private byte atemfrequenz;
-    private byte systolisch;
-    private byte diastolisch;
-    private byte temperatur;
+    private short systolisch;
+    private short diastolisch;
+    private float temperatur;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date datum;
 
     public Vitaldaten() {}
 
-    public Vitaldaten(UUID id, byte herzfrequenz, byte atemfrequenz, byte systolisch, byte diastolisch, byte temperatur, Date datum) {
+    public Vitaldaten(UUID id, short herzfrequenz, byte atemfrequenz, short systolisch, short diastolisch, float temperatur, Date datum) {
         this.id = id;
         this.herzfrequenz = herzfrequenz;
         this.atemfrequenz = atemfrequenz;
@@ -43,10 +43,10 @@ public class Vitaldaten {
     public void setId(UUID id) {
         this.id = id;
     }
-    public byte getHerzfrequenz() {
+    public short getHerzfrequenz() {
         return herzfrequenz;
     }
-    public void setHerzfrequenz(byte herzfrequenz) {
+    public void setHerzfrequenz(short herzfrequenz) {
         this.herzfrequenz = herzfrequenz;
     }
     public byte getAtemfrequenz() {
@@ -55,22 +55,22 @@ public class Vitaldaten {
     public void setAtemfrequenz(byte atemfrequenz) {
         this.atemfrequenz = atemfrequenz;
     }
-    public byte getSystolisch() {
+    public short getSystolisch() {
         return systolisch;
     }
-    public void setSystolisch(byte systolisch) {
+    public void setSystolisch(short systolisch) {
         this.systolisch = systolisch;
     }
-    public byte getDiastolisch() {
+    public short getDiastolisch() {
         return diastolisch;
     }
-    public void setDiastolisch(byte diastolisch) {
+    public void setDiastolisch(short diastolisch) {
         this.diastolisch = diastolisch;
     }
-    public byte getTemperatur() {
+    public float getTemperatur() {
         return temperatur;
     }
-    public void setTemperatur(byte temperatur) {
+    public void setTemperatur(float temperatur) {
         this.temperatur = temperatur;
     }
     public Date getDatum() {
