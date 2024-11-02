@@ -1,6 +1,12 @@
 package com.bht.MediTrack.Entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity
 public class Behandlung {
+    @Id
     private String id;
     private String beschreibung;
     private Patient patient;
