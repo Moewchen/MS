@@ -88,7 +88,6 @@ public class Vitaldaten {
                 ", systolisch=" + systolisch +
                 ", diastolisch=" + diastolisch +
                 ", temperatur=" + temperatur +
-                ", datum=" + datum +
-                '}';
+                ", datum=" + datum +'}';
     }
 }
