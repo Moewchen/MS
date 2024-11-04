@@ -1,0 +1,25 @@
+#Auslöser für Unittests
+# Puschen und Pull Requests auf Main
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+   branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    #ToDo: Strategie definieren (unters. versionen)
+    strategy:
+      matrix:
+    
+
+    #ToDo: Steps definieren
+    steps:
+    #Actions nutzen
+      - uses: actions/checkout@v2
+    #Jobs
+    
+  
