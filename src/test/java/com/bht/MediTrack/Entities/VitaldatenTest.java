@@ -32,7 +32,6 @@ class VitaldatenTest {
 
     private static final String TEMP_PATTERN = "^(0|[1-3][0-9]?|4[0-5])(\\.\\d)?$";
     private static final Pattern TEMP_REGEX = Pattern.compile(TEMP_PATTERN);
-    //TODO Vitaldaten von - bis PATTERNS
 
     @Test
     void testSetId(){
