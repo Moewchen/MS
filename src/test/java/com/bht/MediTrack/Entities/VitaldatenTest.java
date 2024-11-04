@@ -3,8 +3,11 @@ package com.bht.MediTrack.Entities;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -56,6 +59,22 @@ class VitaldatenTest {
 
         assertTrue(HERZ_REGEX.matcher(String.valueOf(vitaldaten.getHerzfrequenz())).matches(), "REGEX error");
 
+    }
+
+    @Test
+    void testHerzfrequenzWithStreams() {
+        List<Short> herzfrequenzen = Stream.of((short) 60, (short) 75, (short) 90)
+                .collect(Collectors.toList());
+
+        List<Short> results = herzfrequenzen.stream()
+                .map(herzfrequenz -> {
+                    Vitaldaten vitaldaten = new Vitaldaten();
+                    vitaldaten.setHerzfrequenz(herzfrequenz);
+                    return vitaldaten.getHerzfrequenz();
+                })
+                .collect(Collectors.toList());
+
+        assertEquals(herzfrequenzen, results, "Herzfrequenz values should match");
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.bht.MediTrack.Repositories;
 
 import com.bht.MediTrack.Entities.Vitaldaten;
+import jakarta.persistence.Id;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -10,12 +11,11 @@ import java.util.UUID;
 
 @Repository
 public class VitaldatenRepository {
-
+    //TODO: Implementierung database anbinden
     private final Map<UUID, Vitaldaten> database = new HashMap<>();
-    //TODO: das untere wieder rausnehmen
-    //UUID patientId = UUID.randomUUID();
+
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId){
-        //TODO: patientId mit der Klasse verbinden
+
         return Optional.ofNullable(database.get(patientId));
     }
     public Optional<Vitaldaten> getVitaldatenByID(UUID Id){
@@ -30,11 +30,13 @@ public class VitaldatenRepository {
         return false;
 
     }
-    public Vitaldaten createVitaldaten(Vitaldaten vitaldaten){
+    public Vitaldaten createVitaldaten(UUID Id, Vitaldaten vitaldaten){
         database.put(vitaldaten.getId(), vitaldaten);
         return vitaldaten;
 
     }
-
+    public Vitaldaten deleteVitaldaten(UUID Id, Vitaldaten vitaldaten){
+        return database.remove(vitaldaten.getId());
+    }
 
 }
