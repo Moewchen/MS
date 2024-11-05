@@ -4,7 +4,7 @@ name: Java CI mit Maven
 # Ausführung: Push oder Pull Request auf Main
 on:
   push:
-    branches: [ "CI-Pipeline_Vitaldaten", "main" ]
+    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
