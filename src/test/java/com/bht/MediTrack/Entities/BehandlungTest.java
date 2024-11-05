@@ -11,13 +11,14 @@ class BehandlungTest {
     private Behandlung behandlung;
 
     @BeforeEach
+    //TODO: Anpassungen notwendig
     void setUp() {
         // Beispiel-Patient und Arzt erstellen
-        patient = new Patient("1", "Max", "Mustermann", "Dr.", "1985-07-10", "max@mustermann.de", "0123456789", "Musterstraße 1", "AOK");
-        arzt = new Arzt("1", "Dr. Schmidt", "Allgemeinmedizin");
+        patient = new Patient();
+        arzt = new Arzt();
 
         // Behandlung erstellen
-        behandlung = new Behandlung("B1", "Routineuntersuchung", patient, arzt);
+        behandlung = new Behandlung();
     }
 
     @Test
@@ -40,14 +41,14 @@ class BehandlungTest {
     @Test
     void testPatientZuordnung() {
         // Überprüfen, ob der Patient korrekt zugeordnet ist
-        assertEquals("Max", behandlung.getPatient().getVorname());
-        assertEquals("Mustermann", behandlung.getPatient().getName());
+        assertEquals("Max", behandlung.getPatient().getFirstName());
+        assertEquals("Mustermann", behandlung.getPatient().getLastName());
     }
 
     @Test
     void testArztZuordnung() {
         // Überprüfen, ob der Arzt korrekt zugeordnet ist
-        assertEquals("Dr. Schmidt", behandlung.getArzt().getName());
+        assertEquals("Dr. Schmidt", behandlung.getArzt().getFirstName());
         assertEquals("Allgemeinmedizin", behandlung.getArzt().getFachrichtung());
     }
 
