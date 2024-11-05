@@ -2,7 +2,6 @@ package com.bht.MediTrack.Services;
 
 import com.bht.MediTrack.Entities.Adresse;
 import com.bht.MediTrack.Entities.Arzt;
-import com.bht.MediTrack.Entities.Patient;
 import com.bht.MediTrack.Repositories.ArztRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
