@@ -1,8 +1,7 @@
 package com.bht.MediTrack.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -11,7 +10,9 @@ import java.util.UUID;
 public class Arzt extends Nutzer{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
     private String fachrichtung;
 
     public Arzt(String fachrichtung, String firstName, String lastName, String titel, LocalDate dateOfBirth, String email, String telefon, Adresse adresse){
