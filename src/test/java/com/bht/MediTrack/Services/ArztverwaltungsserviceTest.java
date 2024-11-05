@@ -29,6 +29,8 @@ class ArztverwaltungsserviceTest {
     private Arzt arzt;
     private Arzt arzt2;
     private UUID arztId;
+    private List<Arzt> arztList;
+    private List<Arzt> foundArzt;
 
     @BeforeEach
     void setUp() {
@@ -54,6 +56,10 @@ class ArztverwaltungsserviceTest {
                 "015050505",
                 new Adresse("Hauptdamm","22","012345","Berlin","Deutschland")
         );
+
+        arztList = new ArrayList<>();
+        arztList.add(arzt);
+        arztList.add(arzt2);
     }
 
     @Test
@@ -67,12 +73,7 @@ class ArztverwaltungsserviceTest {
 
     @Test
     void testgetArztByName() {
-        List<Arzt> arztList = new ArrayList<>();
-        arztList.add(arzt);
-        arztList.add(arzt2);
-        when(ArztRepo.findArztByName("Tom", "Müller")).thenReturn(arztList);
-        when(ArztRepo.findArztByName("Alex", "Meister")).thenReturn(arztList);
-        List<Arzt> foundArzt = ArztService.getArztByName("Alex", "Meister");
+        foundArzt = ArztService.getArztByName("Alex", "Meister");
         assertThat(foundArzt).isNotEmpty();
         assertThat(foundArzt.get(0).getFirstName()).isEqualTo("Alex");
         verify(ArztRepo, times(1)).findArztByName("Alex", "Meister");
@@ -80,12 +81,7 @@ class ArztverwaltungsserviceTest {
 
     @Test
     void testgetArztByFachrichtung() {
-        List<Arzt> arztList = new ArrayList<>();
-        arztList.add(arzt);
-        arztList.add(arzt);
-        when(ArztRepo.findArztByFachrichtung("Allgemeinmedizin")).thenReturn(arztList);
-        when(ArztRepo.findArztByFachrichtung("Zahnarzt")).thenReturn(arztList);
-        List<Arzt> foundArzt = ArztService.getArztByFachrichtung("Zahnarzt");
+        foundArzt = ArztService.getArztByFachrichtung("Zahnarzt");
         assertThat(foundArzt).isNotEmpty();
         assertThat(foundArzt.get(0).getFachrichtung()).isEqualTo("Zahnarzt");
         verify(ArztRepo, times(1)).findArztByFachrichtung("Zahnarzt");
