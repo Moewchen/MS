@@ -70,7 +70,7 @@ class ArztverwaltungsserviceTest {
         assertThat(foundArzt.getFirstName()).isEqualTo("Tom");
         verify(ArztRepo, times(1)).findArztById(arztId);
     }
-
+//TODO: Test läuft noch nicht erfolgreich durch
     @Test
     void testgetArztByName() {
         foundArzt = ArztService.getArztByName("Alex", "Meister");
@@ -78,7 +78,7 @@ class ArztverwaltungsserviceTest {
         assertThat(foundArzt.get(0).getFirstName()).isEqualTo("Alex");
         verify(ArztRepo, times(1)).findArztByName("Alex", "Meister");
     }
-
+//TODO: Test läuft noch nicht erfolgreich durch
     @Test
     void testgetArztByFachrichtung() {
         foundArzt = ArztService.getArztByFachrichtung("Zahnarzt");
