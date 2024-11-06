@@ -1,0 +1,27 @@
+# Kontinuierliche Integration (CI)
+name: CI-Pipeline
+
+# Ausführung: Push oder Pull Request auf Main
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+# Ausführen des Auftrags
+jobs:
+  #Building und automatische Tests
+  build_test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build and Test with Maven
+        run: mvn -B package --file pom.xml
