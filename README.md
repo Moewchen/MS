@@ -47,7 +47,7 @@ Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geword
 ### Branches
 
 Ein Branch ist ein unabhängiger Entwicklungsstrang der parallel zum Hauptstrang bearbeitet werden kann ohne das Hauptprojekt zu verändern.
-![image info](./images/branch.jpg)
+![image info](../../Downloads/MS-main2/MS-main2/images/branch.jpg)
 
 ### Nutzen
 

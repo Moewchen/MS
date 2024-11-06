@@ -28,11 +28,11 @@
 - Behandlung aktualisieren
   - Ärzte können die Behandlungen ihrer Patienten aktualisieren.
 
-![image info](./images/UseCase.png)
+![image info](../../Downloads/MS-main2/MS-main2/images/UseCase.png)
 
 ## 2. Domänenmodell erstellen
 
-![image info](./images/Klassendiagramm.png)
+![image info](../../Downloads/MS-main2/MS-main2/images/Klassendiagramm.png)
 
 ## 3. Bounded Context identifizieren
 
@@ -45,7 +45,7 @@
 - Vitaldatenmanagement
   - Zuständig für die Verwaltung von Vitaldaten und umfasst das Erfassen, Einsehen, Abfragen und Übermitteln von Vitaldaten.
 
-![image info](./images/Paketdiagramm.png)
+![image info](../../Downloads/MS-main2/MS-main2/images/Paketdiagramm.png)
 
 ## 4. Entitäten und Aggregates definieren
 
@@ -130,4 +130,4 @@ Die Implementierungsstrategie umfasst die folgenden Schritte:
 
 #### Beispiel: Implementierung für die Arztverwaltung
 
-![image info](./images/Arztverwaltungsserver.png)
+![image info](../../Downloads/MS-main2/MS-main2/images/Arztverwaltungsserver.png)
