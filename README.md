@@ -244,3 +244,4 @@ Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es 
 - Studienmodul MS: https://moodle.oncampus.de/mod/loop/view.php?id=1303451
 - Git Dokumentation: https://git-scm.com/doc
 - Git Sheet: https://training.github.com/downloads/de/github-git-cheat-sheet/
+
