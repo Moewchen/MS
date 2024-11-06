@@ -12,3 +12,4 @@ class ArztverwaltungsserviceTest {
         Assertions.assertTrue(true);
     }
 }
+
