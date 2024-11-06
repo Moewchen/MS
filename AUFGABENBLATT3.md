@@ -131,3 +131,5 @@ Die Implementierungsstrategie umfasst die folgenden Schritte:
 #### Beispiel: Implementierung für die Arztverwaltung
 
 ![image info](../../Downloads/MS-main2/MS-main2/images/Arztverwaltungsserver.png)
+
+
