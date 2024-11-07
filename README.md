@@ -47,7 +47,7 @@ Aus diesen Gründen ist Git zu einem unverzichtbaren Tool für Entwickler geword
 ### Branches
 
 Ein Branch ist ein unabhängiger Entwicklungsstrang der parallel zum Hauptstrang bearbeitet werden kann ohne das Hauptprojekt zu verändern.
-![image info](./images/branch.jpg)
+![image info](../../Downloads/MS-main2/MS-main2/images/branch.jpg)
 
 ### Nutzen
 
@@ -244,3 +244,4 @@ Git-Tools sind Softwareanwendungen, die die Nutzung von Git erleichtern, sei es 
 - Studienmodul MS: https://moodle.oncampus.de/mod/loop/view.php?id=1303451
 - Git Dokumentation: https://git-scm.com/doc
 - Git Sheet: https://training.github.com/downloads/de/github-git-cheat-sheet/
+

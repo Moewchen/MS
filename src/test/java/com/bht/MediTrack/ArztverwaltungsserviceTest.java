@@ -1,4 +1,4 @@
-package com.bht.MediTrack.Services;
+package com.bht.MediTrack;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,15 +8,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class ArztverwaltungsserviceTest {
 
     @Test
-    void getArztById() {
+    void testArztverwaltungsservice() {
         Assertions.assertTrue(true);
     }
-
-    @Test
-    void getArztByName() {
-    }
-
-    @Test
-    void getArztByFachrichtung() {
-    }
 }
+

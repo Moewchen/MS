@@ -207,7 +207,7 @@ class VitaldatenTest {
     void testToString() {
         UUID id = UUID.fromString("e58ed763-928c-4155-bee9-fdbaaadc15f3");
         Vitaldaten vitaldaten = new Vitaldaten(
-                 id,
+                id,
                 (short) 75,
                 (byte) 16,
                 (short) 120,
