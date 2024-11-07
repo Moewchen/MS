@@ -48,6 +48,7 @@ class VitaldatenServiceTest {
 
     @Test
     void testGetVitaldatenById() {
+
         when(vitaldatenRepository.getVitaldatenByID(patientId)).thenReturn(Optional.of(vitaldaten));
 
         Optional<Vitaldaten> result = vitaldatenService.getVitaldatenById(patientId);
