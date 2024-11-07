@@ -1,7 +1,9 @@
+package com.bht.MediTrack;
 
 import com.bht.MediTrack.Entities.Adresse;
 import com.bht.MediTrack.Entities.Arzt;
 import com.bht.MediTrack.Repositories.ArztRepository;
+import com.bht.MediTrack.Services.Arztverwaltungsservice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,10 +27,7 @@ class ArztverwaltungsserviceTest {
     private ArztRepository ArztRepo;
 
     private Arzt arzt;
-    private Arzt arzt2;
     private UUID arztId;
-    private List<Arzt> arztList;
-    private List<Arzt> foundArzt;
 
     @BeforeEach
     void setUp() {
@@ -44,8 +43,6 @@ class ArztverwaltungsserviceTest {
                 "015050505",
                 new Adresse("Hauptdamm","22","012345","Berlin","Deutschland")
         );
-        arztList = new ArrayList<>();
-        arztList.add(arzt);
     }
 
     @Test
@@ -58,8 +55,10 @@ class ArztverwaltungsserviceTest {
     }
     @Test
     void testgetArztByName() {
+        List<Arzt> arztList = new ArrayList<>();
+        arztList.add(arzt);
         when(ArztRepo.findArztByName("Tom", "Müller")).thenReturn(arztList);
-        foundArzt = ArztService.getArztByName("Tom", "Müller");
+        List<Arzt> foundArzt = ArztService.getArztByName("Tom", "Müller");
         assertThat(foundArzt).isNotEmpty();
         assertThat(foundArzt.get(0).getFirstName()).isEqualTo("Tom");
         verify(ArztRepo, times(1)).findArztByName("Tom", "Müller");
@@ -67,8 +66,10 @@ class ArztverwaltungsserviceTest {
 
     @Test
     void testgetArztByFachrichtung() {
+        List<Arzt> arztList = new ArrayList<>();
+        arztList.add(arzt);
         when(ArztRepo.findArztByFachrichtung("Zahnarzt")).thenReturn(arztList);
-        foundArzt = ArztService.getArztByFachrichtung("Zahnarzt");
+        List<Arzt> foundArzt = ArztService.getArztByFachrichtung("Zahnarzt");
         assertThat(foundArzt).isNotEmpty();
         assertThat(foundArzt.get(0).getFachrichtung()).isEqualTo("Zahnarzt");
         verify(ArztRepo, times(1)).findArztByFachrichtung("Zahnarzt");
