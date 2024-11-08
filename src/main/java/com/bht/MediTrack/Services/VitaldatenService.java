@@ -23,7 +23,7 @@ public class VitaldatenService {
     }
 
     public Optional<Vitaldaten> getVitaldatenById(UUID id) {
-        return vitaldatenRepository.getVitaldatenByID(id);
+        return vitaldatenRepository.getVitaldatenById(id);
     }
 
     public boolean updateVitaldaten(UUID patientId, Vitaldaten vitaldaten) {

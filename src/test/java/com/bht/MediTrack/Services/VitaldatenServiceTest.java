@@ -49,7 +49,7 @@ class VitaldatenServiceTest {
     @Test
     void testGetVitaldatenById() {
 
-        when(vitaldatenRepository.getVitaldatenByID(patientId)).thenReturn(Optional.of(vitaldaten));
+        when(vitaldatenRepository.getVitaldatenById(patientId)).thenReturn(Optional.of(vitaldaten));
 
         Optional<Vitaldaten> result = vitaldatenService.getVitaldatenById(patientId);
 
@@ -81,7 +81,7 @@ class VitaldatenServiceTest {
                 .peek(v -> v.setId(UUID.randomUUID()))
                 .collect(Collectors.toList());
 
-        when(vitaldatenRepository.getVitaldatenByID(any(UUID.class)))
+        when(vitaldatenRepository.getVitaldatenById(any(UUID.class)))
                 .thenAnswer(invocation -> {
                     UUID id = invocation.getArgument(0);
                     return vitaldatenList.stream()
