@@ -2,18 +2,15 @@ package com.bht.MediTrack.Entities;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ArztTest {
 
     private Arzt arzt;
-    private UUID uuid = UUID.randomUUID();
-    private String Fachrichtung = "Zahnarzt";
+    private final UUID uuid = UUID.randomUUID();
 
     @BeforeEach
     void setUp() {
@@ -25,7 +22,7 @@ class ArztTest {
                 LocalDate.of(1976,3,1),
                 "müller@arzt.de",
                 "015050505",
-                new Adresse("Hauptdamm","22","012345","Berlin","Deutschland")
+                "Hauptdamm 22, 012345 Berlin"
         );
     }
 
@@ -37,18 +34,18 @@ class ArztTest {
         assertThat(arzt.getDateOfBirth()).isEqualTo(LocalDate.of(1976, 3, 1));
         assertThat(arzt.getEmail()).isEqualTo("müller@arzt.de");
         assertThat(arzt.getTelefon()).isEqualTo("015050505");
-        //TODO: Test Adresse hinzufügen/verbessern
-        //assertThat(arzt.getAdresse().toString()).isEqualTo("Hauptdamm 22, 012345 Berlin, Deutschland");
+        assertThat(arzt.getAdresse()).isEqualTo("Hauptdamm 22, 012345 Berlin");
         assertThat(arzt.getFachrichtung()).isEqualTo("Allgemeinmedizin");
     }
 
     @Test
     void testSetters() {
-        arzt.setArztId(uuid);
-        arzt.setFachrichtung(Fachrichtung);
+        arzt.setId(uuid);
+        String fachrichtung = "Zahnarzt";
+        arzt.setFachrichtung(fachrichtung);
 
-        assertThat(arzt.getArztId()).isEqualTo(uuid);
-        assertThat(arzt.getFachrichtung()).isEqualTo(Fachrichtung);
+        assertThat(arzt.getId()).isEqualTo(uuid);
+        assertThat(arzt.getFachrichtung()).isEqualTo(fachrichtung);
     }
 
 }
