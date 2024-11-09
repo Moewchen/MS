@@ -18,7 +18,7 @@ public class VitaldatenRepository {
 
         return Optional.ofNullable(database.get(patientId));
     }
-    public Optional<Vitaldaten> getVitaldatenByID(UUID Id){
+    public Optional<Vitaldaten> getVitaldatenById(UUID Id){
         return Optional.ofNullable(database.get(Id));
 
     }

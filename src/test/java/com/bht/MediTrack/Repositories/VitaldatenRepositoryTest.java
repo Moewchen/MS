@@ -29,7 +29,7 @@ class VitaldatenRepositoryTest {
     void testCreateVitaldaten() {
         Vitaldaten created = repository.createVitaldaten(patientId,vitaldaten);
         assertEquals(vitaldaten, created);
-        assertTrue(repository.getVitaldatenByID(patientId).isPresent());
+        assertTrue(repository.getVitaldatenById(patientId).isPresent());
     }
 
     @Test
@@ -47,13 +47,13 @@ class VitaldatenRepositoryTest {
         updatedVitaldaten.setId(patientId);
         boolean updated = repository.updateVitaldaten(patientId, updatedVitaldaten);
         assertTrue(updated);
-        assertEquals(updatedVitaldaten, repository.getVitaldatenByID(patientId).get());
+        assertEquals(updatedVitaldaten, repository.getVitaldatenById(patientId).get());
     }
 
     @Test
-    void testGetVitaldatenByID() {
+    void testGetVitaldatenById() {
         repository.createVitaldaten(patientId,vitaldaten);
-        Optional<Vitaldaten> found = repository.getVitaldatenByID(patientId);
+        Optional<Vitaldaten> found = repository.getVitaldatenById(patientId);
         assertTrue(found.isPresent());
         assertEquals(vitaldaten, found.get());
     }

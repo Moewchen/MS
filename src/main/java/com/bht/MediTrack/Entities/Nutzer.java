@@ -20,8 +20,8 @@ public class Nutzer {
         this.lastName = lastName;
         this.titel = titel;
         this.dateOfBirth = dateOfBirth;
-        this.telefon = telefon;
         this.email = email;
+        this.telefon = telefon;
         this.adresse = adresse;
     }
 
