@@ -19,7 +19,7 @@ Für die automatischen Tests wird das Testframework JUnit verwendet. Für jede e
 
 Mithilfe des Tools Maven können die geschriebenen Tests einfach in die CI-Pipeline von GitHub Actions integriert werden. Die entsprechenden Maven-Befehle für das Erstellen und Testen des Codes, welche auch lokal genutzt werden, können direkt in GitHub Actions integriert werden. Die POM-/XML-Datei enthält dafür alle Informationen über das Projekt und die Konfigurationsdetails. Der Befehlt „mvn package“ sorgt dafür, dass Abhängigkeiten heruntergeladen, Klassen erstellt und Tests ausgeführt werden. Die Jobs der CI-Pipeline werden beim Puschen oder einem Pull Request auf main ausgeführt und nur wenn der Build und alle Tests erfolgreich durchlaufen, werden die Änderungen integriert.
 
-Aufgabe 6 - Refklektion zu TDD und DDD
+Aufgabe 6 - Reflektion zu TDD und DDD
 --------------------------------------
 
 Test-Driven Design (TDD) und Domain-Driven Design (DDD) haben unsere Herangehensweise an das Projekt in wesentlichen Bereichen beeinflusst, vor allem in Bezug auf Struktur und Qualität - aber auch der Zeitplanung.
