@@ -12,7 +12,7 @@ public class BehandlungRepository {
 
     //Methode, um eine neue Behandlung zu erstellen
     public Behandlung createBehandlung(Behandlung behandlung) {
-        behandlung.setId(UUID.randomUUID()); // Erzeugt eine UUID, wenn noch keine gesetzt ist
+        behandlung.setId(UUID.randomUUID());
         behandlungMap.put(behandlung.getId(), behandlung);
         return behandlung;
     }
@@ -39,8 +39,14 @@ public class BehandlungRepository {
         }
     }
 
-    //Methode um die Behandlung eines Patienten durch dessen Id zu finden
-    public Behandlung getBehandlungenByPatientenId(UUID patientId) {
-        return behandlungMap.get(patientId);
+    //Methode alle Behandlungen eines Patienten durch dessen Id zu finden
+    public List<Behandlung> getBehandlungenByPatientId(UUID patientId) {
+        List<Behandlung> patientBehandlungen = new ArrayList<>();
+        for (Behandlung behandlung : behandlungMap.values()) {
+            if (behandlung.getPatientId().equals(patientId)) {
+                patientBehandlungen.add(behandlung);
+            }
+        }
+        return patientBehandlungen;
     }
 }
