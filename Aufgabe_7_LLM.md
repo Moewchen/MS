@@ -19,9 +19,13 @@ Neben generellen Hinweisen am Anfang der Antwort zeigt ein LLM auch innerhalb de
 Neben einzelner Klassen kann ein LLM auch das ganze Projekt analysieren und dem Benutzer ein Feedback geben. Wird diese Art der Unterstützung gewählt fokussiert sich das LLM auch eher auf generelle Implementierungen und geht weniger auf spezifischere Umsetzungen innerhalb der Klassen ein. Beispielsweise wurde mir bei einer kompletten Analyse nicht mehr der detaillierte Hinweis des oberen Beispiels bzgl. des Date Handlings gegeben. Vielmehr weist das LLM hier auf generelle Exception Handling hin, auf vernünftiges Logging und noch fehlende Java-Annotations.
 
 Positives nach kompletten Analyse:
+
 ![LLM_Positiv.png](images%2FLLM_Positiv.png)
+
 Verbesserungsvorschläge:
+
 ![LLM_Negativ.png](images%2FLLM_Negativ.png)
+
 Besonders diese Hinweise helfen uns, unser Programm besser zu implementieren, da hier die meisten Erfahrungen fehlen.
 
 Zusammenfassend hilft uns das LLM fehlende Kenntnisse zu füllen und schneller zu arbeiten. Bei Komplexen Problemen wird ein LLM wahrscheinlich allein jedoch nicht ausreichend sein. Hier wird eigenes Wissen benötigt. 
