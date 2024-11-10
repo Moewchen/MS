@@ -3,6 +3,7 @@ import com.bht.MediTrack.Repositories.InMemoryNutzerRepository;
 import com.bht.MediTrack.Entities.Nutzer;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ public class NutzerService {
 
     // Neuen Nutzer erstellen und speichern
     public Nutzer createNutzer(String firstName, String lastName, String titel, LocalDate dateOfBirth, String telefon, String email, String adresse) {
+        validateEmail(email);
         Nutzer nutzer = new Nutzer(firstName, lastName, titel, dateOfBirth, telefon, email, adresse);
         repository.save(nutzer);
         return nutzer;
@@ -49,6 +51,10 @@ public class NutzerService {
 
     // Nutzer löschen
     public void deleteNutzer(UUID id) {
+
+        if (!repository.findById(id).isPresent()) {
+            throw new NoSuchElementException("Nutzer mit ID " + id + " existiert nicht.");
+        }
         repository.deleteById(id);
     }
 
@@ -68,5 +74,12 @@ public class NutzerService {
     // Nutzer nach E-Mail überprüfen und validieren
     public boolean emailExists(String email) {
         return repository.findByEmail(email).isPresent();
+    }
+
+
+    private void validateEmail(String email) {
+        if (!email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            throw new IllegalArgumentException("Ungültige E-Mail-Adresse: " + email);
+        }
     }
 }

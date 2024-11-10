@@ -30,6 +30,12 @@ public class BehandlungTest {
     }
 
     @Test
+    public void testBehandlungWithNullArzt() {
+        Behandlung nullArztBehandlung = new Behandlung(UUID.randomUUID(), "Emergency", patient, null);
+        assertNull(nullArztBehandlung.getArzt(), "Arzt should be null in case of invalid data.");
+    }
+
+    @Test
     public void testGetPatientId() {
         assertEquals(patient.getId(), behandlung.getPatientId(), "Die Patienten-ID sollte korrekt abgerufen werden.");
     }

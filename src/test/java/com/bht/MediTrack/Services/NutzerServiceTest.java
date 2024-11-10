@@ -2,6 +2,7 @@ package com.bht.MediTrack.Services;
 import com.bht.MediTrack.Entities.Nutzer;
 import com.bht.MediTrack.Entities.Patient;
 import com.bht.MediTrack.Repositories.InMemoryNutzerRepository;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
@@ -83,18 +84,39 @@ public class NutzerServiceTest {
 
     @Test
     public void testEmailExists() {
-        service.createNutzer("Emma", "Schulz", "Ms.", LocalDate.of(1995, 6, 1), "+4912345678", "emma@example.com", "Parkstraße 6");
+        service.createNutzer("Emma", "Schulz", "Ms.", LocalDate.of(2019, 11, 1), "+4912345678", "emma@example.com", "Parkstraße 6");
 
         assertTrue(service.emailExists("emma@example.com"));
-        assertFalse(service.emailExists("nonexistent@example.com"));
+        assertFalse(service.emailExists("nonexistentexample.com"));
     }
+
+    @Test
+    public void testCreateNutzer_InvalidEmail() {
+        assertThrows(IllegalArgumentException.class,
+                () -> service.createNutzer("Invalid", "Email", "Mr.", LocalDate.of(1980, 1, 1), "+491234567890", "invalid-email", "Street 2"));
+    }
+
 
     @Test
     public void testDeleteNutzer() {
         Nutzer nutzer = service.createNutzer("John", "Doe", "Mr.", LocalDate.of(1991, 4, 21), "+4912345678", "john@example.com", "Ringstraße 7");
-
         service.deleteNutzer(nutzer.getId());
         assertFalse(repository.findById(nutzer.getId()).isPresent());
+    }
+
+
+    @Test
+    public void testDeleteNutzerSuccess() {
+        Nutzer nutzer = service.createNutzer("ToDelete", "User", "Mr.", LocalDate.of(2018, 1, 1), "+491234567890", "delete@example.com", "Delete Street");
+        UUID nutzerId = nutzer.getId();
+        service.deleteNutzer(nutzerId);
+        assertFalse(repository.findById(nutzerId).isPresent());
+    }
+
+    @Test
+    public void testDeleteNutzerNotFound() {
+        UUID randomId = UUID.randomUUID();
+        assertThrows(NoSuchElementException.class, () -> service.deleteNutzer(randomId));
     }
 
     @Test

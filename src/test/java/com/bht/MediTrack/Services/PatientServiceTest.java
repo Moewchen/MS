@@ -1,9 +1,12 @@
 package com.bht.MediTrack.Services;
 import com.bht.MediTrack.Entities.Patient;
 import com.bht.MediTrack.Repositories.InMemoryPatientRepository;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +22,15 @@ public class PatientServiceTest {
         patientService = new PatientService(repository);
     }
 
+
+    @Test
+    public void testCreatePatient_NullName_ShouldThrowException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            patientService.createPatient(null, "Muster", "Dr.", LocalDate.of(2015, 1, 1), "+491234567890", "muster@example.com", "Straße 1", "AOK", "123456");
+        });
+        assertEquals("Pflichtfelder dürfen nicht null sein.", exception.getMessage());
+    }
+
     @Test
     public void shouldCreateAndFindPatientById() {
         Patient patient = patientService.createPatient("Alice", "Miller", "Dr", LocalDate.of(1975, 3, 25),
@@ -26,10 +38,24 @@ public class PatientServiceTest {
                 "TK", "K54321");
 
         Optional<Patient> foundPatient = patientService.findPatientById(patient.getId());
-
         assertThat(foundPatient).isPresent();
         assertThat(foundPatient.get().getLastName()).isEqualTo("Miller");
     }
+
+    @Test
+    public void testFindPatientByIdInvalidIdShouldReturnEmpty() {
+        Optional<Patient> foundPatient = patientService.findPatientById(UUID.randomUUID());
+        assertFalse(foundPatient.isPresent());
+    }
+
+    @Test
+    public void testFindPatientByName_EmptyName_ShouldThrowException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            patientService.getPatientByName("");
+        });
+        assertEquals("Name darf nicht null oder leer sein.", exception.getMessage());
+    }
+
 
     @Test
     public void shouldRetrievePatientByName() {
@@ -66,6 +92,23 @@ public class PatientServiceTest {
 
         assertThat(tkPatients).hasSize(1);
         assertThat(tkPatients.get(0).getFirstName()).isEqualTo("Alice");
+    }
+
+    @Test
+    public void testDeletePatientNotExistsIdExceptionThrown() {
+        UUID nonexistentId = UUID.randomUUID();
+        System.out.println(nonexistentId);
+        patientService.deletePatient(nonexistentId);
+        assertTrue(repository.findAll().isEmpty());
+    }
+
+
+    @Test
+    public void testDeletePatient_ValidId_PatientDeleted() {
+        Patient patient = patientService.createPatient("Emily", "Clark", "Dr.", LocalDate.of(2000, 12, 20), "+4912345670", "emily@example.com", "Bergstraße 2", "DAK", "112233");
+        patientService.deletePatient(patient.getId());
+        Optional<Patient> deletedPatient = patientService.findPatientById(patient.getId());
+        assertFalse(deletedPatient.isPresent());
     }
 
     @Test
