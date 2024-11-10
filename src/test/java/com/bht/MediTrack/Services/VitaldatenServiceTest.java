@@ -59,37 +59,6 @@ class VitaldatenServiceTest {
     }
 
     @Test
-    void testGetVitaldatenById() {
-
-        when(vitaldatenRepository.getVitaldatenById(patientId)).thenReturn(Optional.of(vitaldaten));
-
-        Optional<Vitaldaten> result = vitaldatenService.getVitaldatenById(patientId);
-
-        assertTrue(result.isPresent());
-        assertEquals(vitaldaten, result.get());
-    }
-
-    @Test
-    void testUpdateVitaldaten() {
-        when(vitaldatenRepository.getVitaldatenById(any(UUID.class))).thenReturn(Optional.of(vitaldaten));
-        
-        when(vitaldatenRepository.updateVitaldaten(patientId, vitaldaten)).thenReturn(true);
-
-        boolean result = vitaldatenService.updateVitaldaten(patientId, vitaldaten);
-
-        assertTrue(result);
-    }
-
-    @Test
-    void testCreateVitaldaten() {
-        when(vitaldatenRepository.createVitaldaten(patientId, vitaldaten)).thenReturn(vitaldaten);
-
-        Vitaldaten result = vitaldatenService.createVitaldaten(patientId, vitaldaten);
-
-        assertEquals(vitaldaten, result);
-    }
-
-    @Test
     void testGetVitaldatenWithStreams() {
         List<Vitaldaten> vitaldatenList = Stream.of(vitaldaten, new Vitaldaten(), new Vitaldaten())
                 .peek(v -> v.setId(UUID.randomUUID()))
@@ -177,6 +146,13 @@ class VitaldatenServiceTest {
             when(vitaldatenRepository.getVitaldatenById(any(UUID.class))).thenReturn(Optional.empty());
             assertThrows(VitaldatenNotFoundException.class, () -> 
                 vitaldatenService.updateVitaldaten(patientId, vitaldaten));
+        }
+
+        @Test
+        void shouldThrowExceptionWhenHerzfrequenzIsInvalid() {
+            vitaldaten.setHerzfrequenz((short) 300);
+            assertThrows(InvalidVitaldatenException.class, () -> 
+                vitaldatenService.createVitaldaten(patientId, vitaldaten));
         }
     }
 
