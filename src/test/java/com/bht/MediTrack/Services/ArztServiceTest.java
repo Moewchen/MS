@@ -71,12 +71,12 @@ class ArztServiceTest {
     }
 
     @Test
-    public void testGetArztByFachrichtungEmptyFachrichtung() {
+    public void testGetArztByFachrichtungEmpty() {
         assertThrows(IllegalArgumentException.class, () -> arztService.getArztByFachrichtung(""), "Fachrichtung darf nicht null oder leer sein.");
     }
 
     @Test
-    public void testGetArztByFachrichtungNullFachrichtung() {
+    public void testGetArztByFachrichtungNull() {
         assertThrows(IllegalArgumentException.class, () -> arztService.getArztByFachrichtung(null), "Fachrichtung darf nicht null oder leer sein.");
     }
 

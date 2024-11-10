@@ -1,6 +1,5 @@
 package com.bht.MediTrack.Services;
 import com.bht.MediTrack.Entities.Nutzer;
-import com.bht.MediTrack.Entities.Patient;
 import com.bht.MediTrack.Repositories.InMemoryNutzerRepository;
 import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,10 +34,19 @@ public class NutzerServiceTest {
     @Test
     public void testFindNutzerById() {
         Nutzer nutzer = service.createNutzer("Anna", "Musterfrau", "Prof.", LocalDate.of(1990, 2, 10), "+4912345678", "anna@example.com", "Hauptstraße 2");
-
         Optional<Nutzer> foundNutzer = service.findNutzerById(nutzer.getId());
         assertTrue(foundNutzer.isPresent());
         assertEquals("Anna", foundNutzer.get().getFirstName());
+    }
+
+    @Test
+    public void testCreateNutzerInvalidEmail() {
+        assertThrows(IllegalArgumentException.class, () -> service.createNutzer("Max", "Mustermann", "Dr.", LocalDate.of(2001, 5, 20), "+491234567890", "invalid-email", "Musterstr. 1"));
+    }
+
+    @Test
+    public void testFindNutzerByNameEmptyName() {
+        assertThrows(IllegalArgumentException.class, () -> service.findNutzerByName(""), "Name darf nicht leer sein.");
     }
 
     @Test
@@ -57,7 +65,7 @@ public class NutzerServiceTest {
 
         List<Nutzer> foundNutzer = service.findNutzerByName("Anna");
         assertEquals(1, foundNutzer.size());
-        assertEquals("Anna", foundNutzer.get(0).getFirstName());
+        assertEquals("Anna", foundNutzer.getFirst().getFirstName());
     }
 
     @Test
