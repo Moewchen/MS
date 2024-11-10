@@ -1,5 +1,6 @@
 package com.bht.MediTrack.Entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
@@ -7,6 +8,8 @@ import jakarta.persistence.TemporalType;
 import jakarta.persistence.Id;
 
 import java.util.Date;
+
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -21,12 +24,15 @@ public class Vitaldaten {
     private short diastolisch;
     private float temperatur;
 
+    /*
     @Temporal(TemporalType.TIMESTAMP)
     private Date datum;
-
+*/
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime datum;
     public Vitaldaten() {}
 
-    public Vitaldaten(UUID id, short herzfrequenz, byte atemfrequenz, short systolisch, short diastolisch, float temperatur, Date datum) {
+    public Vitaldaten(UUID id, short herzfrequenz, byte atemfrequenz, short systolisch, short diastolisch, float temperatur, LocalDateTime datum) {
         this.id = id;
         this.herzfrequenz = herzfrequenz;
         this.atemfrequenz = atemfrequenz;
@@ -73,10 +79,10 @@ public class Vitaldaten {
     public void setTemperatur(float temperatur) {
         this.temperatur = temperatur;
     }
-    public Date getDatum() {
+    public LocalDateTime getDatum() {
         return datum;
     }
-    public void setDatum(Date datum) {
+    public void setDatum(LocalDateTime datum) {
         this.datum = datum;
     }
 

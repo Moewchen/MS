@@ -3,6 +3,8 @@ package com.bht.MediTrack.Entities;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -138,11 +140,11 @@ class VitaldatenTest {
     @Test
     void testSetDatum(){
         Vitaldaten vitaldaten = new Vitaldaten();
-        Date testDate = new Date();
+        LocalDateTime testDate = LocalDateTime.now();
 
         vitaldaten.setDatum(testDate);
 
-        Date actualDate = vitaldaten.getDatum();
+        LocalDateTime actualDate = vitaldaten.getDatum();
 
         assertEquals(testDate, actualDate, "set/get error");
     }
@@ -165,7 +167,7 @@ class VitaldatenTest {
         vitaldaten.setDatum(null);
 
         // Get the Date Using GetDate
-        Date actualDate = vitaldaten.getDatum();
+        LocalDateTime actualDate = vitaldaten.getDatum();
 
         // Assert that the date is null
         assertNull(actualDate, "The date should be null");
@@ -185,27 +187,28 @@ class VitaldatenTest {
         Vitaldaten vitaldaten = new Vitaldaten();
 
         // Create two different Date objects
-        Date testDate1 = new Date();
-        Date testDate2 = new Date(testDate1.getTime() + 1000); // 1 second later
+        LocalDateTime testDate1 = LocalDateTime.now();
+        LocalDateTime testDate2 = testDate1.plusSeconds(1); // 1 second later
 
         // Set the first Date
         vitaldaten.setDatum(testDate1);
 
         // Get the Date and assert it is the first date
-        Date actualDate1 = vitaldaten.getDatum();
+        LocalDateTime actualDate1 = vitaldaten.getDatum();
         assertEquals(testDate1, actualDate1, "The first date should be set correctly");
 
         // Set the second Date
         vitaldaten.setDatum(testDate2);
 
         // Get the Date and assert it is the second date
-        Date actualDate2 = vitaldaten.getDatum();
+        LocalDateTime actualDate2 = vitaldaten.getDatum();
         assertEquals(testDate2, actualDate2, "The second date should be set correctly");
     }
 
     @Test
     void testToString() {
         UUID id = UUID.fromString("e58ed763-928c-4155-bee9-fdbaaadc15f3");
+        LocalDateTime testDate = LocalDateTime.of(2024, 3, 15, 10, 30, 0); // Fixed date for testing
         Vitaldaten vitaldaten = new Vitaldaten(
                 id,
                 (short) 75,
@@ -213,11 +216,20 @@ class VitaldatenTest {
                 (short) 120,
                 (short) 80,
                 (float) 37,
-                new Date()
+                testDate
         );
 
-        String expected = "Vitaldaten{id='e58ed763-928c-4155-bee9-fdbaaadc15f3', herzfrequenz=75, atemfrequenz=16, systolisch=120, diastolisch=80, temperatur=37.0, datum=" + vitaldaten.getDatum() + "}";
-        String actual = vitaldaten.toString();
-        assertEquals(expected, actual);
+        String expected = "Vitaldaten{" +
+        "id='e58ed763-928c-4155-bee9-fdbaaadc15f3', " +
+        "herzfrequenz=75, " +
+        "atemfrequenz=16, " +
+        "systolisch=120, " +
+        "diastolisch=80, " +
+        "temperatur=37.0, " +
+        "datum=" + testDate + 
+        "}";
+        
+    String actual = vitaldaten.toString();
+    assertEquals(expected, actual);
     }
 }
