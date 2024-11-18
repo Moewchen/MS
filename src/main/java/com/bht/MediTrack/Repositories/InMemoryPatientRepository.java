@@ -25,6 +25,9 @@ public class InMemoryPatientRepository {
 
     // Findet einen Patienten anhand der ID
     public Optional<Patient> findById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID darf nicht null sein.");
+        }
         return Optional.ofNullable(patientStorage.get(id));
     }
 
@@ -35,6 +38,9 @@ public class InMemoryPatientRepository {
 
     // Patient anhand des Namens abrufen
     public List<Patient> getPatientByName(String name) {
+        if (name == null || name.isEmpty()) {
+            throw new IllegalArgumentException("Name darf nicht null oder leer sein.");
+        }
         return patientStorage.values().stream()
                 .filter(patient -> patient.getFirstName().equalsIgnoreCase(name) ||
                         patient.getLastName().equalsIgnoreCase(name))
@@ -43,6 +49,9 @@ public class InMemoryPatientRepository {
 
     // Patient anhand des Geburtsdatums abrufen
     public List<Patient> getPatientByGeburtsdatum(LocalDate geburtsdatum) {
+        if (geburtsdatum == null) {
+            throw new IllegalArgumentException("Datum darf nicht null sein.");
+        }
         return patientStorage.values().stream()
                 .filter(patient -> patient.getDateOfBirth().equals(geburtsdatum))
                 .collect(Collectors.toList());
@@ -57,6 +66,9 @@ public class InMemoryPatientRepository {
 
     // Löscht einen Patienten anhand der ID
     public void deleteById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID darf nicht null sein.");
+        }
         patientStorage.remove(id);
     }
 

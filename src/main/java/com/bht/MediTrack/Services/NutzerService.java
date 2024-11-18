@@ -3,6 +3,7 @@ import com.bht.MediTrack.Repositories.InMemoryNutzerRepository;
 import com.bht.MediTrack.Entities.Nutzer;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -17,6 +18,7 @@ public class NutzerService {
 
     // Neuen Nutzer erstellen und speichern
     public Nutzer createNutzer(String firstName, String lastName, String titel, LocalDate dateOfBirth, String telefon, String email, String adresse) {
+        validateNutzerData(firstName, lastName, dateOfBirth, telefon, email);
         Nutzer nutzer = new Nutzer(firstName, lastName, titel, dateOfBirth, telefon, email, adresse);
         repository.save(nutzer);
         return nutzer;
@@ -39,6 +41,9 @@ public class NutzerService {
 
     // Nutzer nach Namen filtern
     public List<Nutzer> findNutzerByName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Name darf nicht null oder leer sein.");
+        }
         return repository.findAll(n -> n.getFirstName().equalsIgnoreCase(name) || n.getLastName().equalsIgnoreCase(name));
     }
 
@@ -49,6 +54,10 @@ public class NutzerService {
 
     // Nutzer löschen
     public void deleteNutzer(UUID id) {
+
+        if (repository.findById(id).isEmpty()) {
+            throw new NoSuchElementException("Nutzer mit ID " + id + " existiert nicht.");
+        }
         repository.deleteById(id);
     }
 
@@ -68,5 +77,23 @@ public class NutzerService {
     // Nutzer nach E-Mail überprüfen und validieren
     public boolean emailExists(String email) {
         return repository.findByEmail(email).isPresent();
+    }
+
+    private void validateNutzerData(String firstName, String lastName, LocalDate dateOfBirth, String telefon, String email) {
+        if (firstName == null || firstName.isBlank()) {
+            throw new IllegalArgumentException("Vorname darf nicht null oder leer sein.");
+        }
+        if (lastName == null || lastName.isBlank()) {
+            throw new IllegalArgumentException("Nachname darf nicht null oder leer sein.");
+        }
+        if (dateOfBirth == null || dateOfBirth.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("Geburtsdatum muss in der Vergangenheit liegen.");
+        }
+        if (telefon == null || !telefon.matches("\\+?[0-9]*")) {
+            throw new IllegalArgumentException("Telefonnummer ist ungültig.");
+        }
+        if (email == null || !email.matches("^[\\w-.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            throw new IllegalArgumentException("Ungültige E-Mail-Adresse: " + email);
+        }
     }
 }
