@@ -1,0 +1,29 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -------------------------< com.bht:MediTrack >--------------------------
+[INFO] Building MediTrack 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ MediTrack ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ MediTrack ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ MediTrack ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 36 source files with javac [debug parameters release 21] to target\classes
+[INFO] Die Annotationsverarbeitung ist aktiviert, da mindestens ein Prozessor im
+  Classpath gefunden wurde. In einem zukünftigen Release von javac kann die Annotationsverarbeitung deaktiviert werden,
+  es sei denn, mindestens ein Prozessor ist namentlich angegeben (-processor), oder ein Suchpfad
+  ist angegeben (--processor-path, --processor-module-path), oder die Annotationsverarbeitung
+  wurde explizit aktiviert (-proc:only, -proc:full).
+  Verwenden Sie "-Xlint:-options", um diese Meldung zu unterdrücken.
+  Verwenden Sie "-proc:none", um die Annotationsverarbeitung zu deaktivieren.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  2.994 s
+[INFO] Finished at: 2024-11-23T15:13:18+01:00
+[INFO] ------------------------------------------------------------------------

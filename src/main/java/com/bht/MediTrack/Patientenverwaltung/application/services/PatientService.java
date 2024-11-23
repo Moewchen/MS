@@ -36,7 +36,10 @@ public class PatientService {
                 new Personendaten(firstName,lastName,titel, dateOfBirth),
                 new Kontaktdaten(email, telefon),
                 new Adresse(strasse, hausnummer, plz, ort));
-        return patientRepository.save(patient);
+
+        Patient createdPatient = patientRepository.createPatient(patient);
+
+                return patientRepository.save(patient);
     }
 
     // Findet einen Patienten anhand der ID
