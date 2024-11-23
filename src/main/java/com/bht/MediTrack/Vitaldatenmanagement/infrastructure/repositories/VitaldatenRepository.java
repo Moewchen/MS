@@ -1,6 +1,8 @@
 package com.bht.MediTrack.Vitaldatenmanagement.infrastructure.repositories;
 
 import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
