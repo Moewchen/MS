@@ -1,50 +1,61 @@
 package com.bht.MediTrack.Patientenverwaltung.domain.events;
+import com.bht.MediTrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
+import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
+import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
+import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
+import java.time.Instant;
+import java.util.UUID;
+
 
 public class PatientAngelegtEvent {
+    private final UUID patientId;
+    private final Krankenkasse krankenkasse;
+    private final String krankenversicherungsnummer;
+    private final Personendaten personendaten;
+    private final Kontaktdaten kontaktdaten;
+    private final Adresse adresse;
+    private final Instant createdAt;
 
-        private final String vorname;
-        private final String nachname;
-        private final String geburtsdatum;
-        private final String geschlecht;
-        private final String adresse;
-        private final String telefonnummer;
-        private final String email;
+    public PatientAngelegtEvent(UUID patientId,
+            Krankenkasse krankenkasse,
+            String krankenversicherungsnummer,
+            Personendaten personendaten,
+            Kontaktdaten kontaktdaten,
+            Adresse adresse) {
+        this.patientId = patientId;
+        this.krankenkasse = krankenkasse;
+        this.krankenversicherungsnummer = krankenversicherungsnummer;
+        this.personendaten = personendaten;
+        this.kontaktdaten = kontaktdaten;
+        this.adresse = adresse;
+        this.createdAt = Instant.now();
+    }
 
-        public PatientAngelegtEvent(String vorname, String nachname, String geburtsdatum, String geschlecht, String adresse, String telefonnummer, String email) {
-            this.vorname = vorname;
-            this.nachname = nachname;
-            this.geburtsdatum = geburtsdatum;
-            this.geschlecht = geschlecht;
-            this.adresse = adresse;
-            this.telefonnummer = telefonnummer;
-            this.email = email;
-        }
+    public UUID getPatientId() {
+        return patientId;
+    }
 
-        public String getVorname() {
-            return vorname;
-        }
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
 
-        public String getNachname() {
-            return nachname;
-        }
+    public Krankenkasse getKrankenkasse() {
+        return krankenkasse;
+    }
 
-        public String getGeburtsdatum() {
-            return geburtsdatum;
-        }
+    public String getKrankenversicherungsnummer() {
+        return krankenversicherungsnummer;
+    }
 
-        public String getGeschlecht() {
-            return geschlecht;
-        }
+    public Personendaten getPersonendaten() {
+        return personendaten;
+    }
 
-        public String getAdresse() {
-            return adresse;
-        }
+    public Kontaktdaten getKontaktdaten() {
+        return kontaktdaten;
+    }
 
-        public String getTelefonnummer() {
-            return telefonnummer;
-        }
-
-        public String getEmail() {
-            return email;
-        }
+    public Adresse getAdresse() {
+        return adresse;
+    }
 }
