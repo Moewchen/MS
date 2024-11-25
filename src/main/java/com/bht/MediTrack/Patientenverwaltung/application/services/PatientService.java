@@ -35,7 +35,9 @@ public class PatientService {
         if (firstName == null || lastName == null || dateOfBirth == null || email == null) {
             throw new IllegalArgumentException("Pflichtfelder dürfen nicht null sein.");
         }
+        UUID patientId = UUID.randomUUID();
         Patient patient = new Patient(
+                patientId,
                 new Krankenkasse(krankenkasse),
                 krankenversicherungsnummer,
                 new Personendaten(firstName,lastName,titel, dateOfBirth),

@@ -4,7 +4,8 @@ public record Kontaktdaten (String email, String telefon){
 
     //Konstruktor mit Prüfung
     public Kontaktdaten{
-        if (isValidEmail(email)){
+        //TODO spaeter umschreiben
+        if (!isValidEmail(email)){
             throw new IllegalArgumentException("Ungültige E-Mail-Adresse: " + email);
         }
         if (isValidTelefon(telefon)){

@@ -7,27 +7,30 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
+import org.springframework.lang.Nullable;
 
 public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    @Nullable
     private Krankenkasse krankenkasse;
     private String krankenversicherungsnummer;
     private Personendaten personendaten;
     private Kontaktdaten kontaktdaten;
     private Adresse adresse;
 
-    public Patient(Krankenkasse krankenkasse, String krankenversicherungsnummer, Personendaten personendaten, Kontaktdaten kontaktdaten, Adresse adresse) {
+    public Patient() {}
+
+    public Patient(UUID patientId, Krankenkasse krankenkasse, String krankenversicherungsnummer, Personendaten personendaten, Kontaktdaten kontaktdaten, Adresse adresse) {
+        this.id = patientId;
         this.krankenkasse = krankenkasse;
         this.krankenversicherungsnummer = krankenversicherungsnummer;
         this.personendaten = personendaten;
         this.kontaktdaten = kontaktdaten;
         this.adresse = adresse;
     }
-
-    public Patient() {}
 
     public UUID getId() {
         return id;
