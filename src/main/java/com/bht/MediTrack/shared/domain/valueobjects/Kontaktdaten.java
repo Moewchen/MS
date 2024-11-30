@@ -8,22 +8,20 @@ public record Kontaktdaten (String email, String telefon){
         if (!isValidEmail(email)){
             throw new IllegalArgumentException("Ungültige E-Mail-Adresse: " + email);
         }
-        if (isValidTelefon(telefon)){
+        if (!isValidTelefon(telefon)){
             throw new IllegalArgumentException("Ungültige Telefonnummer: " + telefon);
         }
     }
 
     //Prüfung E-Mail
-    //ToDo: Prüfung E-Mail vervollständigen
     private static boolean isValidEmail(String email) {
         if (email == null) return false;
-        return email.contains("@");
+        return email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");//gültiges E-Mail-Format
     }
     //Prüfung Telefonnummer
-    //ToDo: Prüfung Telefon vervollständigen
     private static boolean isValidTelefon(String telefon) {
         if (telefon == null) return false;
-        return telefon.contains("+");
+        return telefon.matches("^\\+\\d{1,3}\\d{4,14}(?:x.+)?$");//gültiges Telefon-Format
     }
 
     @Override
