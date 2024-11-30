@@ -23,12 +23,14 @@ public class VitaldatenRepository {
         return Optional.ofNullable(database.get(Id));
 
     }
-    public boolean updateVitaldaten(UUID Id, Vitaldaten vitaldaten){
+
+    //ToDo Exceptionhandling
+    public Vitaldaten updateVitaldaten(UUID Id, Vitaldaten vitaldaten){
         if (database.containsKey(Id)){
             database.put(Id, vitaldaten);
-            return true;
+            return vitaldaten;
         }
-        return false;
+        return vitaldaten;
 
     }
     public Vitaldaten createVitaldaten(UUID Id, Vitaldaten vitaldaten){

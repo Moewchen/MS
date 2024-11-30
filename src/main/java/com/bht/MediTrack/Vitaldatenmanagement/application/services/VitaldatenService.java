@@ -1,6 +1,7 @@
 package com.bht.MediTrack.Vitaldatenmanagement.application.services;
 
 import com.bht.MediTrack.Vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
+import com.bht.MediTrack.Vitaldatenmanagement.domain.events.VitaldatenUpdateEvent;
 import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import com.bht.MediTrack.Vitaldatenmanagement.infrastructure.repositories.VitaldatenRepository;
 import com.bht.MediTrack.PublisherEvent;
@@ -44,7 +45,7 @@ public class VitaldatenService {
         return vitaldatenRepository.getVitaldatenById(id);
     }
 
-    public boolean updateVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
+    public Vitaldaten updateVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
         if (patientId == null) {
             throw new InvalidVitaldatenException("PatientId cannot be null");
         }
@@ -61,6 +62,17 @@ public class VitaldatenService {
             "Vitaldaten with ID " + vitaldaten.getId() + " not found"
         );
     }
+        VitaldatenUpdateEvent event = new VitaldatenUpdateEvent(
+                vitaldaten.getId(),
+                vitaldaten.getHerzfrequenz(),
+                vitaldaten.getAtemfrequenz(),
+                vitaldaten.getSystolisch(),
+                vitaldaten.getDiastolisch(),
+                vitaldaten.getTemperatur(),
+                vitaldaten.getDatum()
+        );
+
+        eventListener.publishEvent(event);
         return vitaldatenRepository.updateVitaldaten(patientId, vitaldaten);
     }
 
