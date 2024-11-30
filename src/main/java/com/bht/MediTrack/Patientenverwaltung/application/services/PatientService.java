@@ -123,4 +123,8 @@ public class PatientService {
     public Optional<Patient> updatePatient(UUID id, Patient updatedPatient) {
         return patientRepository.updatePatient(id, updatedPatient);
     }
+
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
+    }
 }

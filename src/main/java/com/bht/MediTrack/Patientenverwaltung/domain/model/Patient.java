@@ -6,8 +6,11 @@ import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import java.util.UUID;
+
+
 import org.springframework.data.annotation.Id;
 import org.springframework.lang.Nullable;
+
 
 public class Patient {
 

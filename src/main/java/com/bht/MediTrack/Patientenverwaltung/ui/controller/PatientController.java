@@ -8,6 +8,8 @@ import com.bht.MediTrack.PublisherEvent;
 import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
 import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class PatientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient request) {
+    public ResponseEntity<String> createPatient(@RequestBody Patient request) {
         //TODO spaeter hoch zaehlen und nicht random gererieren lassen
         UUID patientId = UUID.randomUUID();
         Patient patient = new Patient(
@@ -49,13 +51,21 @@ public class PatientController {
                 request.getAdresse()
         );
         Patient createdPatient = patientService.createPatient(patient);
-        return ResponseEntity.ok(createdPatient);
+        String responseMessage = "Patient mit den Daten " + createdPatient.getPersonendaten() + " wurde erstellt";
+        return ResponseEntity.ok(responseMessage);
+        /*return ResponseEntity.ok(createdPatient); */
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable UUID id) {
         Optional<Patient> patient = patientService.findPatientById(id);
         return patient.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Patient>> getAllPatients() {
+        List<Patient> patients = patientService.getAllPatients();
+        return ResponseEntity.ok(patients);
     }
 
     @DeleteMapping("/{id}")
