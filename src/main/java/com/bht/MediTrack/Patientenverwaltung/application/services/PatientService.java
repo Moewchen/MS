@@ -29,21 +29,12 @@ public class PatientService {
     }
 
     // Erstellt und speichert einen neuen Patienten
-    public Patient createPatient(String firstName, String lastName, String titel, LocalDate dateOfBirth,
-            String telefon, String email, String strasse, String hausnummer, String plz, String ort, String krankenkasse,
-            String krankenversicherungsnummer) {
-        if (firstName == null || lastName == null || dateOfBirth == null || email == null) {
+    public Patient createPatient(Krankenkasse krankenkasse, String krankenversicherungsnummer, Personendaten personendaten, Kontaktdaten kontaktdaten, Adresse adresse) {
+        if (personendaten.firstName() == null || personendaten.lastName() == null || personendaten.dateOfBirth() == null || kontaktdaten.email() == null) {
             throw new IllegalArgumentException("Pflichtfelder dürfen nicht null sein.");
         }
         UUID patientId = UUID.randomUUID();
-        Patient patient = new Patient(
-                patientId,
-                new Krankenkasse(krankenkasse),
-                krankenversicherungsnummer,
-                new Personendaten(firstName,lastName,titel, dateOfBirth),
-                new Kontaktdaten(email, telefon),
-                new Adresse(strasse, hausnummer, plz, ort));
-
+        Patient patient = new Patient(patientId, krankenkasse, krankenversicherungsnummer, personendaten, kontaktdaten, adresse);
         //Patient createdPatient = patientRepository.createPatient(patient);
         // Event auslösen
         PatientAngelegtEvent event = new PatientAngelegtEvent(patient.getId(), patient.getKrankenkasse(), patient.getKrankenversicherungsnummer(), patient.getPersonendaten(), patient.getKontaktdaten(), patient.getAdresse());
