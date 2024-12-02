@@ -1,10 +1,12 @@
 package com.bht.MediTrack.Vitaldatenmanagement.application.services;
 
 import com.bht.MediTrack.Vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
+import com.bht.MediTrack.Vitaldatenmanagement.domain.events.VitaldatenUpdateEvent;
 import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import com.bht.MediTrack.Vitaldatenmanagement.infrastructure.repositories.VitaldatenRepository;
 import com.bht.MediTrack.PublisherEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.bht.MediTrack.Vitaldatenmanagement.exceptions.InvalidVitaldatenException;
@@ -18,7 +20,7 @@ import java.util.UUID;
 @Service
 public class VitaldatenService {
 
-    //private final VitaldatenRepository vitaldatenRepository;
+    private final VitaldatenRepository vitaldatenRepository;
     private final PublisherEvent eventListener;
     private static final short MIN_HERZFREQUENZ = 0;
     private static final short MAX_HERZFREQUENZ = 220;
@@ -78,7 +80,7 @@ public class VitaldatenService {
         return vitaldatenRepository.getVitaldatenById(id);
     }
 
-    public boolean updateVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
+    public Vitaldaten updateVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
         if (patientId == null) {
             throw new InvalidVitaldatenException("PatientId cannot be null");
         }
@@ -95,6 +97,17 @@ public class VitaldatenService {
             "Vitaldaten with ID " + vitaldaten.getId() + " not found"
         );
     }
+        VitaldatenUpdateEvent event = new VitaldatenUpdateEvent(
+                vitaldaten.getId(),
+                vitaldaten.getHerzfrequenz(),
+                vitaldaten.getAtemfrequenz(),
+                vitaldaten.getSystolisch(),
+                vitaldaten.getDiastolisch(),
+                vitaldaten.getTemperatur(),
+                vitaldaten.getDatum()
+        );
+
+        eventListener.publishEvent(event);
         return vitaldatenRepository.updateVitaldaten(patientId, vitaldaten);
     }
 
@@ -123,7 +136,7 @@ public class VitaldatenService {
                 LocalDateTime.now()
         );
 
-        eventListener.publishEvent(event);
+        eventPublisher.publishEvent(event);
 
 
         return vitaldatenRepository.createVitaldaten(patientId, vitaldaten);

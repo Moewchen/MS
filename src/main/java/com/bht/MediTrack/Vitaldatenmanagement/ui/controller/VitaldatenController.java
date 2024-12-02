@@ -38,6 +38,12 @@ public class VitaldatenController {
         return ResponseEntity.ok(createdVitaldaten);
     }
 
+    @PostMapping
+    public ResponseEntity<Vitaldaten> updateVitaldaten(@RequestParam UUID patientId, @RequestBody Vitaldaten vitaldaten) {
+        Vitaldaten updateVitaldaten = vitaldatenService.updateVitaldaten(patientId, vitaldaten);
+        return ResponseEntity.ok(updateVitaldaten);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Vitaldaten> getVitaldatenById(@PathVariable UUID id) {
         Optional<Vitaldaten> vitaldaten = vitaldatenService.getVitaldatenById(id);

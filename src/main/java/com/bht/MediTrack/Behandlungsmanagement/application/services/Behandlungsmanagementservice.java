@@ -1,7 +1,11 @@
 package com.bht.MediTrack.Behandlungsmanagement.application.services;
 
+import com.bht.MediTrack.Behandlungsmanagement.domain.events.BehandlungErstelltEvent;
+import com.bht.MediTrack.Behandlungsmanagement.domain.events.BehandlungUpdateEvent;
 import com.bht.MediTrack.Behandlungsmanagement.domain.model.Behandlung;
+import com.bht.MediTrack.PublisherEvent;
 import org.springframework.stereotype.Service;
+
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -10,11 +14,26 @@ import java.util.stream.Collectors;
 public class Behandlungsmanagementservice {
 
     private final Map<UUID, Behandlung> behandlungMap = new HashMap<>();
+    private final PublisherEvent eventListener;
+
+    public Behandlungsmanagementservice(PublisherEvent eventListener) {
+        this.eventListener = eventListener;
+    }
 
     //Methode zum Erstellen einer neuen Behandlung
     public Behandlung createBehandlung(Behandlung behandlung) {
         behandlung.setId(UUID.randomUUID());
         behandlungMap.put(behandlung.getId(), behandlung);
+
+        BehandlungErstelltEvent event = new BehandlungErstelltEvent(
+                behandlung.getId(),
+                behandlung.getBeschreibung(),
+                behandlung.getPatient(),
+                behandlung.getArzt(),
+                behandlung.getVitaldaten()
+        );
+        eventListener.publishEvent(event);
+
         return behandlung;
     }
 
@@ -34,6 +53,11 @@ public class Behandlungsmanagementservice {
         } else {
             throw new IllegalArgumentException("Behandlung mit der ID " + id + " nicht gefunden.");
         }
+        BehandlungUpdateEvent event = new BehandlungUpdateEvent(
+                behandlung.getId(),
+                beschreibung
+        );
+        eventListener.publishEvent(event);
     }
 
     //Methode zum Löschen einer Behandlung
