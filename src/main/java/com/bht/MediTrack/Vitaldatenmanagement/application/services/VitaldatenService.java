@@ -21,6 +21,7 @@ public class VitaldatenService {
 
     private final VitaldatenRepository vitaldatenRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final PublisherEvent eventListener;
     private static final short MIN_HERZFREQUENZ = 0;
     private static final short MAX_HERZFREQUENZ = 220;
     private static final byte MIN_ATEMFREQUENZ = 0;
@@ -33,9 +34,10 @@ public class VitaldatenService {
     private static final float MAX_TEMPERATUR = 45.0f;
 
     @Autowired
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, ApplicationEventPublisher eventPublisher) {
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, ApplicationEventPublisher eventPublisher, PublisherEvent eventListener) {
         this.vitaldatenRepository = vitaldatenRepository;
         this.eventPublisher = eventPublisher;
+        this.eventListener = eventListener;
     }
 
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId) {
