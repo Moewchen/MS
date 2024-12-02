@@ -2,23 +2,33 @@ package com.bht.MediTrack.Behandlungsmanagement.application.services;
 
 import com.bht.MediTrack.Behandlungsmanagement.domain.model.Behandlung;
 import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
+import com.bht.MediTrack.PublisherEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.ApplicationEventPublisher;
+
 import java.util.List;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class BehandlungsmanagementserviceTest {
 
     private Behandlungsmanagementservice service;
     private Patient patient;
     private Behandlung behandlung;
+    private PublisherEvent eventListener;
+    private ApplicationEventPublisher applicationEventPublisher;
+
     @BeforeEach
     public void setUp() {
-        service = new Behandlungsmanagementservice();
+        applicationEventPublisher = mock(ApplicationEventPublisher.class);
+        eventListener = new PublisherEvent(applicationEventPublisher);
+        service = new Behandlungsmanagementservice(eventListener);
         patient = new Patient();
         patient.setId(UUID.randomUUID());
         behandlung = new Behandlung(UUID.randomUUID(), "Initial Beschreibung", patient, null);
+
     }
     @Test
     public void testCreateBehandlung() {

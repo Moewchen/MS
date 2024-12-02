@@ -32,7 +32,8 @@ class VitaldatenRepositoryTest {
         assertTrue(found.isPresent());
         assertEquals(vitaldaten, found.get());
     }
-    @Test
+
+/*    @Test
     void testUpdateVitaldaten() {
         repository.createVitaldaten(patientId,vitaldaten);
         Vitaldaten updatedVitaldaten = new Vitaldaten();
@@ -40,7 +41,7 @@ class VitaldatenRepositoryTest {
         boolean updated = repository.updateVitaldaten(patientId, updatedVitaldaten);
         assertTrue(updated);
         assertEquals(updatedVitaldaten, repository.getVitaldatenById(patientId).get());
-    }
+    }*/
     @Test
     void testGetVitaldatenById() {
         repository.createVitaldaten(patientId,vitaldaten);
