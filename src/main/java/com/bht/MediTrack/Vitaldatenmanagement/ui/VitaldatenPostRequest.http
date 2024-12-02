@@ -1,9 +1,9 @@
-POST http://localhost:8080/vitaldaten/513532a9-918c-4f64-a435-c0016cd42be1
+POST http://localhost:8080/vitaldaten/0f8052f5-be9c-4bab-b892-7b2fe1bae2c5
 Content-Type: application/json
 
 {
-  "herzfrequenz": 80,
-  "atemfrequenz": 20,
+  "herzfrequenz": 90,
+  "atemfrequenz": 10,
   "systolisch": 120,
   "diastolisch": 80,
   "temperatur": 36.5,

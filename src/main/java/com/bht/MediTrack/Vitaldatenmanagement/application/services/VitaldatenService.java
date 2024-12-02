@@ -11,6 +11,7 @@ import com.bht.MediTrack.Vitaldatenmanagement.exceptions.InvalidVitaldatenExcept
 import com.bht.MediTrack.Vitaldatenmanagement.exceptions.VitaldatenNotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -63,6 +64,11 @@ public class VitaldatenService {
 
         return savedVitaldaten;
     }
+
+    public List<Vitaldaten> findByPatientId(UUID patientId) {
+        return vitaldatenRepository.findByPatientId(patientId);
+    }
+
     /*
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId) {
         return vitaldatenRepository.getVitaldatenByPatientenId(patientId);

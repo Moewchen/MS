@@ -49,6 +49,15 @@ public class PatientService {
         return patientRepository.save(patient);
     }
 
+    public List<Patient> getAllPatients() {
+
+        return (List<Patient>) patientRepository.findAll();
+    }
+
+    public Patient findById(UUID id) {
+        return patientRepository.findById(id).orElse(null);
+    }
+
     /*
     private final InMemoryPatientRepository patientRepository;
     private final ApplicationEventPublisher eventPublisher;

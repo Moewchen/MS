@@ -1,10 +1,13 @@
 package com.bht.MediTrack.Patientenverwaltung.domain.model;
 import com.bht.MediTrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
+import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
 import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -40,6 +43,9 @@ public class Patient {
     @Embedded
     private Adresse adresse;
 
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Vitaldaten> vitaldaten;
 
     /*
     public Patient(UUID patientId, Krankenkasse krankenkasse, String krankenversicherungsnummer, Personendaten personendaten, Kontaktdaten kontaktdaten, Adresse adresse) {

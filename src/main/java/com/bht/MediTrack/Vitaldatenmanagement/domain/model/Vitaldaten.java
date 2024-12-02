@@ -1,5 +1,6 @@
 package com.bht.MediTrack.Vitaldatenmanagement.domain.model;
 
+import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,10 @@ public class Vitaldaten {
     )
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
 
     private short herzfrequenz;
     private byte atemfrequenz;
