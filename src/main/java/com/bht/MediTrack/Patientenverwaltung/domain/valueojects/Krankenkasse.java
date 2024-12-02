@@ -9,5 +9,8 @@ public record Krankenkasse (String krankenkasse){
         if (krankenkasse == null || krankenkasse.trim().isEmpty()) {
             throw new IllegalArgumentException("Krankenkasse darf nicht leer sein");
         }
+
+
     }
+
 }

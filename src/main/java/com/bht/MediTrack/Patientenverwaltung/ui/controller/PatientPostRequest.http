@@ -1,0 +1,23 @@
+POST http://localhost:8080/patients
+//api/v1
+Content-Type: application/json
+
+{
+  "krankenversicherungsnummer": "123456789",
+  "personendaten": {
+    "firstName": "Max",
+    "lastName": "Mustermann",
+    "titel": "Dr.",
+    "dateOfBirth": "1980-01-01"
+  },
+  "kontaktdaten": {
+    "email": "max.mustermann@example.com",
+    "telefon": "0123456789"
+  },
+  "adresse": {
+    "strasse": "Musterstraße",
+    "hausnummer": "1",
+    "plz": "12345",
+    "ort": "Musterstadt"
+  }
+}

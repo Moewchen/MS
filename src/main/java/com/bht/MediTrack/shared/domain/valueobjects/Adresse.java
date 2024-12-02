@@ -14,8 +14,8 @@ public record Adresse (String strasse, String hausnummer, String plz, String ort
         if (hausnummer == null || hausnummer.trim().isEmpty()){
             throw new IllegalArgumentException("Hausnummer darf nicht leer sein");
         }
-
-        if (isValidPLZ(plz)){
+        //TODO spaeter umschreiben
+        if (!isValidPLZ(plz)){
             throw new IllegalArgumentException("Ungültige PLZ: " + plz);
         }
 

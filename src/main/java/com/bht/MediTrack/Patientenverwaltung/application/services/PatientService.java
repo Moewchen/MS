@@ -1,4 +1,5 @@
 package com.bht.MediTrack.Patientenverwaltung.application.services;
+import com.bht.MediTrack.Patientenverwaltung.domain.events.PatientAngelegtEvent;
 import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
 import com.bht.MediTrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
 import com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories.InMemoryPatientRepository;
@@ -13,31 +14,31 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Service;
 
+@Service
 public class PatientService {
 
     private final InMemoryPatientRepository patientRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
-    public PatientService(InMemoryPatientRepository patientRepository) {
-        //this.patientRepository = patientRepository;
+    public PatientService(InMemoryPatientRepository patientRepository, ApplicationEventPublisher eventPublisher) {
         this.patientRepository = Objects.requireNonNull(patientRepository, "Repository darf nicht null sein.");
+        this.eventPublisher = eventPublisher;
     }
 
     // Erstellt und speichert einen neuen Patienten
-    public Patient createPatient(String firstName, String lastName, String titel, LocalDate dateOfBirth,
-            String telefon, String email, String strasse, String hausnummer, String plz, String ort, String krankenkasse,
-            String krankenversicherungsnummer) {
-        if (firstName == null || lastName == null || dateOfBirth == null || email == null) {
+    public Patient createPatient(Krankenkasse krankenkasse, String krankenversicherungsnummer, Personendaten personendaten, Kontaktdaten kontaktdaten, Adresse adresse) {
+        if (personendaten.firstName() == null || personendaten.lastName() == null || personendaten.dateOfBirth() == null || kontaktdaten.email() == null) {
             throw new IllegalArgumentException("Pflichtfelder dürfen nicht null sein.");
         }
-        Patient patient = new Patient(
-                new Krankenkasse(krankenkasse),
-                krankenversicherungsnummer,
-                new Personendaten(firstName,lastName,titel, dateOfBirth),
-                new Kontaktdaten(email, telefon),
-                new Adresse(strasse, hausnummer, plz, ort));
-
-        Patient createdPatient = patientRepository.createPatient(patient);
+        UUID patientId = UUID.randomUUID();
+        Patient patient = new Patient(patientId, krankenkasse, krankenversicherungsnummer, personendaten, kontaktdaten, adresse);
+        //Patient createdPatient = patientRepository.createPatient(patient);
+        // Event auslösen
+        PatientAngelegtEvent event = new PatientAngelegtEvent(patient.getId(), patient.getKrankenkasse(), patient.getKrankenversicherungsnummer(), patient.getPersonendaten(), patient.getKontaktdaten(), patient.getAdresse());
+        eventPublisher.publishEvent(event);
 
                 return patientRepository.save(patient);
     }
