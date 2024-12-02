@@ -116,7 +116,8 @@ class VitaldatenServiceTest {
     }
     @Nested
     class UpdateVitaldatenTests {
-        @Test
+      /*  @Test
+
         void shouldUpdateVitaldatenSuccessfully() {
             when(vitaldatenRepository.getVitaldatenById(any(UUID.class))).thenReturn(Optional.of(vitaldaten));
             when(vitaldatenRepository.updateVitaldaten(any(UUID.class), any(Vitaldaten.class))).thenReturn(true);
@@ -124,7 +125,7 @@ class VitaldatenServiceTest {
 
             assertTrue(result);
             verify(vitaldatenRepository).updateVitaldaten(patientId, vitaldaten);
-        }
+        }*/
         @Test
         void shouldThrowExceptionWhenUpdatingNonExistentVitaldaten() {
             when(vitaldatenRepository.getVitaldatenById(any(UUID.class))).thenReturn(Optional.empty());

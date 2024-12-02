@@ -1,6 +1,7 @@
 package com.bht.MediTrack.Vitaldatenmanagement.application.services;
 
 import com.bht.MediTrack.Vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
+import com.bht.MediTrack.Vitaldatenmanagement.domain.events.VitaldatenUpdateEvent;
 import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import com.bht.MediTrack.Vitaldatenmanagement.infrastructure.repositories.VitaldatenRepository;
 import com.bht.MediTrack.PublisherEvent;
@@ -20,6 +21,7 @@ public class VitaldatenService {
 
     private final VitaldatenRepository vitaldatenRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final PublisherEvent eventListener;
     private static final short MIN_HERZFREQUENZ = 0;
     private static final short MAX_HERZFREQUENZ = 220;
     private static final byte MIN_ATEMFREQUENZ = 0;
@@ -32,9 +34,10 @@ public class VitaldatenService {
     private static final float MAX_TEMPERATUR = 45.0f;
 
     @Autowired
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, ApplicationEventPublisher eventPublisher) {
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, ApplicationEventPublisher eventPublisher, PublisherEvent eventListener) {
         this.vitaldatenRepository = vitaldatenRepository;
         this.eventPublisher = eventPublisher;
+        this.eventListener = eventListener;
     }
 
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId) {
@@ -45,7 +48,7 @@ public class VitaldatenService {
         return vitaldatenRepository.getVitaldatenById(id);
     }
 
-    public boolean updateVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
+    public Vitaldaten updateVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
         if (patientId == null) {
             throw new InvalidVitaldatenException("PatientId cannot be null");
         }
@@ -62,6 +65,17 @@ public class VitaldatenService {
             "Vitaldaten with ID " + vitaldaten.getId() + " not found"
         );
     }
+        VitaldatenUpdateEvent event = new VitaldatenUpdateEvent(
+                vitaldaten.getId(),
+                vitaldaten.getHerzfrequenz(),
+                vitaldaten.getAtemfrequenz(),
+                vitaldaten.getSystolisch(),
+                vitaldaten.getDiastolisch(),
+                vitaldaten.getTemperatur(),
+                vitaldaten.getDatum()
+        );
+
+        eventListener.publishEvent(event);
         return vitaldatenRepository.updateVitaldaten(patientId, vitaldaten);
     }
 
