@@ -3,29 +3,45 @@ import com.bht.MediTrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
 import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
 import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
 
-import org.springframework.data.annotation.Id;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 import org.springframework.lang.Nullable;
 
 
+@EntityScan
+@NoArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "patient")
 public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
+
     @Nullable
+    @Embedded
     private Krankenkasse krankenkasse;
     private String krankenversicherungsnummer;
+    @Embedded
     private Personendaten personendaten;
+    @Embedded
     private Kontaktdaten kontaktdaten;
+    @Embedded
     private Adresse adresse;
 
-    public Patient() {}
 
+    /*
     public Patient(UUID patientId, Krankenkasse krankenkasse, String krankenversicherungsnummer, Personendaten personendaten, Kontaktdaten kontaktdaten, Adresse adresse) {
         this.id = patientId;
         this.krankenkasse = krankenkasse;
@@ -35,6 +51,17 @@ public class Patient {
         this.adresse = adresse;
     }
 
+     */
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    /*
     public UUID getId() {
         return id;
     }
@@ -64,4 +91,6 @@ public class Patient {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
+
+     */
 }

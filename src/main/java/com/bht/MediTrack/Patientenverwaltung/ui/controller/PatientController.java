@@ -14,12 +14,35 @@ import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/patients")
 public class PatientController {
+
+    @Autowired
+    private PatientService patientService;
+
+    @Autowired
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
+    }
+
+    @PatchMapping(path = "/upsert", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Patient upsertPatient(@RequestParam final UUID patientId, @RequestBody final Patient patient) {
+        return patientService.upsertPatient(patientId, patient);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Patient> upsertPatient(@RequestBody Patient patient) {
+        UUID patientId = patient.getId() != null ? patient.getId() : UUID.randomUUID();
+        Patient upsertedPatient = patientService.upsertPatient(patientId, patient);
+        return ResponseEntity.status(HttpStatus.CREATED).body(upsertedPatient);
+    }
+    /*
     private final PatientService patientService;
 
     @Autowired
@@ -56,6 +79,7 @@ public class PatientController {
         /*return ResponseEntity.ok(createdPatient); */
     }
 
+    /*
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getPatientById(@PathVariable UUID id) {
         Optional<Patient> patient = patientService.findPatientById(id);
@@ -73,4 +97,5 @@ public class PatientController {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
     }
-}
+    */
+

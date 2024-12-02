@@ -46,11 +46,6 @@ public class VitaldatenService {
         if (vitaldaten == null) {
             throw new InvalidVitaldatenException("Vitaldaten cannot be null");
         }
-        /*
-        if(!validateVitaldaten(vitaldaten)) {
-            throw new InvalidVitaldatenException("Vitaldaten is invalid");
-        }
-         */
 
         Vitaldaten savedVitaldaten = vitaldatenRepository.save(vitaldaten);
 

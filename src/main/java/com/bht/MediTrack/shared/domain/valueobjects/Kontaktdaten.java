@@ -1,5 +1,8 @@
 package com.bht.MediTrack.shared.domain.valueobjects;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public record Kontaktdaten (String email, String telefon){
 
     //Konstruktor mit Prüfung

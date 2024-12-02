@@ -4,6 +4,7 @@ import com.bht.MediTrack.ApplicationKonstante;
 import com.bht.MediTrack.Vitaldatenmanagement.application.services.VitaldatenService;
 import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,8 @@ import java.util.UUID;
 
 
 @RestController
-@RequestMapping(ApplicationKonstante.API_VERSION+"/vitaldaten") // endpoint mapping name
+//@RequestMapping(ApplicationKonstante.API_VERSION+"/vitaldaten") // endpoint mapping name
+@RequestMapping("/vitaldaten") // endpoint mapping name
 public class VitaldatenController {
 
     @Autowired
@@ -50,4 +52,10 @@ public class VitaldatenController {
             return savedVitaldaten;
         }
 
+    @PostMapping(path = "/{patientId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+        public ResponseEntity<Vitaldaten> createVitaldaten (@PathVariable final UUID patientId,
+        @RequestBody Vitaldaten vitaldaten){
+            Vitaldaten createdVitaldaten = vitaldatenService.upsertVitaldaten(patientId, vitaldaten);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdVitaldaten);
+        }
 }
