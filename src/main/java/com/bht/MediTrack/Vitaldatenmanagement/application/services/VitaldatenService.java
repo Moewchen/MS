@@ -5,6 +5,7 @@ import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import com.bht.MediTrack.Vitaldatenmanagement.infrastructure.repositories.VitaldatenRepository;
 import com.bht.MediTrack.PublisherEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import com.bht.MediTrack.Vitaldatenmanagement.exceptions.InvalidVitaldatenException;
@@ -18,7 +19,7 @@ import java.util.UUID;
 public class VitaldatenService {
 
     private final VitaldatenRepository vitaldatenRepository;
-    private final PublisherEvent eventListener;
+    private final ApplicationEventPublisher eventPublisher;
     private static final short MIN_HERZFREQUENZ = 0;
     private static final short MAX_HERZFREQUENZ = 220;
     private static final byte MIN_ATEMFREQUENZ = 0;
@@ -31,9 +32,9 @@ public class VitaldatenService {
     private static final float MAX_TEMPERATUR = 45.0f;
 
     @Autowired
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, ApplicationEventPublisher eventPublisher) {
         this.vitaldatenRepository = vitaldatenRepository;
-        this.eventListener = eventPublisher;
+        this.eventPublisher = eventPublisher;
     }
 
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId) {
@@ -89,7 +90,7 @@ public class VitaldatenService {
                 LocalDateTime.now()
         );
 
-        eventListener.publishEvent(event);
+        eventPublisher.publishEvent(event);
 
 
         return vitaldatenRepository.createVitaldaten(patientId, vitaldaten);

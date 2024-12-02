@@ -92,7 +92,7 @@ class InMemoryPatientRepositoryTest {
                 new Adresse("Adresse","3","11111","test")
         );
         Patient patient2 = new Patient(
-                new UUID(2,3),
+                new UUID(1,5),
                 new Krankenkasse("AOK"),
                 "K76765",
                 new Personendaten("Jane", "Doe", "Ms", LocalDate.of(1985, 5, 15)),
