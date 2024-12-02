@@ -1,12 +1,11 @@
-POST http://localhost:8080/api/v1/vitaldaten/71f1ab8a-8df2-4984-a489-0c3d8084df08
+POST http://localhost:8080/vitaldaten/0f8052f5-be9c-4bab-b892-7b2fe1bae2c5
 Content-Type: application/json
 
 {
-  "vitaldaten": {
-    "systolisch": 120,
-    "diastolisch": 80,
-    "puls": 80,
-    "sauerstoff": 98,
-    "temperatur": 36.5
-  }
+  "herzfrequenz": 90,
+  "atemfrequenz": 10,
+  "systolisch": 120,
+  "diastolisch": 80,
+  "temperatur": 36.5,
+  "datum": "2023-10-10T10:00:00"
 }

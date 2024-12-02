@@ -1,5 +1,8 @@
 package com.bht.MediTrack.Patientenverwaltung.domain.valueojects;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 //ToDo: Auswahlliste integrieren
 public record Krankenkasse (String krankenkasse){
 

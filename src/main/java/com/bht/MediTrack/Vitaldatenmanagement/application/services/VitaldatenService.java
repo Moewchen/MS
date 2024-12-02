@@ -13,14 +13,17 @@ import com.bht.MediTrack.Vitaldatenmanagement.exceptions.InvalidVitaldatenExcept
 import com.bht.MediTrack.Vitaldatenmanagement.exceptions.VitaldatenNotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class VitaldatenService {
 
+
     private final VitaldatenRepository vitaldatenRepository;
     private final ApplicationEventPublisher eventPublisher;
+
     private final PublisherEvent eventListener;
     private static final short MIN_HERZFREQUENZ = 0;
     private static final short MAX_HERZFREQUENZ = 220;
@@ -33,13 +36,48 @@ public class VitaldatenService {
     private static final float MIN_TEMPERATUR = 25.0f;
     private static final float MAX_TEMPERATUR = 45.0f;
 
-    @Autowired
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, ApplicationEventPublisher eventPublisher, PublisherEvent eventListener) {
+
+    @Autowired  // Field injection
+    private final VitaldatenRepository vitaldatenRepository;
+
+    @Autowired  // Constructor injection -> das andere oben reicht, ist hier jetzt gedoppelt
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
+
         this.vitaldatenRepository = vitaldatenRepository;
         this.eventPublisher = eventPublisher;
         this.eventListener = eventListener;
     }
 
+    public Vitaldaten upsertVitaldaten(UUID patientId, final Vitaldaten vitaldaten) {
+        if (patientId == null) {
+            throw new InvalidVitaldatenException("PatientId cannot be null");
+        }
+        if (vitaldaten == null) {
+            throw new InvalidVitaldatenException("Vitaldaten cannot be null");
+        }
+
+        Vitaldaten savedVitaldaten = vitaldatenRepository.save(vitaldaten);
+
+        VitaldatenErstelltEvent event = new VitaldatenErstelltEvent(
+                savedVitaldaten.getId(),
+                savedVitaldaten.getHerzfrequenz(),
+                savedVitaldaten.getAtemfrequenz(),
+                savedVitaldaten.getSystolisch(),
+                savedVitaldaten.getDiastolisch(),
+                savedVitaldaten.getTemperatur(),
+                LocalDateTime.now()
+        );
+
+        eventListener.publishEvent(event);
+
+        return savedVitaldaten;
+    }
+
+    public List<Vitaldaten> findByPatientId(UUID patientId) {
+        return vitaldatenRepository.findByPatientId(patientId);
+    }
+
+    /*
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId) {
         return vitaldatenRepository.getVitaldatenByPatientenId(patientId);
     }
@@ -143,4 +181,6 @@ public class VitaldatenService {
         }
         return true;
     }
+
+     */
 }
