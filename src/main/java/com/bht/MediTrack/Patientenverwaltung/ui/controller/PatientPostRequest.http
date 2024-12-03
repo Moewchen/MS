@@ -5,14 +5,14 @@ Content-Type: application/json
 {
   "krankenversicherungsnummer": "123456789",
   "personendaten": {
-    "firstName": "Max",
-    "lastName": "Mustermann",
+    "firstName": "rthgrth",
+    "lastName": "rthrh",
     "titel": "Dr.",
     "dateOfBirth": "1980-01-01"
   },
   "kontaktdaten": {
-    "email": "max.mustermann@example.com",
-    "telefon": "0123456789"
+    "email": "max.hrth@example.com",
+    "telefon": "0128856789"
   },
   "adresse": {
     "strasse": "Musterstraße",

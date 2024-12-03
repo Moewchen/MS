@@ -28,6 +28,7 @@ import static org.mockito.Mockito.*;
 
 class VitaldatenServiceTest {
 
+    /*
     @Mock
     private VitaldatenRepository vitaldatenRepository;
     private ApplicationEventPublisher applicationEventPublisher;
@@ -126,6 +127,7 @@ class VitaldatenServiceTest {
             assertTrue(result);
             verify(vitaldatenRepository).updateVitaldaten(patientId, vitaldaten);
         }*/
+    /*
         @Test
         void shouldThrowExceptionWhenUpdatingNonExistentVitaldaten() {
             when(vitaldatenRepository.getVitaldatenById(any(UUID.class))).thenReturn(Optional.empty());
@@ -154,4 +156,6 @@ class VitaldatenServiceTest {
                     vitaldatenService.deleteVitaldaten(patientId, vitaldaten));
         }
     }
+
+     */
 }

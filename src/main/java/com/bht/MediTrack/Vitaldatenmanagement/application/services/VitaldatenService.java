@@ -20,7 +20,6 @@ import java.util.UUID;
 @Service
 public class VitaldatenService {
 
-    private final VitaldatenRepository vitaldatenRepository;
     private final PublisherEvent eventListener;
     private static final short MIN_HERZFREQUENZ = 0;
     private static final short MAX_HERZFREQUENZ = 220;
