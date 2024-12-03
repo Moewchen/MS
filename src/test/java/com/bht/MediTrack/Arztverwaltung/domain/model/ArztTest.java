@@ -19,7 +19,7 @@ class ArztTest {
         arzt = new Arzt(
                 new Fachrichtung("Allgemeinmedizin"),
                 new Personendaten("Tom", "Müller", "Dr. Med.", LocalDate.of(1976,3,1)),
-                new Kontaktdaten("mueller@arzt.de", "+015050505"),
+                new Kontaktdaten("mueller@arzt.de", "015050505"),
                 new Adresse("Hauptdamm","22", "01234", "Berlin")
         );
     }
@@ -30,7 +30,7 @@ class ArztTest {
         assertThat(arzt.getPersonendaten().titel()).isEqualTo("Dr. Med.");
         assertThat(arzt.getPersonendaten().dateOfBirth()).isEqualTo(LocalDate.of(1976, 3, 1));
         assertThat(arzt.getKontaktdaten().email()).isEqualTo("mueller@arzt.de");
-        assertThat(arzt.getKontaktdaten().telefon()).isEqualTo("+015050505");
+        assertThat(arzt.getKontaktdaten().telefon()).isEqualTo("015050505");
         assertThat(arzt.getAdresse()).isEqualTo(new Adresse("Hauptdamm","22", "01234", "Berlin"));
         assertThat(arzt.getFachrichtung()).isEqualTo(new Fachrichtung("Allgemeinmedizin"));
     }
