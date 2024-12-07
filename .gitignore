@@ -4,6 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 docker-compose.yml
+.idea/dataSources.xml
+.idea
 
 ### STS ###
 .apt_generated
