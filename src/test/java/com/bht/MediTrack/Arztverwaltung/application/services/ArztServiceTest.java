@@ -60,7 +60,7 @@ class ArztServiceTest {
         Arzt arzt = new Arzt(
                 new Fachrichtung("Kardiologie"),
                 new Personendaten("Tom", "Müller", "Dr. Med.", LocalDate.of(1976,3,1)),
-                new Kontaktdaten("mueller@arzt.de", "+015050505"),
+                new Kontaktdaten("mueller@arzt.de", "015050505"),
                 new Adresse("Hauptdamm","22", "01234", "Berlin")
         );
         when(arztRepository.findArztByFachrichtung("Kardiologie")).thenReturn(List.of(arzt));

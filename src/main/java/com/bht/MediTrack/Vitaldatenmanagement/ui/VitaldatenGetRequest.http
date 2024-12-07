@@ -1,0 +1,2 @@
+GET http://localhost:8080/vitaldaten/patient/0f8052f5-be9c-4bab-b892-7b2fe1bae2c5
+Content-Type: application/json

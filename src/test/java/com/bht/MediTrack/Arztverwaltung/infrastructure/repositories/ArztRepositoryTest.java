@@ -24,7 +24,7 @@ class ArztRepositoryTest {
         Arzt arzt = new Arzt(
                 new Fachrichtung("Allgemeinmedizin"),
                 new Personendaten("Tom", "Müller", "Dr. Med.", LocalDate.of(1976,3,1)),
-                new Kontaktdaten("mueller@arzt.de", "+015050505"),
+                new Kontaktdaten("mueller@arzt.de", "015050505"),
                 new Adresse("Hauptdamm","22", "01234", "Berlin")
         );
         Arzt savedArzt = arztRepository.save(arzt);
