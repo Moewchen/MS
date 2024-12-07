@@ -5,8 +5,8 @@ Content-Type: application/json
 {
   "krankenversicherungsnummer": "123456789",
   "personendaten": {
-    "firstName": "rthgrth",
-    "lastName": "rthrh",
+    "firstName": "Max",
+    "lastName": "Mustermann",
     "titel": "Dr.",
     "dateOfBirth": "1980-01-01"
   },
