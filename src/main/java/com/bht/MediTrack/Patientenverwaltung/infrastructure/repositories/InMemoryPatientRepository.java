@@ -1,5 +1,6 @@
 package com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories;
 import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -13,6 +14,7 @@ public interface InMemoryPatientRepository extends CrudRepository<Patient, UUID>
 }
 
  */
+
 public interface InMemoryPatientRepository extends JpaRepository<Patient,UUID> {
 }
 /*

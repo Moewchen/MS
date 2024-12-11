@@ -1,6 +1,7 @@
 package com.bht.MediTrack.Vitaldatenmanagement.domain.model;
 
 import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
+import com.bht.MediTrack.Vitaldatenmanagement.exceptions.InvalidVitaldatenException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;
@@ -150,15 +151,6 @@ class VitaldatenTest {
         assertEquals(testDate, actualDate, "set/get error");
     }
 
-    // Hier Ideen von LLM huggingface
-
-    /*
-    Test Set Datum with Null:
-
-    Set the Date to Null: Set the date to null using the setDatum method.
-    Get the Date: Retrieve the date using the getDatum method.
-    Assert Null: Use assertNull to assert that the date is null.
-     */
     @Test
     void testSetDatumWithNull() {
         // Create an instance of Vitaldaten
@@ -173,14 +165,6 @@ class VitaldatenTest {
         // Assert that the date is null
         assertNull(actualDate, "The date should be null");
     }
-
-    /*
-    Test Set Datum with Different Dates:
-
-    Create Two Different Dates: Create two different Date objects.
-    Set and Get the First Date: Set the first date and assert it is set correctly.
-    Set and Get the Second Date: Set the second date and assert it is set correctly.
-     */
 
     @Test
     void testSetDatumWithDifferentDates() {
@@ -207,6 +191,16 @@ class VitaldatenTest {
     }
 
     @Test
+    void testInvalidHerzfrequenz() {
+        Vitaldaten vitaldaten = new Vitaldaten();
+        short invalidHerzfrequenz = 300; // Ungültig, da der Maximalwert 220 beträgt
+
+        assertThrows(InvalidVitaldatenException.class, () -> {
+            vitaldaten.setHerzfrequenz(invalidHerzfrequenz);
+        }, "Invalid value should throw an exception");
+    }
+
+    @Test
     void testToString() {
         UUID id = UUID.fromString("e58ed763-928c-4155-bee9-fdbaaadc15f3");
         LocalDateTime testDate = LocalDateTime.of(2024, 3, 15, 10, 30, 0); // Fixed date for testing
@@ -219,6 +213,7 @@ class VitaldatenTest {
                 (float) 37,
                 testDate
         );
+
 
         String expected = "Vitaldaten{" +
                 "id='e58ed763-928c-4155-bee9-fdbaaadc15f3', " +

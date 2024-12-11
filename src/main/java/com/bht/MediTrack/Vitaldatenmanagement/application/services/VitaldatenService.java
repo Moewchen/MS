@@ -35,6 +35,10 @@ public class VitaldatenService {
     @Autowired  // Field injection
     private final VitaldatenRepository vitaldatenRepository;
 
+    public Optional<Vitaldaten> findById(UUID id) {
+        return vitaldatenRepository.findById(id);
+    }
+
     @Autowired  // Constructor injection -> das andere oben reicht, ist hier jetzt gedoppelt
     public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
         this.vitaldatenRepository = vitaldatenRepository;
@@ -42,14 +46,27 @@ public class VitaldatenService {
     }
 
     public Vitaldaten upsertVitaldaten(UUID patientId, final Vitaldaten vitaldaten) {
+        if (vitaldaten == null || vitaldaten.getHerzfrequenz() < 30 || vitaldaten.getHerzfrequenz() > 200) {
+            throw new InvalidVitaldatenException("Invalid Herzfrequenz value");
+        }
+        //Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.findById(vitaldaten.getId());
+        //if (existingVitaldaten.isEmpty()) {
+        //    throw new VitaldatenNotFoundException("Vitaldaten not found");
+        //}
         if (patientId == null) {
             throw new InvalidVitaldatenException("PatientId cannot be null");
         }
-        if (vitaldaten == null) {
-            throw new InvalidVitaldatenException("Vitaldaten cannot be null");
+        if (vitaldaten.getId() != null) {
+            Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.findById(vitaldaten.getId());
+            if (existingVitaldaten.isEmpty()) {
+                throw new VitaldatenNotFoundException("Vitaldaten not found");
+            }
         }
 
         Vitaldaten savedVitaldaten = vitaldatenRepository.save(vitaldaten);
+        if (savedVitaldaten == null) {
+            throw new InvalidVitaldatenException("Failed to save Vitaldaten");
+        }
 
         VitaldatenErstelltEvent event = new VitaldatenErstelltEvent(
                 savedVitaldaten.getId(),
@@ -69,7 +86,42 @@ public class VitaldatenService {
     public List<Vitaldaten> findByPatientId(UUID patientId) {
         return vitaldatenRepository.findByPatientId(patientId);
     }
+/*
+    public void deleteVitaldaten(UUID id) {
+        Optional<Vitaldaten> vitaldaten = vitaldatenRepository.findById(id);
+        if (vitaldaten.isPresent()) {
+            vitaldatenRepository.delete(vitaldaten.get());
+        } else {
+            throw new VitaldatenNotFoundException("Vitaldaten with ID " + id + " not found");
+        }
+    }
+*/
+public void deleteVitaldaten(UUID patientId, UUID vitaldatenId) {
+    Optional<Vitaldaten> optionalVitaldaten = vitaldatenRepository.findById(vitaldatenId);
+    if (optionalVitaldaten.isEmpty() || !optionalVitaldaten.get().getPatient().getId().equals(patientId)) {
+        throw new VitaldatenNotFoundException("Vitaldaten with ID " + vitaldatenId + " not found for patient with ID " + patientId);
+    }
+    vitaldatenRepository.deleteByPatientIdAndId(patientId, vitaldatenId);
+}
+    /*
+    public Vitaldaten deleteVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
+        if (patientId == null) {
+            throw new InvalidVitaldatenException("PatientId cannot be null");
+        }
+        if (vitaldaten == null) {
+            throw new InvalidVitaldatenException("Vitaldaten is null");
+        }
 
+        Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.delete(vitaldaten.getId());
+        if (existingVitaldaten.isEmpty()) {
+            throw new VitaldatenNotFoundException(
+                    "Vitaldaten with ID " + vitaldaten.getId() + " not found"
+            );
+        }
+        return vitaldatenRepository.delete(patientId, vitaldaten);
+    }
+
+     */
     /*
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId) {
         return vitaldatenRepository.getVitaldatenByPatientenId(patientId);

@@ -24,6 +24,7 @@ public record Personendaten(String firstName, String lastName, String titel, Loc
         }
     }
 
+
     //Prüfung Geburtstag
     //ToDo: Prüfung Geburtstag vervollständigen
     private static boolean isValidBirthday(LocalDate dateOfBirth) {
