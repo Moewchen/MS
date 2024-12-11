@@ -1,12 +1,14 @@
 package com.bht.MediTrack.Arztverwaltung.infrastructure.repositories;
 
 import com.bht.MediTrack.Arztverwaltung.domain.model.Arzt;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ArztRepository{
+public interface ArztRepository extends JpaRepository<Arzt, UUID> {}
 
+    /*
     private final Map<UUID, Arzt> arztStorage = new HashMap<>();
 
     // Neuen Arzt speichern
@@ -33,6 +35,4 @@ public class ArztRepository{
         return arztStorage.values().stream()
                 .filter(arzt -> arzt.getFachrichtung().fachrichtung().equalsIgnoreCase(fachrichtung))
                 .collect(Collectors.toList());
-    }
-
-}
+    }*/
