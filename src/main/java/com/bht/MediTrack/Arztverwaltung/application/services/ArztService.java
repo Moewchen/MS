@@ -4,9 +4,11 @@ import com.bht.MediTrack.Arztverwaltung.domain.model.Arzt;
 import com.bht.MediTrack.Arztverwaltung.infrastructure.repositories.ArztRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+@Service
 public class ArztService { ;
 
     //@Autowired
@@ -38,26 +40,4 @@ public class ArztService { ;
         return arztRepository.findById(arztId).orElse(null);
     }
 
-     /*
-    public Optional<Arzt> findArztById(UUID id){
-        if (id == null) {
-            throw new IllegalArgumentException("ID darf nicht null sein.");
-        }
-        return arztRepository.findArztById(id);
-    }
-
-    public List<Arzt> getArztByName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name darf nicht null oder leer sein.");
-        }
-        return arztRepository.findArztByName(name);
-    }
-
-    public List<Arzt> getArztByFachrichtung(String fachrichtung) {
-        if (fachrichtung == null || fachrichtung.trim().isEmpty()) {
-            throw new IllegalArgumentException("Fachrichtung darf nicht null oder leer sein.");
-        }
-        return arztRepository.findArztByFachrichtung(fachrichtung);
-    }
-      */
 }
