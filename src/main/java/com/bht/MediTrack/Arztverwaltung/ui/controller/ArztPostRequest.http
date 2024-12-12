@@ -1,0 +1,25 @@
+POST http://localhost:8080/aerzte
+//api/v1
+Content-Type: application/json
+
+{
+  "fachrichtung": {
+    "fachrichtung": "Zahnarzt"
+  },
+  "personendaten": {
+    "firstName": "Max",
+    "lastName": "Muster",
+    "titel": "Dr. Med.",
+    "dateOfBirth": "1975-12-03"
+  },
+  "kontaktdaten": {
+    "email": "max.arzt@example.com",
+    "telefon": "012343434"
+  },
+  "adresse": {
+    "strasse": "Musterstraße",
+    "hausnummer": "1",
+    "plz": "12345",
+    "ort": "Musterstadt"
+  }
+}
