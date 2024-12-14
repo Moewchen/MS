@@ -1,51 +1,53 @@
 package com.bht.MediTrack.Behandlungsmanagement.application.services;
 
 import com.bht.MediTrack.Behandlungsmanagement.domain.events.BehandlungErstelltEvent;
-import com.bht.MediTrack.Behandlungsmanagement.domain.events.BehandlungUpdateEvent;
 import com.bht.MediTrack.Behandlungsmanagement.domain.model.Behandlung;
-import com.bht.MediTrack.PublisherEvent;
+import com.bht.MediTrack.Behandlungsmanagement.infrastructure.repositories.BehandlungRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-@Service
-public class Behandlungsmanagementservice {
+    @Service
+    public class Behandlungsmanagementservice {
 
-    private final Map<UUID, Behandlung> behandlungMap = new HashMap<>();
-    private final PublisherEvent eventListener;
+        @Autowired
+        private  BehandlungRepository behandlungRepository;
+        private final ApplicationEventPublisher eventPublisher;
 
-    public Behandlungsmanagementservice(PublisherEvent eventListener) {
-        this.eventListener = eventListener;
-    }
+        public Behandlungsmanagementservice(BehandlungRepository behandlungRepository, ApplicationEventPublisher eventPublisher) {
+            this.behandlungRepository = Objects.requireNonNull(behandlungRepository, "Repository darf nicht null sein");
+            this.eventPublisher = eventPublisher;
+        }
 
-    //Methode zum Erstellen einer neuen Behandlung
-    public Behandlung createBehandlung(Behandlung behandlung) {
-        behandlung.setId(UUID.randomUUID());
-        behandlungMap.put(behandlung.getId(), behandlung);
 
-        BehandlungErstelltEvent event = new BehandlungErstelltEvent(
-                behandlung.getId(),
-                behandlung.getBeschreibung(),
-                behandlung.getPatient(),
-                behandlung.getArzt(),
-                behandlung.getVitaldaten()
-        );
-        eventListener.publishEvent(event);
+        public Behandlung createBehandlung(Behandlung behandlung) {
 
-        return behandlung;
-    }
+            behandlung.setId(UUID.randomUUID());
 
-    //Methode zum Abrufen aller Behandlungen für einen bestimmten Patienten
-    public List<Behandlung> getBehandlungenByPatientId(UUID patientId) {
-        return behandlungMap.values().stream()
-                .filter(behandlung -> patientId.equals(behandlung.getPatientId()))
-                .collect(Collectors.toList());
-    }
+            Behandlung gespeicherteBehandlung = behandlungRepository.save(behandlung);
+
+            BehandlungErstelltEvent event = new BehandlungErstelltEvent(
+                    gespeicherteBehandlung.getId(),
+                    gespeicherteBehandlung.getBeschreibung(),
+                    gespeicherteBehandlung.getPatient(),
+                    gespeicherteBehandlung.getArzt()
+            );
+
+            eventPublisher.publishEvent(event);
+
+            return gespeicherteBehandlung;
+        }
+
+        // Methode zum Abrufen aller Behandlungen für einen bestimmten Patienten
+        public List<Behandlung> getBehandlungenByPatientId(UUID patientId) {
+            return behandlungRepository.getBehandlungenByPatientId(patientId);
+        }
 
     //Methode zum Aktualisieren der Beschreibung einer Behandlung
-    public void updateBehandlung(String beschreibung, UUID id) {
+    /*public void updateBehandlung(String beschreibung, UUID id) {
         Behandlung behandlung = behandlungMap.get(id);
         if (behandlung != null) {
             behandlung.setBeschreibung(beschreibung);
@@ -68,4 +70,7 @@ public class Behandlungsmanagementservice {
             throw new IllegalArgumentException("Behandlung mit der ID " + id + " nicht gefunden.");
         }
     }
+
+     */
 }
+
