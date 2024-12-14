@@ -13,14 +13,13 @@ import com.bht.MediTrack.Vitaldatenmanagement.exceptions.InvalidVitaldatenExcept
 import com.bht.MediTrack.Vitaldatenmanagement.exceptions.VitaldatenNotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class VitaldatenService {
 
-    private final VitaldatenRepository vitaldatenRepository;
-    private final ApplicationEventPublisher eventPublisher;
     private final PublisherEvent eventListener;
     private static final short MIN_HERZFREQUENZ = 0;
     private static final short MAX_HERZFREQUENZ = 220;
@@ -33,13 +32,97 @@ public class VitaldatenService {
     private static final float MIN_TEMPERATUR = 25.0f;
     private static final float MAX_TEMPERATUR = 45.0f;
 
-    @Autowired
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, ApplicationEventPublisher eventPublisher, PublisherEvent eventListener) {
-        this.vitaldatenRepository = vitaldatenRepository;
-        this.eventPublisher = eventPublisher;
-        this.eventListener = eventListener;
+    @Autowired  // Field injection
+    private final VitaldatenRepository vitaldatenRepository;
+
+    public Optional<Vitaldaten> findById(UUID id) {
+        return vitaldatenRepository.findById(id);
     }
 
+    @Autowired  // Constructor injection -> das andere oben reicht, ist hier jetzt gedoppelt
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
+        this.vitaldatenRepository = vitaldatenRepository;
+        this.eventListener = eventPublisher;
+    }
+
+    public Vitaldaten upsertVitaldaten(UUID patientId, final Vitaldaten vitaldaten) {
+        if (vitaldaten == null || vitaldaten.getHerzfrequenz() < 30 || vitaldaten.getHerzfrequenz() > 200) {
+            throw new InvalidVitaldatenException("Invalid Herzfrequenz value");
+        }
+        //Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.findById(vitaldaten.getId());
+        //if (existingVitaldaten.isEmpty()) {
+        //    throw new VitaldatenNotFoundException("Vitaldaten not found");
+        //}
+        if (patientId == null) {
+            throw new InvalidVitaldatenException("PatientId cannot be null");
+        }
+        if (vitaldaten.getId() != null) {
+            Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.findById(vitaldaten.getId());
+            if (existingVitaldaten.isEmpty()) {
+                throw new VitaldatenNotFoundException("Vitaldaten not found");
+            }
+        }
+
+        Vitaldaten savedVitaldaten = vitaldatenRepository.save(vitaldaten);
+        if (savedVitaldaten == null) {
+            throw new InvalidVitaldatenException("Failed to save Vitaldaten");
+        }
+
+        VitaldatenErstelltEvent event = new VitaldatenErstelltEvent(
+                savedVitaldaten.getId(),
+                savedVitaldaten.getHerzfrequenz(),
+                savedVitaldaten.getAtemfrequenz(),
+                savedVitaldaten.getSystolisch(),
+                savedVitaldaten.getDiastolisch(),
+                savedVitaldaten.getTemperatur(),
+                LocalDateTime.now()
+        );
+
+        eventListener.publishEvent(event);
+
+        return savedVitaldaten;
+    }
+
+    public List<Vitaldaten> findByPatientId(UUID patientId) {
+        return vitaldatenRepository.findByPatientId(patientId);
+    }
+/*
+    public void deleteVitaldaten(UUID id) {
+        Optional<Vitaldaten> vitaldaten = vitaldatenRepository.findById(id);
+        if (vitaldaten.isPresent()) {
+            vitaldatenRepository.delete(vitaldaten.get());
+        } else {
+            throw new VitaldatenNotFoundException("Vitaldaten with ID " + id + " not found");
+        }
+    }
+*/
+public void deleteVitaldaten(UUID patientId, UUID vitaldatenId) {
+    Optional<Vitaldaten> optionalVitaldaten = vitaldatenRepository.findById(vitaldatenId);
+    if (optionalVitaldaten.isEmpty() || !optionalVitaldaten.get().getPatient().getId().equals(patientId)) {
+        throw new VitaldatenNotFoundException("Vitaldaten with ID " + vitaldatenId + " not found for patient with ID " + patientId);
+    }
+    vitaldatenRepository.deleteByPatientIdAndId(patientId, vitaldatenId);
+}
+    /*
+    public Vitaldaten deleteVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
+        if (patientId == null) {
+            throw new InvalidVitaldatenException("PatientId cannot be null");
+        }
+        if (vitaldaten == null) {
+            throw new InvalidVitaldatenException("Vitaldaten is null");
+        }
+
+        Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.delete(vitaldaten.getId());
+        if (existingVitaldaten.isEmpty()) {
+            throw new VitaldatenNotFoundException(
+                    "Vitaldaten with ID " + vitaldaten.getId() + " not found"
+            );
+        }
+        return vitaldatenRepository.delete(patientId, vitaldaten);
+    }
+
+     */
+    /*
     public Optional<Vitaldaten> getVitaldatenByPatientenId(UUID patientId) {
         return vitaldatenRepository.getVitaldatenByPatientenId(patientId);
     }
@@ -143,4 +226,6 @@ public class VitaldatenService {
         }
         return true;
     }
+
+     */
 }

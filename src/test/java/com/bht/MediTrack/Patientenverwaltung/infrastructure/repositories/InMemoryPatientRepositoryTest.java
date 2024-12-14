@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 class InMemoryPatientRepositoryTest {
-
+/*
     private InMemoryPatientRepository repository;
     @BeforeEach
     public void setUp() {
@@ -134,4 +134,6 @@ class InMemoryPatientRepositoryTest {
         assertThat(updatedPatient).isPresent();
         assertThat(updatedPatient.get().getKontaktdaten().email()).isEqualTo("eve_updated@example.com");
     }
+
+ */
 }

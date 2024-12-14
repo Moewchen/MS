@@ -1,19 +1,37 @@
 package com.bht.MediTrack.Vitaldatenmanagement.domain.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@EntityScan
+@NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "vitaldaten")
 public class Vitaldaten {
 
     @Id
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
+
     private short herzfrequenz;
     private byte atemfrequenz;
     private short systolisch;
@@ -26,7 +44,6 @@ public class Vitaldaten {
 */
     @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime datum;
-    public Vitaldaten() {}
 
     public Vitaldaten(UUID id, short herzfrequenz, byte atemfrequenz, short systolisch, short diastolisch, float temperatur, LocalDateTime datum) {
         this.id = id;
@@ -39,6 +56,7 @@ public class Vitaldaten {
 
     }
 
+    /*
     public UUID getId() {
         return id;
     }
@@ -81,6 +99,7 @@ public class Vitaldaten {
     public void setDatum(LocalDateTime datum) {
         this.datum = datum;
     }
+     */
 
     @Override
     public String toString() {

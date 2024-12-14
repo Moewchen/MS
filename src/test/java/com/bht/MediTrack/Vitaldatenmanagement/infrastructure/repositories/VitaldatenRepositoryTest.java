@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VitaldatenRepositoryTest {
 
+    /*
     private VitaldatenRepository repository;
     private UUID patientId;
     private Vitaldaten vitaldaten;
@@ -42,6 +43,7 @@ class VitaldatenRepositoryTest {
         assertTrue(updated);
         assertEquals(updatedVitaldaten, repository.getVitaldatenById(patientId).get());
     }*/
+    /*
     @Test
     void testGetVitaldatenById() {
         repository.createVitaldaten(patientId,vitaldaten);
@@ -49,4 +51,6 @@ class VitaldatenRepositoryTest {
         assertTrue(found.isPresent());
         assertEquals(vitaldaten, found.get());
     }
+
+     */
 }

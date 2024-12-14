@@ -3,7 +3,6 @@ package com.bht.MediTrack.Behandlungsmanagement.domain.model;
 
 import com.bht.MediTrack.Arztverwaltung.domain.model.Arzt;
 import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
-import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 
 import java.util.UUID;
 
@@ -13,9 +12,9 @@ public class Behandlung {
 
     private UUID id;
     private String beschreibung;
-    private Patient patient;
+    private UUID patient;
     private Arzt arzt;
-    private Vitaldaten vitaldaten;
+
 
     // Standard-Konstruktor
     public Behandlung() {
@@ -25,7 +24,7 @@ public class Behandlung {
     public Behandlung(UUID id, String beschreibung, Patient patient, Arzt arzt) {
         this.id = id;
         this.beschreibung = beschreibung;
-        this.patient = patient;
+        this.patient = patient.getId();
         this.arzt = arzt;
     }
 
@@ -46,11 +45,11 @@ public class Behandlung {
         this.beschreibung = beschreibung;
     }
 
-    public Patient getPatient() {
+    public UUID getPatient() {
         return patient;
     }
 
-    public void setPatient(Patient patient) {
+    public void setPatient(UUID patient) {
         this.patient = patient;
     }
 
@@ -62,15 +61,7 @@ public class Behandlung {
         this.arzt = arzt;
     }
 
-    public Vitaldaten getVitaldaten() {
-        return vitaldaten;
-    }
-
-    public void setVitaldaten(Vitaldaten vitaldaten) {
-        this.vitaldaten = vitaldaten;
-    }
-
-    public UUID getPatientId() {
-        return patient.getId();
-    }
+  public UUID getPatientId() {
+    return patient;
+}
 }

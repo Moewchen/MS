@@ -1,15 +1,16 @@
 package com.bht.MediTrack.Vitaldatenmanagement.infrastructure.repositories;
-
 import com.bht.MediTrack.Vitaldatenmanagement.domain.model.Vitaldaten;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
+
+public interface VitaldatenRepository extends JpaRepository<Vitaldaten,UUID> {
+    List<Vitaldaten> findByPatientId(UUID patientId);
+    void deleteByPatientIdAndId(UUID patientId, UUID id);
+}
+
+/*
 @Repository
 public class VitaldatenRepository {
     //TODO: Implementierung database anbinden
@@ -43,3 +44,4 @@ public class VitaldatenRepository {
     }
 
 }
+*/

@@ -1,5 +1,8 @@
 package com.bht.MediTrack.shared.domain.valueobjects;
 
+import jakarta.persistence.Embeddable;
+
+@Embeddable
 public record Kontaktdaten (String email, String telefon){
 
     //Konstruktor mit Prüfung
@@ -21,7 +24,7 @@ public record Kontaktdaten (String email, String telefon){
     //Prüfung Telefonnummer
     private static boolean isValidTelefon(String telefon) {
         if (telefon == null) return false;
-        return telefon.matches("^\\+\\d{1,3}\\d{4,14}(?:x.+)?$");//gültiges Telefon-Format
+        return telefon.matches("^\\d{1,3}\\d{4,14}(?:x.+)?$");//gültiges Telefon-Format
     }
 
     @Override

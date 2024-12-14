@@ -1,7 +1,10 @@
 package com.bht.MediTrack.shared.domain.valueobjects;
 
+import jakarta.persistence.Embeddable;
+
 import java.time.LocalDate;
 
+@Embeddable
 public record Personendaten(String firstName, String lastName, String titel, LocalDate dateOfBirth) {
 
     //Konstruktor mit Prüfung
@@ -20,6 +23,7 @@ public record Personendaten(String firstName, String lastName, String titel, Loc
             throw new IllegalArgumentException("Geburtsdatum darf nicht in der Zukunft liegen");
         }
     }
+
 
     //Prüfung Geburtstag
     //ToDo: Prüfung Geburtstag vervollständigen

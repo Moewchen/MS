@@ -32,7 +32,7 @@ public class BehandlungController {
         return ResponseEntity.ok(behandlungen);
     }
 
-
+/*
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateBehandlung(@PathVariable UUID id, @RequestParam String beschreibung) {
         behandlungsmanagementservice.updateBehandlung(beschreibung, id);
@@ -45,4 +45,6 @@ public class BehandlungController {
         behandlungsmanagementservice.deleteBehandlung(id);
         return ResponseEntity.ok().build();
     }
+
+ */
 }

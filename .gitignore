@@ -1,8 +1,12 @@
+docker-compose.yml
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+docker-compose.yml
+.idea/dataSources.xml
+.idea
 
 ### STS ###
 .apt_generated
