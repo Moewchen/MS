@@ -6,74 +6,93 @@ import java.util.List;
 import com.bht.MediTrack.Arztverwaltung.domain.model.Arzt;
 import com.bht.MediTrack.Arztverwaltung.domain.valueojects.Fachrichtung;
 import com.bht.MediTrack.Arztverwaltung.infrastructure.repositories.ArztRepository;
+import com.bht.MediTrack.MediTrackApplication;
 import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
 import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationEventPublisher;
+
 import java.util.Optional;
 import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+
+@ExtendWith(MockitoExtension.class)
 class ArztServiceTest {
+
+    @Mock
+    private ArztRepository arztRepository;
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
 
     @InjectMocks
     private ArztService arztService;
-    @Mock
-    private ArztRepository arztRepository;
+
+
     private Arzt arzt;
     private UUID arztId;
-    private Fachrichtung arztFachrichtung;
+
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
         arztId = UUID.randomUUID();
         arzt = new Arzt();
         arzt.setId(arztId);
-        arzt.setFachrichtung(arztFachrichtung);
+        arzt.setFachrichtung(new Fachrichtung("Zahnarzt"));
+        arzt.setPersonendaten(new Personendaten("Marta", "Müller", "Frau Dr.", LocalDate.of(1994, 12, 12)));
+        arzt.setKontaktdaten(new Kontaktdaten("mueller@arzt.de", "01010101"));
+        arzt.setAdresse(new Adresse("Teststraße", "90", "01234", "Stadt"));
     }
+
     @Test
-    void testGetArztById() {
-        when(arztRepository.findArztById(arztId)).thenReturn(Optional.of(arzt));
-        Optional<Arzt> result = arztService.findArztById(arztId);
-        assertTrue(result.isPresent());
-        assertEquals(arzt, result.get());
+    void testUpsertArzt() {
+        when(arztRepository.save(any(Arzt.class))).thenReturn(arzt);
+
+        Arzt savedArzt = arztService.upsertArzt(arztId, arzt);
+
+        assertNotNull(savedArzt, "Arzt sollte nicht null sein");
+        assertEquals(arztId, savedArzt.getId(), "Die ID des Arztes sollte übereinstimmen");
     }
+
     @Test
-    public void testFindArztByIdNullId() {
-        assertThrows(IllegalArgumentException.class, () -> arztService.findArztById(null), "ID darf nicht null sein.");
+    void testFindArztById() {
+        // Simuliere das Verhalten des Repositories
+        when(arztRepository.findById(arztId)).thenReturn(Optional.of(arzt));
+
+        Arzt foundArzt = arztService.findArztById(arztId);
+
+        assertNotNull(foundArzt, "Arzt sollte gefunden werden");
+        assertEquals(arztId, foundArzt.getId(), "Die ID des Arztes sollte übereinstimmen");
     }
+
     @Test
-    public void testGetArztByNameEmptyName() {
-        assertThrows(IllegalArgumentException.class, () -> arztService.getArztByName(""), "Name darf nicht null oder leer sein.");
+    void testFindArztByIdNotFound() {
+        when(arztRepository.findById(arztId)).thenReturn(Optional.empty());
+
+        Arzt foundArzt = arztService.findArztById(arztId);
+
+        assertNull(foundArzt, "Arzt sollte nicht gefunden werden");
     }
+
     @Test
-    public void testGetArztByNameNullName() {
-        assertThrows(IllegalArgumentException.class, () -> arztService.getArztByName(null), "Name darf nicht null oder leer sein.");
+    void testGetAllAerzte() {
+
+        when(arztRepository.findAll()).thenReturn(List.of(arzt));
+
+        List<Arzt> aerzte = arztService.getAllAerzte();
+
+        assertNotNull(aerzte, "Liste der Ärzte sollte nicht null sein");
+        assertEquals(1, aerzte.size(), "Es sollte genau ein Arzt in der Liste sein");
     }
-    @Test
-    public void testGetArztByFachrichtungValidFachrichtung() {
-        Arzt arzt = new Arzt(
-                new Fachrichtung("Kardiologie"),
-                new Personendaten("Tom", "Müller", "Dr. Med.", LocalDate.of(1976,3,1)),
-                new Kontaktdaten("mueller@arzt.de", "015050505"),
-                new Adresse("Hauptdamm","22", "01234", "Berlin")
-        );
-        when(arztRepository.findArztByFachrichtung("Kardiologie")).thenReturn(List.of(arzt));
-        List<Arzt> result = arztService.getArztByFachrichtung("Kardiologie");
-        assertEquals(1, result.size());
-        assertEquals(new Fachrichtung("Kardiologie"), result.getFirst().getFachrichtung());
-    }
-    @Test
-    public void testGetArztByFachrichtungEmpty() {
-        assertThrows(IllegalArgumentException.class, () -> arztService.getArztByFachrichtung(""), "Fachrichtung darf nicht null oder leer sein.");
-    }
-    @Test
-    public void testGetArztByFachrichtungNull() {
-        assertThrows(IllegalArgumentException.class, () -> arztService.getArztByFachrichtung(null), "Fachrichtung darf nicht null oder leer sein.");
-    }
+
 }
