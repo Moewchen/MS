@@ -7,11 +7,13 @@ import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
 import jakarta.persistence.*;
 import java.util.UUID;
 
+@Entity
 public class Arzt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+    @Embedded
     private Fachrichtung fachrichtung;
     private Personendaten personendaten;
     private Kontaktdaten kontaktdaten;
