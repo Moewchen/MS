@@ -27,7 +27,14 @@ public class ErrorHandlingAspect {
                     joinPoint.getSignature(),
                     exception.getMessage()
             );
-            throw exception;
+            String errorMessage = String.format(
+                    "Fehler in Methode %s mit Argumenten %s: %s",
+                    joinPoint.getSignature(),
+                    joinPoint.getArgs(),
+                    exception.getMessage()
+            );
+            logger.error(errorMessage, exception);
+            throw new RuntimeException(errorMessage, exception);
         }
     }
 }
