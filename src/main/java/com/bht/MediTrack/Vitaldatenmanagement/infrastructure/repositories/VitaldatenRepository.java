@@ -7,6 +7,7 @@ import java.util.*;
 
 public interface VitaldatenRepository extends JpaRepository<Vitaldaten,UUID> {
     List<Vitaldaten> findByPatientId(UUID patientId);
+    void deleteByPatientIdAndId(UUID patientId, UUID id);
 }
 
 /*
