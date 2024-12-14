@@ -19,11 +19,8 @@ public class ErrorHandlingAspect {
     @Around("execution(* com.bht.MediTrack.Vitaldatenmanagement.application.services.*.*(..))")
     public Object handleError(ProceedingJoinPoint joinPoint) throws Throwable {
         try {
-           // Object result = joinPoint.proceed();
-            //return result;
             return joinPoint.proceed();
         }
-        //Exception exception = (Exception) result;
         catch (Exception exception) {
             //Speicherung in Log-Datei
             logger.info("ErrorHandling {} : {}",
