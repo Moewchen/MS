@@ -2,15 +2,7 @@ package com.bht.MediTrack.Patientenverwaltung.ui.controller;
 
 import com.bht.MediTrack.Patientenverwaltung.application.services.PatientService;
 import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
-import com.bht.MediTrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
-import com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories.InMemoryPatientRepository;
-import com.bht.MediTrack.PublisherEvent;
-import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
-import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
-import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
-
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,18 +29,38 @@ public class PatientController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Patient> upsertPatient(@RequestBody Patient patient) {
+    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
         UUID patientId = patient.getId() != null ? patient.getId() : UUID.randomUUID();
-        Patient upsertedPatient = patientService.upsertPatient(patientId, patient);
-        return ResponseEntity.status(HttpStatus.CREATED).body(upsertedPatient);
+        Patient createdPatient = patientService.upsertPatient(patientId, patient);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Patient>> getAllPatients() {
         List<Patient> patients = patientService.getAllPatients();
-        // Exclude vitaldaten from the response
         patients.forEach(patient -> patient.setVitaldaten(null));
         return ResponseEntity.ok(patients);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Patient> getPatientById(@PathVariable UUID id) {
+        Patient patient = patientService.findById(id);
+        if (patient == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(patient);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePatient(@PathVariable UUID id) {
+        patientService.deletePatient(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ResponseEntity<String> handleException(Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
     }
     /*
     private final PatientService patientService;

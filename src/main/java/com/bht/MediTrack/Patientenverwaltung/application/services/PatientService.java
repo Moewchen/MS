@@ -1,26 +1,19 @@
 package com.bht.MediTrack.Patientenverwaltung.application.services;
 import com.bht.MediTrack.Patientenverwaltung.domain.events.PatientAngelegtEvent;
+import com.bht.MediTrack.Patientenverwaltung.domain.events.PatientEntferntEvent;
+import com.bht.MediTrack.Patientenverwaltung.domain.events.PatientUpdateEvent;
 import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
 import com.bht.MediTrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
-import com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories.InMemoryPatientRepository;
-import com.bht.MediTrack.PublisherEvent;
+import com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
 import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
-import com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories.InMemoryPatientRepository;
-
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-
-import com.bht.MediTrack.PublisherEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,11 +21,11 @@ public class PatientService {
 
 
     @Autowired // Field injection
-    private final InMemoryPatientRepository patientRepository;
+    private final PatientRepository patientRepository;
     private final ApplicationEventPublisher eventPublisher;
 
     @Autowired // Constructor injection
-    public PatientService(InMemoryPatientRepository patientRepository, ApplicationEventPublisher eventPublisher) {
+    public PatientService(PatientRepository patientRepository, ApplicationEventPublisher eventPublisher) {
         this.patientRepository = Objects.requireNonNull(patientRepository, "Repository darf nicht null sein.");
         this.eventPublisher = eventPublisher;
     }
@@ -46,17 +39,70 @@ public class PatientService {
             throw new IllegalArgumentException("Patient darf nicht null sein.");
         }
         patient.setId(patientId);
+        Patient savedPatient = patientRepository.save(patient);
+        eventPublisher.publishEvent(new PatientUpdateEvent(patientId, "Patient", patient.toString()));
+        return savedPatient;
+    }
+
+    public Patient createPatient(Patient patient) {
+        if (patient.getPersonendaten().firstName() == null || patient.getPersonendaten().lastName() == null || patient.getPersonendaten().dateOfBirth() == null || patient.getKontaktdaten().email() == null) {
+            throw new IllegalArgumentException("Pflichtfelder dürfen nicht null sein.");
+        }
+        UUID patientId = patient.getId() != null ? patient.getId() : UUID.randomUUID();
+        patient.setId(patientId);
+        PatientAngelegtEvent event = new PatientAngelegtEvent(patient.getId(), patient.getKrankenkasse(), patient.getKrankenversicherungsnummer(), patient.getPersonendaten(), patient.getKontaktdaten(), patient.getAdresse());
+        eventPublisher.publishEvent(event);
         return patientRepository.save(patient);
     }
 
     public List<Patient> getAllPatients() {
-
         return (List<Patient>) patientRepository.findAll();
     }
 
     public Patient findById(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID darf nicht null sein.");
+        }
         return patientRepository.findById(id).orElse(null);
     }
+
+//    public Optional<Patient> findPatientById(UUID id) {
+//        if (id == null) {
+//            throw new IllegalArgumentException("ID darf nicht null sein.");
+//        }
+//        return patientRepository.findById(id);
+//    }
+
+
+
+    public void deletePatient(UUID id) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID darf nicht null sein.");
+        }
+        patientRepository.deleteById(id);
+        eventPublisher.publishEvent(new PatientEntferntEvent(id));
+    }
+
+    public void deleteAllPatients() {
+        patientRepository.deleteAll();
+    }
+
+    public Optional<Patient> updatePatient(UUID id, Patient updatedPatient) {
+        if (id == null) {
+            throw new IllegalArgumentException("ID darf nicht null sein.");
+        }
+        if (updatedPatient == null) {
+            throw new IllegalArgumentException("UpdatedPatient darf nicht null sein.");
+        }
+        return patientRepository.findById(id)
+                .map(existingPatient -> {
+                    updatedPatient.setId(existingPatient.getId());
+                    Patient savedPatient = patientRepository.save(updatedPatient);
+                    eventPublisher.publishEvent(new PatientUpdateEvent(id, "Patient", updatedPatient.toString()));
+                    return savedPatient;
+                });
+    }
+
 
     /*
     private final InMemoryPatientRepository patientRepository;

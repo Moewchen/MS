@@ -1,211 +1,109 @@
 package com.bht.MediTrack.Patientenverwaltung.application.services;
 
-import java.util.UUID;
-
 import com.bht.MediTrack.Patientenverwaltung.domain.model.Patient;
 import com.bht.MediTrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
-import com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories.InMemoryPatientRepository;
-import com.bht.MediTrack.shared.domain.valueobjects.Adresse;
+import com.bht.MediTrack.Patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.MediTrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.MediTrack.shared.domain.valueobjects.Personendaten;
+import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.context.ApplicationEventPublisher;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
 class PatientServiceTest {
 
-    /*
-    private PatientService patientService;
-    private InMemoryPatientRepository repository;
+    @Mock
+    private PatientRepository patientRepository;
+
+    @Mock
     private ApplicationEventPublisher eventPublisher;
+
+    @InjectMocks
+    private PatientService patientService;
+
+    private Patient patient;
+    private UUID patientId;
+
     @BeforeEach
-    public void setUp() {
-        eventPublisher = new ApplicationEventPublisher() {
-            @Override
-            public void publishEvent(Object event) {}
-        };
-        repository = new InMemoryPatientRepository();
-        patientService = new PatientService(repository,eventPublisher);
-    }
-    @Test
-    public void testCreatePatient_NullName_ShouldThrowException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-                    patientService.createPatient(
-                            new Krankenkasse("AOK"), "123456789012",
-                            new Personendaten(null, "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)),
-                            new Kontaktdaten("max.mustermann@example.com", "+491234567890"),
-                            new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-                    );
-        });
-        assertEquals("Vorname darf nicht leer sein", exception.getMessage());
-    }
-    @Test
-    public void shouldCreateAndFindPatientById() {
-        Patient patient = patientService.createPatient(
-                new Krankenkasse("AOK"), "123456789012",
-                new Personendaten("Max", "Miller", "Dr.", LocalDate.of(1985, 5, 20)),
-                new Kontaktdaten("max.mustermann@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        Optional<Patient> foundPatient = patientService.findPatientById(patient.getId());
-        assertThat(foundPatient).isPresent();
-        assertThat(foundPatient.get().getPersonendaten().lastName()).isEqualTo("Miller");
-    }
-    @Test
-    public void testFindPatientByIdInvalidIdShouldReturnEmpty() {
-        Optional<Patient> foundPatient = patientService.findPatientById(UUID.randomUUID());
-        assertFalse(foundPatient.isPresent());
-    }
-    @Test
-    public void testFindPatientByName_EmptyName_ShouldThrowException() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            patientService.getPatientByName("");
-        });
-        assertEquals("Name darf nicht null oder leer sein.", exception.getMessage());
-    }
-    @Test
-    public void shouldRetrievePatientByName() {
-        Patient patient = new Patient(null,
-                new Krankenkasse("AOK"), "123456789012",
-                new Personendaten("Bob", "Anderson", "Dr.", LocalDate.of(1985, 5, 20)),
-                new Kontaktdaten("max.mustermann@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.createPatient(patient);
-        var foundPatients = patientService.getPatientByName("Bob");
-        assertThat(foundPatients).hasSize(1);
-        assertThat(foundPatients.get(0).getPersonendaten().lastName()).isEqualTo("Anderson");
-    }
-    @Test
-    public void shouldRetrievePatientByGeburtsdatum() {
-        Patient patient = new Patient(null,
-                new Krankenkasse("AOK"), "123456789012",
-                new Personendaten("Charlie", "Anderson", "Dr.", LocalDate.of(1978, 10, 10)),
-                new Kontaktdaten("max.mustermann@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.createPatient(patient);
-        var foundPatients = patientService.getPatientByGeburtsdatum(LocalDate.of(1978, 10, 10));
-        assertThat(foundPatients).hasSize(1);
-        assertThat(foundPatients.get(0).getPersonendaten().firstName()).isEqualTo("Charlie");
-    }
-    @Test
-    public void shouldFindPatientsByKrankenkasse() {
-        patientService.createPatient(
-                new Krankenkasse("TK"), "K54321",
-                new Personendaten("Alice", "Miller", "Dr", LocalDate.of(1975, 3, 25)),
-                new Kontaktdaten("alice@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.createPatient(
-                new Krankenkasse("AOK"), "K67891",
-                new Personendaten("Bob", "Smith", "Mr", LocalDate.of(1982, 7, 20)),
-                new Kontaktdaten("bob@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        List<Patient> tkPatients = patientService.findPatientsByKrankenkasse("TK");
-        assertThat(tkPatients).hasSize(1);
-        assertThat(tkPatients.get(0).getPersonendaten().firstName()).isEqualTo("Alice");
-    }
-    @Test
-    public void testDeletePatientNotExistsIdExceptionThrown() {
-        UUID nonexistentId = UUID.randomUUID();
-        System.out.println(nonexistentId);
-        patientService.deletePatient(nonexistentId);
-        assertTrue(repository.findAll().isEmpty());
-    }
-    @Test
-    public void testDeletePatient_ValidId_PatientDeleted() {
-        Patient patient = patientService.createPatient(
-                new Krankenkasse("DAK"), "K54321",
-                new Personendaten("Emily", "Clark", "Dr.", LocalDate.of(2000, 12, 20)),
-                new Kontaktdaten("emily@example.com", "+4912345670"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.deletePatient(patient.getId());
-        Optional<Patient> deletedPatient = patientService.findPatientById(patient.getId());
-        assertFalse(deletedPatient.isPresent());
-    }
-    @Test
-    public void shouldFindPatientsBornBefore() {
-        patientService.createPatient(
-                new Krankenkasse("TK"), "K54321",
-                new Personendaten("Alice", "Miller", "Dr", LocalDate.of(1975, 3, 25)),
-                new Kontaktdaten("alice@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.createPatient(
-                new Krankenkasse("AOK"), "K67891",
-                new Personendaten("Bob", "Smith", "Mr", LocalDate.of(1982, 7, 20)),
-                new Kontaktdaten("bob@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        List<Patient> patientsBornBefore1980 = patientService.findPatientsBornBefore(1980);
-        assertThat(patientsBornBefore1980).hasSize(1);
-        assertThat(patientsBornBefore1980.get(0).getPersonendaten().firstName()).isEqualTo("Alice");
-    }
-    @Test
-    public void shouldCheckIfKrankenversicherungsnummerExists() {
-        patientService.createPatient(
-                new Krankenkasse("BKK"), "K87654",
-                new Personendaten("Charlie", "Brown", "Mr", LocalDate.of(1992, 1, 15)),
-                new Kontaktdaten("charlie@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        boolean exists = patientService.krankenversicherungsnummerExists("K87654");
-        boolean notExists = patientService.krankenversicherungsnummerExists("K99999");
-        assertThat(exists).isTrue();
-        assertThat(notExists).isFalse();
-    }
-    @Test
-    public void shouldDeletePatient() {
-        Patient patient = patientService.createPatient(
-                new Krankenkasse("TK"), "K54321",
-                new Personendaten("Alice", "Miller", "Dr", LocalDate.of(1975, 3, 25)),
-                new Kontaktdaten("alice@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.deletePatient(patient.getId());
-        assertThat(patientService.findPatientById(patient.getId())).isNotPresent();
-    }
-    @Test
-    public void shouldDeleteAllPatients() {
-        patientService.createPatient(
-                new Krankenkasse("TK"), "K54321",
-                new Personendaten("Alice", "Miller", "Dr", LocalDate.of(1975, 3, 25)),
-                new Kontaktdaten("alice@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.createPatient(
-                new Krankenkasse("AOK"), "K67891",
-                new Personendaten("Bob", "Smith", "Mr", LocalDate.of(1982, 7, 20)),
-                new Kontaktdaten("bob@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt"));
-        patientService.deleteAllPatients();
-        assertThat(patientService.findPatientsByKrankenkasse("TK")).isEmpty();
-        assertThat(patientService.findPatientsByKrankenkasse("AOK")).isEmpty();
-    }
-    @Test
-    public void shouldUpdatePatient() {
-        Patient patient = new Patient(
-                null,
-                new Krankenkasse("BKK"), "K67891",
-                new Personendaten("Eve", "Williams", "Dr", LocalDate.of(1995, 7, 7)),
-                new Kontaktdaten("eve@example.com", "+491234567890"),
-                new Adresse("Musterstraße", "1", "12345", "Musterstadt")
-        );
-        patientService.createPatient(patient);
-        patient.setKontaktdaten(new Kontaktdaten("eve@example.com","+321654789"));
-        var updatedPatient = patientService.updatePatient(patient.getId(), patient);
-        assertThat(updatedPatient).isPresent();
-        assertThat(updatedPatient.get().getKontaktdaten().telefon()).isEqualTo("+321654789");
+    void setUp() {
+        patientId = UUID.randomUUID();
+        patient = new Patient();
+        patient.setId(patientId);
+        patient.setPersonendaten(new Personendaten("John", "Doe", "Mr", LocalDate.of(1980, 1, 1)));
+        patient.setKrankenversicherungsnummer("123456789");
+        patient.setKrankenkasse(new Krankenkasse("AOK"));
+        patient.setKontaktdaten(new Kontaktdaten("john.doe@example.com", "0123456789")); // Initialize Kontaktdaten
     }
 
-     */
+    @Test
+    void testCreatePatient() {
+        when(patientRepository.save(any(Patient.class))).thenReturn(patient);
+
+        Patient createdPatient = patientService.createPatient(patient);
+
+        assertNotNull(createdPatient, "Patient should not be null");
+        assertEquals(patientId, createdPatient.getId(), "Patient ID should match");
+    }
+
+    @Test
+    void testFindById() {
+        when(patientRepository.findById(patientId)).thenReturn(Optional.of(patient));
+
+        Patient foundPatient = patientService.findById(patientId);
+
+        assertNotNull(foundPatient, "Patient should be found");
+        assertEquals(patientId, foundPatient.getId(), "Patient ID should match");
+    }
+
+    @Test
+    void testFindByIdNotFound() {
+        when(patientRepository.findById(patientId)).thenReturn(Optional.empty());
+
+        Patient foundPatient = patientService.findById(patientId);
+
+        assertNull(foundPatient, "Patient should not be found");
+    }
+
+    @Test
+    void testGetAllPatients() {
+        when(patientRepository.findAll()).thenReturn(List.of(patient));
+
+        List<Patient> patients = patientService.getAllPatients();
+
+        assertNotNull(patients, "Patient list should not be null");
+        assertEquals(1, patients.size(), "There should be exactly one patient in the list");
+    }
+
+    @Test
+    void testDeleteById() {
+        doNothing().when(patientRepository).deleteById(patientId);
+
+        patientService.deletePatient(patientId);
+
+        verify(patientRepository, times(1)).deleteById(patientId);
+    }
+
+    @Test
+    void testUpdatePatient() {
+        when(patientRepository.findById(patientId)).thenReturn(Optional.of(patient));
+        when(patientRepository.save(any(Patient.class))).thenReturn(patient);
+
+        Optional<Patient> updatedPatient = patientService.updatePatient(patientId, patient);
+
+        assertTrue(updatedPatient.isPresent(), "Updated patient should be present");
+        assertEquals(patientId, updatedPatient.get().getId(), "Patient ID should match");
+    }
 }
