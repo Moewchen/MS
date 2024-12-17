@@ -19,7 +19,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.lang.Nullable;
 
 
-@EntityScan
+
 @NoArgsConstructor
 @Getter
 @Setter
