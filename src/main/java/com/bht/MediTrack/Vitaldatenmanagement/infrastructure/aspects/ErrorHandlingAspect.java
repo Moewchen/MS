@@ -18,14 +18,23 @@ public class ErrorHandlingAspect {
     // rund um die Ausführung einer Methode
     @Around("execution(* com.bht.MediTrack.Vitaldatenmanagement.application.services.*.*(..))")
     public Object handleError(ProceedingJoinPoint joinPoint) throws Throwable {
-        Object result = joinPoint.proceed();
-        Exception exception = (Exception) result;
-
-        //Speicherung in Log-Datei
-        logger.info("ErrorHandling {} : {}",
-                joinPoint.getSignature(),
-                exception.getMessage()
-        );
-        return result;
+        try {
+            return joinPoint.proceed();
+        }
+        catch (Exception exception) {
+            //Speicherung in Log-Datei
+            logger.info("ErrorHandling {} : {}",
+                    joinPoint.getSignature(),
+                    exception.getMessage()
+            );
+            String errorMessage = String.format(
+                    "Fehler in Methode %s mit Argumenten %s: %s",
+                    joinPoint.getSignature(),
+                    joinPoint.getArgs(),
+                    exception.getMessage()
+            );
+            logger.error(errorMessage, exception);
+            throw new RuntimeException(errorMessage, exception);
+        }
     }
 }
