@@ -43,7 +43,7 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.CREATED).body(upsertedPatient);
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Patient>> getAllPatients() {
         List<Patient> patients = patientService.getAllPatients();
         // Exclude vitaldaten from the response
