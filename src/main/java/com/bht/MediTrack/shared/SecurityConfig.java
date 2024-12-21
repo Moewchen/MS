@@ -32,9 +32,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/demo/user").hasRole("clientuser")
-                        .requestMatchers("/api/v1/demo/admin").hasRole("clientadmin")
-                        .requestMatchers("/patients").hasRole("clientadmin")
+                        .requestMatchers("/api/v1/demo/user").hasAnyRole("user_patient", "user_arzt")
+                        .requestMatchers("/api/v1/demo/admin").hasRole("admin")
+                        .requestMatchers("/patients").hasAnyRole("admin", "user_arzt")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)))
