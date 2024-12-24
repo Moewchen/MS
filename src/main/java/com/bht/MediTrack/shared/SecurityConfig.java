@@ -35,6 +35,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/demo/user").hasAnyRole("user_patient", "user_arzt")
                         .requestMatchers("/api/v1/demo/admin").hasRole("admin")
                         .requestMatchers("/patients").hasAnyRole("admin", "user_arzt")
+                        .requestMatchers("/patients/upsert").hasAnyRole("admin", "user_arzt")
+                        .requestMatchers("/vitaldaten").hasAnyRole("admin", "user_arzt", "user_patient")
+                        .requestMatchers("/vitaldaten/upsert").hasAnyRole("admin", "user_arzt", "user_patient")
+                        .requestMatchers("/vitaldaten/patient/{patientId}").hasAnyRole("admin", "user_arzt", "user_patient")
                         .anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthConverter)))

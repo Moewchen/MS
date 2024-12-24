@@ -54,8 +54,8 @@ public class PatientService {
         return (List<Patient>) patientRepository.findAll();
     }
 
-    public Patient findById(UUID id) {
-        return patientRepository.findById(id).orElse(null);
+    public Optional<Patient> findById(UUID id) {
+        return patientRepository.findById(id);
     }
 
     /*
