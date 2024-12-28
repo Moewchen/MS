@@ -21,7 +21,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfig implements WebMvcConfigurer {
 
-
     private final JwtAuthConverter jwtAuthConverter;
 
     @Bean
@@ -32,6 +31,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .cors(cors -> cors.configure(http))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/demo/user").hasAnyRole("user_patient", "user_arzt")
