@@ -58,6 +58,10 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -90,10 +94,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 	</dependencies>
@@ -110,10 +110,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.bht.MediTrack.Arztverwaltung.application.ArztverwaltungApplication</mainClass>
-					<mainClass>com.bht.MediTrack.Behandlungsmanagement.application.BehandlungApplication</mainClass>
-					<mainClass>com.bht.MediTrack.Patientenverwaltung.application.PatientenverwaltungApplication</mainClass>
-					<mainClass>com.bht.MediTrack.Vitaldatenmanagement.application.VitaldatenApplication</mainClass>
+					<mainClass>com.bht.meditrack.Arztverwaltung.application.ArztverwaltungApplication</mainClass>
+					<mainClass>com.bht.meditrack.Behandlungsmanagement.application.BehandlungApplication</mainClass>
+					<mainClass>com.bht.meditrack.Patientenverwaltung.application.PatientenverwaltungApplication</mainClass>
+					<mainClass>com.bht.meditrack.Vitaldatenmanagement.application.VitaldatenApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>

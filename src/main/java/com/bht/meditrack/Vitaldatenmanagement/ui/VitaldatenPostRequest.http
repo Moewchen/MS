@@ -1,0 +1,11 @@
+POST http://localhost:8080/vitaldaten/c5dafad7-38b3-4758-b184-8d882d1081e6
+Content-Type: application/json
+
+{
+  "herzfrequenz": 90,
+  "atemfrequenz": 10,
+  "systolisch": 120,
+  "diastolisch": 80,
+  "temperatur": 36.5,
+  "datum": "2023-10-10T10:00:00"
+}
