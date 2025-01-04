@@ -64,14 +64,14 @@ public class VitaldatenController {
             return savedVitaldaten;
         }
 
-    @PostMapping(path = "/{patientId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/patient/{patientId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<Vitaldaten> createVitaldaten (@PathVariable final UUID patientId,
         @RequestBody Vitaldaten vitaldaten){
-        Patient patient = patientService.findById(patientId);
-        if (patient == null) {
+        Optional<Patient> patientOptional = patientService.findById(patientId);
+        if (patientOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        vitaldaten.setPatient(patient);
+        vitaldaten.setPatient(patientOptional.get());
         Vitaldaten createdVitaldaten = vitaldatenService.upsertVitaldaten(patientId, vitaldaten);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdVitaldaten);
         }
