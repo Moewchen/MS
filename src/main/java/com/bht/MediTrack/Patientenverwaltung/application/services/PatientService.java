@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 public class PatientService {
 
 
-    @Autowired // Field injection
     private final InMemoryPatientRepository patientRepository;
     private final ApplicationEventPublisher eventPublisher;
 

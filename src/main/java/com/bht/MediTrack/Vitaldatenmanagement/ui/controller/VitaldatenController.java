@@ -20,9 +20,7 @@ import java.util.UUID;
 @RequestMapping("/vitaldaten") // endpoint mapping name
 public class VitaldatenController {
 
-    @Autowired
     private VitaldatenService vitaldatenService;
-    @Autowired
     private PatientService patientService;
 
     @Autowired

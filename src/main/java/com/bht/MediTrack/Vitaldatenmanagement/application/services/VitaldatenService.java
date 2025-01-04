@@ -32,7 +32,6 @@ public class VitaldatenService {
     private static final float MIN_TEMPERATUR = 25.0f;
     private static final float MAX_TEMPERATUR = 45.0f;
 
-    @Autowired  // Field injection
     private final VitaldatenRepository vitaldatenRepository;
 
     public Optional<Vitaldaten> findById(UUID id) {

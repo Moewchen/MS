@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/patients")
 public class PatientController {
 
-    @Autowired
     private PatientService patientService;
 
     @Autowired
