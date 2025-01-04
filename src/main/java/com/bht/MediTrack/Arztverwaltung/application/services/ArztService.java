@@ -11,11 +11,9 @@ import java.util.*;
 @Service
 public class ArztService { ;
 
-    //@Autowired
     private final ArztRepository arztRepository;
     private final ApplicationEventPublisher eventPublisher;
 
-    //@Autowired
     public ArztService(ArztRepository arztRepository, ApplicationEventPublisher eventPublisher) {
         this.arztRepository = Objects.requireNonNull(arztRepository,"Repository darf nicht null sein.");
         this.eventPublisher = eventPublisher;

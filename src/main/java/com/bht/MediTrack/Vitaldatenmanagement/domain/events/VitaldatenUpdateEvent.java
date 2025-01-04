@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class VitaldatenUpdateEvent {
 
-    private final UUID id; // Die eindeutige ID der Vitaldaten
+    private final UUID id;
     private final short herzfrequenz;
     private final byte atemfrequenz;
     private final short systolisch;

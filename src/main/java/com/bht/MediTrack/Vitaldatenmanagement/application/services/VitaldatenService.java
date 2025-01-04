@@ -49,10 +49,7 @@ public class VitaldatenService {
         if (vitaldaten == null || vitaldaten.getHerzfrequenz() < 30 || vitaldaten.getHerzfrequenz() > 200) {
             throw new InvalidVitaldatenException("Invalid Herzfrequenz value");
         }
-        //Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.findById(vitaldaten.getId());
-        //if (existingVitaldaten.isEmpty()) {
-        //    throw new VitaldatenNotFoundException("Vitaldaten not found");
-        //}
+
         if (patientId == null) {
             throw new InvalidVitaldatenException("PatientId cannot be null");
         }

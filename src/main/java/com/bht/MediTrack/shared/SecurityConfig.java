@@ -33,7 +33,6 @@ public class SecurityConfig implements WebMvcConfigurer {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configure(http))
-                //.csrf(csrf -> csrf.disable())
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/api/v1/demo/**")
                         .ignoringRequestMatchers("/patients/**")

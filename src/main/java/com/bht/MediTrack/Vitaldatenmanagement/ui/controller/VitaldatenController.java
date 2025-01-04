@@ -17,7 +17,6 @@ import java.util.UUID;
 
 
 @RestController
-//@RequestMapping(ApplicationKonstante.API_VERSION+"/vitaldaten") // endpoint mapping name
 @RequestMapping("/vitaldaten") // endpoint mapping name
 public class VitaldatenController {
 
@@ -30,32 +29,6 @@ public class VitaldatenController {
     public VitaldatenController(VitaldatenService vitaldatenService) {
         this.vitaldatenService = vitaldatenService;
     }
-
-    /*
-    @PostMapping
-    public ResponseEntity<Vitaldaten> createVitaldaten(@RequestParam UUID patientId, @RequestBody Vitaldaten vitaldaten) {
-        Vitaldaten createdVitaldaten = vitaldatenService.createVitaldaten(patientId, vitaldaten);
-        return ResponseEntity.ok(createdVitaldaten);
-    }
-
-    @PostMapping
-    public ResponseEntity<Vitaldaten> updateVitaldaten(@RequestParam UUID patientId, @RequestBody Vitaldaten vitaldaten) {
-        Vitaldaten updateVitaldaten = vitaldatenService.updateVitaldaten(patientId, vitaldaten);
-        return ResponseEntity.ok(updateVitaldaten);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Vitaldaten> getVitaldatenById(@PathVariable UUID id) {
-        Optional<Vitaldaten> vitaldaten = vitaldatenService.getVitaldatenById(id);
-        return vitaldaten.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/patient/{patientId}")
-    public ResponseEntity<Vitaldaten> getVitaldatenByPatientenId(@PathVariable UUID patientId) {
-        Optional<Vitaldaten> vitaldaten = vitaldatenService.getVitaldatenByPatientenId(patientId);
-        return vitaldaten.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-    */
 
     @PatchMapping(path = "/upsert", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
         public Vitaldaten upsertVitaldaten ( @RequestParam final UUID patientId,

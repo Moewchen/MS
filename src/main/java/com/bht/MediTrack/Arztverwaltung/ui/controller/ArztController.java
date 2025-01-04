@@ -14,10 +14,8 @@ import java.util.UUID;
 @RequestMapping("/aerzte")
 public class ArztController {
 
-    //@Autowired
     private ArztService arztService;
 
-    //@Autowired
     public ArztController(ArztService arztService) {
         this.arztService = arztService;
     }
@@ -38,7 +36,6 @@ public class ArztController {
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Arzt>> getAllAerzte() {
         List<Arzt> aerzte = arztService.getAllAerzte();
-        // Exclude vitaldaten from the response
         return ResponseEntity.ok(aerzte);
     }
 }

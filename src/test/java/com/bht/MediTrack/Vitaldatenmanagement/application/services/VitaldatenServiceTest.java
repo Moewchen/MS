@@ -181,31 +181,4 @@ class VitaldatenServiceTest {
         verify(vitaldatenRepository, times(1)).save(vitaldaten);
     }
 
-    //TODO kann raus, steht weiter oben
-    @Test
-    void shouldUpdateVitaldatenSuccessfully() {
-        when(vitaldatenRepository.findById(any(UUID.class))).thenReturn(Optional.of(vitaldaten));
-        when(vitaldatenRepository.save(any(Vitaldaten.class))).thenReturn(vitaldaten);
-
-        Vitaldaten updatedVitaldaten = vitaldatenService.upsertVitaldaten(patientId, vitaldaten);
-
-        assertNotNull(updatedVitaldaten);
-        assertEquals(vitaldaten.getId(), updatedVitaldaten.getId());
-        verify(vitaldatenRepository, times(1)).save(vitaldaten);
-    }
-
-    //TODO kann raus, steht weiter oben
-    @Test
-    void shouldDeleteVitaldatenSuccessfully() {
-        // Set the patient field
-        Patient patient = new Patient();
-        patient.setId(patientId);
-        vitaldaten.setPatient(patient);
-
-        when(vitaldatenRepository.findById(any(UUID.class))).thenReturn(Optional.of(vitaldaten));
-        doNothing().when(vitaldatenRepository).deleteByPatientIdAndId(any(UUID.class), any(UUID.class));
-        assertDoesNotThrow(() -> vitaldatenService.deleteVitaldaten(patientId, vitaldaten.getId()));
-        verify(vitaldatenRepository).deleteByPatientIdAndId(patientId, vitaldaten.getId());
-    }
-
 }

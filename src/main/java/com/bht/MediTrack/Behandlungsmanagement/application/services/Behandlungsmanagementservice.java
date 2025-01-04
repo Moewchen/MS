@@ -45,32 +45,5 @@ import java.util.*;
         public List<Behandlung> getBehandlungenByPatientId(UUID patientId) {
             return behandlungRepository.getBehandlungenByPatientId(patientId);
         }
-
-    //Methode zum Aktualisieren der Beschreibung einer Behandlung
-    /*public void updateBehandlung(String beschreibung, UUID id) {
-        Behandlung behandlung = behandlungMap.get(id);
-        if (behandlung != null) {
-            behandlung.setBeschreibung(beschreibung);
-            behandlungMap.put(id, behandlung);
-        } else {
-            throw new IllegalArgumentException("Behandlung mit der ID " + id + " nicht gefunden.");
-        }
-        BehandlungUpdateEvent event = new BehandlungUpdateEvent(
-                behandlung.getId(),
-                beschreibung
-        );
-        eventListener.publishEvent(event);
-    }
-
-    //Methode zum Löschen einer Behandlung
-    public void deleteBehandlung(UUID id) {
-        if (behandlungMap.containsKey(id)) {
-            behandlungMap.remove(id);
-        } else {
-            throw new IllegalArgumentException("Behandlung mit der ID " + id + " nicht gefunden.");
-        }
-    }
-
-     */
 }
 
