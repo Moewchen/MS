@@ -29,6 +29,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     }
 
     @Bean
+    @SuppressWarnings("java:S4502")  // CSRF check disabled for stateless JWT API
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configure(http))
