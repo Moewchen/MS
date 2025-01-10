@@ -4,13 +4,19 @@ import com.bht.meditrack.shared.ui.JwtAuthConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.core.Authentication;
+import java.util.function.Supplier;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -20,7 +26,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfig implements WebMvcConfigurer {
 
-    // Konstanten für Rollen
     public static final String ROLE_USER_PATIENT = "user_patient";
     public static final String ROLE_USER_ARZT = "user_arzt";
     public static final String ROLE_ADMIN = "admin";
@@ -33,7 +38,7 @@ public class SecurityConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    @SuppressWarnings("java:S4502")  // CSRF check disabled for stateless JWT API
+    @SuppressWarnings("java:S4502")
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configure(http))
@@ -50,7 +55,19 @@ public class SecurityConfig implements WebMvcConfigurer {
                         .requestMatchers("/patients/upsert").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT, ROLE_USER_PATIENT)
                         .requestMatchers("/vitaldaten").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT, ROLE_USER_PATIENT)
                         .requestMatchers("/vitaldaten/upsert").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT, ROLE_USER_PATIENT)
-                        .requestMatchers("/vitaldaten/patient/{patientId}").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT, ROLE_USER_PATIENT)
+                        .requestMatchers("/vitaldaten/patient/{patientId}").access((authenticationRequest, context) -> {
+                            if (authenticationRequest.get().getAuthorities().stream()
+                                    .anyMatch(a -> a.getAuthority().equals("ROLE_" + ROLE_ADMIN) ||
+                                            a.getAuthority().equals("ROLE_" + ROLE_USER_ARZT))) {
+                                return new AuthorizationDecision(true);
+                            }
+
+                            Jwt jwt = (Jwt) authenticationRequest.get().getPrincipal();
+                            String userPatientId = jwt.getClaim("patientId");
+                            String requestPatientId = context.getVariables().get("patientId");
+
+                            return new AuthorizationDecision(requestPatientId.equals(userPatientId));
+                        })
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
