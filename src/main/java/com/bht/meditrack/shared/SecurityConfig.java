@@ -52,6 +52,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                         .requestMatchers("/api/v1/demo/user").hasAnyRole(ROLE_USER_PATIENT, ROLE_USER_ARZT)
                         .requestMatchers("/api/v1/demo/admin").hasRole(ROLE_ADMIN)
                         .requestMatchers("/patients").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT)
+                        .requestMatchers("/patients/{patientId}").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT,  ROLE_USER_PATIENT)
                         .requestMatchers("/patients/upsert").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT, ROLE_USER_PATIENT)
                         .requestMatchers("/vitaldaten").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT, ROLE_USER_PATIENT)
                         .requestMatchers("/vitaldaten/upsert").hasAnyRole(ROLE_ADMIN, ROLE_USER_ARZT, ROLE_USER_PATIENT)
