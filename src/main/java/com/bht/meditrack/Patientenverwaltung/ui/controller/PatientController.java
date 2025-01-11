@@ -7,6 +7,9 @@ import com.bht.meditrack.shared.SecurityConfig;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,11 +19,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+
 @RestController
 @RequestMapping("/patients")
 public class PatientController {
 
     private PatientService patientService;
+    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
+
 
     @Autowired
     public PatientController(PatientService patientService) {
@@ -48,12 +54,16 @@ public class PatientController {
         return ResponseEntity.ok(patients);
     }
 
-    @GetMapping("/{patientId}")
+    @GetMapping(path = "/{patientId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Patient> getPatientById(@PathVariable UUID patientId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Jwt jwt = (Jwt) authentication.getPrincipal();
+        logger.info("jwt: " + jwt);
+        System.out.println("jwt: " + jwt);
+        System.out.println("jwt.getTokenValue()" + jwt.getTokenValue());
+
         String userPatientId = jwt.getClaim("patientId");
-        String userRole = jwt.getClaim("role");
+        String userRole = jwt.getClaim("preferred_username");
 
         if (userRole == null) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -62,6 +72,7 @@ public class PatientController {
         if (userRole.equals(SecurityConfig.ROLE_USER_PATIENT) && !patientId.toString().equals(userPatientId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
+
 
         Optional<Patient> patient = patientService.findById(patientId);
         return patient.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
