@@ -34,19 +34,6 @@ public class VitaldatenService {
     }
 
     public Vitaldaten upsertVitaldaten(UUID patientId, final Vitaldaten vitaldaten) {
-        if (vitaldaten == null || vitaldaten.getHerzfrequenz() < 30 || vitaldaten.getHerzfrequenz() > 200) {
-            throw new InvalidVitaldatenException("Invalid Herzfrequenz value");
-        }
-
-        if (patientId == null) {
-            throw new InvalidVitaldatenException("PatientId cannot be null");
-        }
-        if (vitaldaten.getId() != null) {
-            Optional<Vitaldaten> existingVitaldaten = vitaldatenRepository.findById(vitaldaten.getId());
-            if (existingVitaldaten.isEmpty()) {
-                throw new VitaldatenNotFoundException("Vitaldaten not found");
-            }
-        }
 
         Vitaldaten savedVitaldaten = vitaldatenRepository.save(vitaldaten);
         Objects.requireNonNull(savedVitaldaten, "Failed to save Vitaldaten");
