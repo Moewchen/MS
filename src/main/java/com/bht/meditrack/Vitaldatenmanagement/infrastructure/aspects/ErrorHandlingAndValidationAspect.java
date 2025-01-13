@@ -24,8 +24,20 @@ public class ErrorHandlingAndValidationAspect {
             if (arg instanceof Vitaldaten) {
                 Vitaldaten vitaldaten = (Vitaldaten) arg;
 
-                if (vitaldaten == null || vitaldaten.getHerzfrequenz() < 30 || vitaldaten.getHerzfrequenz() > 200) {
+                if (vitaldaten.getHerzfrequenz() < 60 || vitaldaten.getHerzfrequenz() > 80) {
                     throw new InvalidVitaldatenException("Invalid Herzfrequenz value: " + vitaldaten.getHerzfrequenz());
+                }
+                if (vitaldaten.getAtemfrequenz() < 0 || vitaldaten.getAtemfrequenz() > 70) {
+                    throw new InvalidVitaldatenException("Invalid Atemfrequenz value: " + vitaldaten.getAtemfrequenz());
+                }
+                if (vitaldaten.getSystolisch() < 110 || vitaldaten.getSystolisch() > 130) {
+                    throw new InvalidVitaldatenException("Invalid Systolisch value: " + vitaldaten.getSystolisch());
+                }
+                if (vitaldaten.getDiastolisch() < 0 || vitaldaten.getDiastolisch() > 170) {
+                    throw new InvalidVitaldatenException("Invalid Diastolisch value: " + vitaldaten.getDiastolisch());
+                }
+                if (vitaldaten.getTemperatur() < 34 || vitaldaten.getTemperatur() > 45) {
+                    throw new InvalidVitaldatenException("Invalid Temperatur value: " + vitaldaten.getTemperatur());
                 }
                 if (vitaldaten.getPatient() == null || vitaldaten.getPatient().getId() == null) {
                     throw new InvalidVitaldatenException("Patient cannot be null");
