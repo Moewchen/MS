@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Arrays;
+
 @Aspect
 @Component
 public class ErrorHandlingAndValidationAspect {
@@ -21,8 +23,8 @@ public class ErrorHandlingAndValidationAspect {
         Object[] args = joinPoint.getArgs();
 
         for (Object arg : args) {
-            if (arg instanceof Vitaldaten) {
-                Vitaldaten vitaldaten = (Vitaldaten) arg;
+            if (arg instanceof Vitaldaten vitaldaten) {
+                //Vitaldaten vitaldaten = (Vitaldaten) arg;
 
                 if (vitaldaten.getHerzfrequenz() < 60 || vitaldaten.getHerzfrequenz() > 80) {
                     throw new InvalidVitaldatenException("Invalid Herzfrequenz value: " + vitaldaten.getHerzfrequenz());
@@ -56,7 +58,7 @@ public class ErrorHandlingAndValidationAspect {
             String errorMessage = String.format(
                     "Fehler in Methode %s mit Argumenten %s: %s",
                     joinPoint.getSignature(),
-                    joinPoint.getArgs(),
+                    Arrays.toString(joinPoint.getArgs()),
                     exception.getMessage()
             );
             logger.error(errorMessage, exception);
