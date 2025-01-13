@@ -20,21 +20,18 @@ import java.util.UUID;
 public class VitaldatenService {
 
     private final PublisherEvent eventListener;
-
     private final VitaldatenRepository vitaldatenRepository;
 
     public Optional<Vitaldaten> findById(UUID id) {
         return vitaldatenRepository.findById(id);
     }
 
-    @Autowired  // Constructor injection → das andere oben reicht, ist hier jetzt gedoppelt
     public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
         this.vitaldatenRepository = vitaldatenRepository;
         this.eventListener = eventPublisher;
     }
 
     public Vitaldaten upsertVitaldaten(UUID patientId, final Vitaldaten vitaldaten) {
-
         Vitaldaten savedVitaldaten = vitaldatenRepository.save(vitaldaten);
         Objects.requireNonNull(savedVitaldaten, "Failed to save Vitaldaten");
 
