@@ -91,21 +91,6 @@ class VitaldatenServiceTest {
                     "Should throw InvalidVitaldatenException when patientId is null");
         }
 
-        @Test
-        @DisplayName("Should not create vitaldaten when patient ID is null")
-        void shouldNotCreateVitaldatenWithInvalidHerzfrequenz() {
-            // Arrange
-            Vitaldaten vitaldaten = createValidVitaldaten();
-            Stream.of((short)29, (short)201).forEach(herzfrequenz -> {
-                vitaldaten.setHerzfrequenz(herzfrequenz);
-
-                // Act & Assert
-                assertThrows(InvalidVitaldatenException.class, () ->
-                                vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten),
-                        "Should throw InvalidVitaldatenException for invalid herzfrequenz: " + herzfrequenz);
-            });
-        }
-
         @ParameterizedTest
         @ValueSource(shorts = {29, 201}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid herzfrequenz")
@@ -123,6 +108,90 @@ class VitaldatenServiceTest {
             assertEquals(
                     String.format("Herzfrequenz muss zwischen %d und %d liegen, war: %d",
                             30, 200, herzfrequenz),
+                    exception.getMessage()
+            );
+        }
+
+        @ParameterizedTest
+        @ValueSource(bytes = {4, 41}) // Testing boundary values
+        @DisplayName("Should not create vitaldaten with invalid atemfrequenz")
+        void shouldNotCreateVitaldatenWithInvalidAtemfrequenz(byte atemfrequenz) {
+            // Arrange
+            Vitaldaten vitaldaten = createValidVitaldaten();
+            vitaldaten.setAtemfrequenz(atemfrequenz);
+
+            // Act & Assert
+            InvalidVitaldatenException exception = assertThrows(
+                    InvalidVitaldatenException.class,
+                    () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
+            );
+
+            assertEquals(
+                    String.format("Atemfrequenz muss zwischen %d und %d liegen, war: %d",
+                            5, 40, atemfrequenz),
+                    exception.getMessage()
+            );
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = {49, 251}) // Testing boundary values
+        @DisplayName("Should not create vitaldaten with invalid systolisch")
+        void shouldNotCreateVitaldatenWithInvalidSystolisch(short systolisch) {
+            // Arrange
+            Vitaldaten vitaldaten = createValidVitaldaten();
+            vitaldaten.setSystolisch(systolisch);
+
+            // Act & Assert
+            InvalidVitaldatenException exception = assertThrows(
+                    InvalidVitaldatenException.class,
+                    () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
+            );
+
+            assertEquals(
+                    String.format("Systolisch muss zwischen %d und %d liegen, war: %d",
+                            50, 250, systolisch),
+                    exception.getMessage()
+            );
+        }
+
+        @ParameterizedTest
+        @ValueSource(shorts = {29, 151}) // Testing boundary values
+        @DisplayName("Should not create vitaldaten with invalid diastolisch")
+        void shouldNotCreateVitaldatenWithInvalidDiastolisch(short diastolisch) {
+            // Arrange
+            Vitaldaten vitaldaten = createValidVitaldaten();
+            vitaldaten.setDiastolisch(diastolisch);
+
+            // Act & Assert
+            InvalidVitaldatenException exception = assertThrows(
+                    InvalidVitaldatenException.class,
+                    () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
+            );
+
+            assertEquals(
+                    String.format("Diastolisch muss zwischen %d und %d liegen, war: %d",
+                            30, 150, diastolisch),
+                    exception.getMessage()
+            );
+        }
+
+        @ParameterizedTest
+        @ValueSource(floats = {29.9f, 45.1f}) // Testing boundary values
+        @DisplayName("Should not create vitaldaten with invalid temperatur")
+        void shouldNotCreateVitaldatenWithInvalidTemperatur(float temperatur) {
+            // Arrange
+            Vitaldaten vitaldaten = createValidVitaldaten();
+            vitaldaten.setTemperatur(temperatur);
+
+            // Act & Assert
+            InvalidVitaldatenException exception = assertThrows(
+                    InvalidVitaldatenException.class,
+                    () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
+            );
+
+            assertEquals(
+                    String.format("Temperatur muss zwischen %.1f und %.1f liegen, war: %.1f",
+                            30.0f, 45.0f, temperatur),
                     exception.getMessage()
             );
         }

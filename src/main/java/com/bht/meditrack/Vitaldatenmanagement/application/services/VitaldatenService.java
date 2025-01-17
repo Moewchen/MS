@@ -51,12 +51,12 @@ public class VitaldatenService {
 
     private void validateInput(UUID patientId, Vitaldaten vitaldaten) {
         validatePatientId(patientId);
-        validateVitaldaten(vitaldaten);
         validateHerzfrequenz(vitaldaten.getHerzfrequenz());
         validateAtemfrequenz(vitaldaten.getAtemfrequenz());
         validateSystolisch(vitaldaten.getSystolisch());
         validateDiastolisch(vitaldaten.getDiastolisch());
         validateTemperatur(vitaldaten.getTemperatur());
+        validateVitaldaten(vitaldaten);
     }
 
     private void validatePatientId(UUID patientId) {
