@@ -28,18 +28,18 @@ public class VitaldatenController {
     }
 
     @PatchMapping(path = "/upsert", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Vitaldaten upsertVitaldaten(@RequestParam final UUID patientId, @RequestBody final Vitaldaten vitaldaten) {
+    public Optional<Vitaldaten> upsertVitaldaten(@RequestParam final UUID patientId, @RequestBody final Vitaldaten vitaldaten) {
         return vitaldatenService.upsertVitaldaten(patientId, vitaldaten);
     }
 
     @PostMapping(path = "/patient/{patientId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vitaldaten> createVitaldaten(@PathVariable final UUID patientId, @RequestBody Vitaldaten vitaldaten) {
+    public ResponseEntity<Optional<Vitaldaten>> createVitaldaten(@PathVariable final UUID patientId, @RequestBody Vitaldaten vitaldaten) {
         Optional<Patient> patientOptional = patientService.findById(patientId);
         if (patientOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
         vitaldaten.setPatient(patientOptional.get());
-        Vitaldaten createdVitaldaten = vitaldatenService.upsertVitaldaten(patientId, vitaldaten);
+        Optional<Vitaldaten> createdVitaldaten = vitaldatenService.upsertVitaldaten(patientId, vitaldaten);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdVitaldaten);
     }
 
