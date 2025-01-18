@@ -8,28 +8,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-// Logging
-// Logging-Logik von der eigentlichen Geschäftslogik trennen
-
 @Aspect
 @Component
 public class LoggingAspect {
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     //Vor der Ausführung einer Methode
-    @Before("execution(* com.bht.meditrack.Vitaldatenmanagement.domain.*.*(..))")
-    public void logBefore(JoinPoint joinPoint) {
+    @Before("execution(* com.bht.meditrack.Vitaldatenmanagement.infrastructure.repositories.*.*(..))")
+    public void logBeforeServiceMethod(JoinPoint joinPoint) {
         logger.info("Aufruf von: {}", joinPoint.getSignature().getName());
     }
 
     //Wenn eine Methode eine Ausnahme wirft
     @AfterThrowing(
-            pointcut = "execution(* com.bht.meditrack.Vitaldatenmanagement.domain.*.*(..))",
+            pointcut = "execution(* com.bht.meditrack.Vitaldatenmanagement.infrastructure.repositories.*.*(..))",
             throwing = "error"
     )
 
     //Speicherung in Log-Datei
-    public void logErrors(JoinPoint joinPoint, Throwable error) {
+    public void logServiceErrors(JoinPoint joinPoint, Throwable error) {
         logger.error("Fehler in {}: {}",
                 joinPoint.getSignature().getName(),
                 error.getMessage()

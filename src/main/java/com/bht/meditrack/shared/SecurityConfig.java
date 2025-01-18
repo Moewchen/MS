@@ -14,10 +14,6 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import org.springframework.security.authorization.AuthorizationDecision;
-import org.springframework.security.core.Authentication;
-import java.util.function.Supplier;
-
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration

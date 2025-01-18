@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// Performance Monitoring
-// Auswertung wichtiger Kennzahlen
-// Engpässe oder ineffiziente Ausführungen identifizieren
 @Aspect
 @Component
 public class PerformanceMonitoringAspect {
