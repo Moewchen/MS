@@ -20,13 +20,13 @@ public class VitaldatenService {
     private final PublisherEvent eventListener;
     private final VitaldatenRepository vitaldatenRepository;
 
-    private static final int MIN_HERZFREQUENZ = 30;
-    private static final int MAX_HERZFREQUENZ = 200;
+    private static final int MIN_HERZFREQUENZ = 20;
+    private static final int MAX_HERZFREQUENZ = 220;
     private static final int MIN_ATEMFREQUENZ = 5;
-    private static final int MAX_ATEMFREQUENZ = 40;
+    private static final int MAX_ATEMFREQUENZ = 60;
     private static final int MIN_SYSTOLISCH = 50;
     private static final int MAX_SYSTOLISCH = 250;
-    private static final int MIN_DIASTOLISCH = 30;
+    private static final int MIN_DIASTOLISCH = 40;
     private static final int MAX_DIASTOLISCH = 150;
     private static final float MIN_TEMPERATUR = 30.0f;
     private static final float MAX_TEMPERATUR = 45.0f;
