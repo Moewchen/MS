@@ -92,7 +92,7 @@ class VitaldatenServiceTest {
         }
 
         @ParameterizedTest
-        @ValueSource(shorts = {29, 201}) // Testing boundary values
+        @ValueSource(shorts = {19, 221}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid herzfrequenz")
         void shouldNotCreateVitaldatenWithInvalidHerzfrequenz(short herzfrequenz) {
             // Arrange
@@ -107,13 +107,13 @@ class VitaldatenServiceTest {
 
             assertEquals(
                     String.format("Herzfrequenz muss zwischen %d und %d liegen, war: %d",
-                            30, 200, herzfrequenz),
+                            20, 220, herzfrequenz),
                     exception.getMessage()
             );
         }
 
         @ParameterizedTest
-        @ValueSource(bytes = {4, 41}) // Testing boundary values
+        @ValueSource(bytes = {4, 61}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid atemfrequenz")
         void shouldNotCreateVitaldatenWithInvalidAtemfrequenz(byte atemfrequenz) {
             // Arrange
@@ -128,7 +128,7 @@ class VitaldatenServiceTest {
 
             assertEquals(
                     String.format("Atemfrequenz muss zwischen %d und %d liegen, war: %d",
-                            5, 40, atemfrequenz),
+                            5, 60, atemfrequenz),
                     exception.getMessage()
             );
         }
@@ -155,7 +155,7 @@ class VitaldatenServiceTest {
         }
 
         @ParameterizedTest
-        @ValueSource(shorts = {29, 151}) // Testing boundary values
+        @ValueSource(shorts = {39, 151}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid diastolisch")
         void shouldNotCreateVitaldatenWithInvalidDiastolisch(short diastolisch) {
             // Arrange
@@ -170,7 +170,7 @@ class VitaldatenServiceTest {
 
             assertEquals(
                     String.format("Diastolisch muss zwischen %d und %d liegen, war: %d",
-                            30, 150, diastolisch),
+                            40, 150, diastolisch),
                     exception.getMessage()
             );
         }
