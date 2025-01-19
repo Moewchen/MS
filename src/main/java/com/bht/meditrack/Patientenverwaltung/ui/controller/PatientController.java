@@ -8,14 +8,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import java.util.stream.Collectors;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController {
 
     private PatientService patientService;
-    private static final Logger logger = LoggerFactory.getLogger(PatientController.class);
 
 
     @Autowired
@@ -37,13 +32,13 @@ public class PatientController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
         return Optional.ofNullable(patient)
-                .map(p -> UUID.randomUUID())
-                .map(id -> {
-                    patient.setId(id);
-                    return ResponseEntity
-                            .status(HttpStatus.CREATED)
-                            .body(patientService.upsertPatient(id, patient));
+                .map(p -> {
+                    if (p.getId() == null) {
+                        p.setId(UUID.randomUUID());
+                    }
+                    return p;
                 })
+                .map(p -> ResponseEntity.status(HttpStatus.CREATED).body(patientService.upsertPatient(p.getId(), p)))
                 .orElse(ResponseEntity.badRequest().build());
     }
 
@@ -61,12 +56,14 @@ public class PatientController {
     public ResponseEntity<List<Patient>> getAllPatients() {
         return Optional.of(patientService.getAllPatients())
                 .map(patients -> patients.stream()
-                        .peek(patient -> patient.setVitaldaten(null))
-                        .collect(Collectors.toList()))
+                        .map(patient -> {
+                            patient.setVitaldaten(null);
+                            return patient;
+                        })
+                        .toList())
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.noContent().build());
     }
-
 
     @GetMapping(path = "/{patientId}")
     public ResponseEntity<Patient> getPatientById(@PathVariable UUID patientId) {
@@ -88,5 +85,11 @@ public class PatientController {
     private boolean isRestrictedAccess(Jwt jwt, UUID patientId) {
         return jwt.getClaim("preferred_username").equals(SecurityConfig.ROLE_USER_PATIENT) &&
                 !patientId.toString().equals(jwt.getClaim("patientId"));
+    }
+
+    @GetMapping(path = "/krankenkasse/{krankenkasse}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Patient>> getPatientsByKrankenkasse(@PathVariable String krankenkasse) {
+        List<Patient> patients = patientService.findByKrankenkasse(krankenkasse);
+        return patients.isEmpty() ? ResponseEntity.noContent().build() : ResponseEntity.ok(patients);
     }
 }
