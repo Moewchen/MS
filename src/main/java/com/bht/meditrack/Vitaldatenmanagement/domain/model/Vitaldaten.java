@@ -11,31 +11,17 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@EntityScan
-@NoArgsConstructor
 @Getter
 @Setter
-@Entity
-@Table(name = "vitaldaten")
 public class Vitaldaten {
 
-    @Id
-    @GeneratedValue(generator = "UUID")
-    @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
-
     private short herzfrequenz;
     private byte atemfrequenz;
     private short systolisch;
     private short diastolisch;
     private float temperatur;
-
-    @Column(columnDefinition = "TIMESTAMP")
     private LocalDateTime datum;
 
     public Vitaldaten(UUID id, short herzfrequenz, byte atemfrequenz, short systolisch, short diastolisch, float temperatur, LocalDateTime datum) {

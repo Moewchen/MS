@@ -2,6 +2,8 @@ package com.bht.meditrack.Vitaldatenmanagement.application.services;
 
 import com.bht.meditrack.Vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
 import com.bht.meditrack.Vitaldatenmanagement.domain.model.Vitaldaten;
+
+import com.bht.meditrack.Vitaldatenmanagement.infrastructure.persistence.VitaldatenEntity;
 import com.bht.meditrack.Vitaldatenmanagement.infrastructure.repositories.VitaldatenRepository;
 import com.bht.meditrack.PublisherEvent;
 import org.springframework.stereotype.Service;
@@ -36,19 +38,26 @@ public class VitaldatenService {
         this.eventListener = Objects.requireNonNull(eventPublisher, "EventPublisher darf nicht null sein.");
     }
 
+    // Methode, um Vitaldaten anhand der ID zu finden
     public Optional<Vitaldaten> findById(UUID id) {
-        return vitaldatenRepository.findById(id);
+        return vitaldatenRepository.findById(id)
+                .map(this::toDomainModel);  // Umwandlung von Entity zu Domain
     }
 
+    // Methode zum Erstellen oder Aktualisieren von Vitaldaten
     public Optional<Vitaldaten> upsertVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
         validateInput(patientId, vitaldaten);
         validateExistingVitaldaten(vitaldaten);
 
+        // Speichern und Event veröffentlichen
         return Optional.of(vitaldaten)
-                .map(this::saveVitaldaten)
+                .map(this::toEntity)       // Umwandlung von Domain zu Entity
+                .map(vitaldatenRepository::save)
+                .map(this::toDomainModel)  // Rückwandlung von Entity zu Domain
                 .map(this::publishVitaldatenEvent);
     }
 
+    // Validierungen
     private void validateInput(UUID patientId, Vitaldaten vitaldaten) {
         validatePatientId(patientId);
         validateHerzfrequenz(vitaldaten.getHerzfrequenz());
@@ -71,6 +80,7 @@ public class VitaldatenService {
         }
     }
 
+    // Validierungslogik für einzelne Felder (Herzfrequenz, Atemfrequenz, etc.)
     private void validateHerzfrequenz(short herzfrequenz) {
         if (herzfrequenz < MIN_HERZFREQUENZ || herzfrequenz > MAX_HERZFREQUENZ) {
             throw new InvalidVitaldatenException(
@@ -116,7 +126,7 @@ public class VitaldatenService {
         }
     }
 
-
+    // Überprüfen, ob die Vitaldaten bereits existieren
     private void validateExistingVitaldaten(Vitaldaten vitaldaten) {
         if (vitaldaten.getId() != null && !vitaldatenRepository.findById(vitaldaten.getId()).isPresent()) {
             throw new VitaldatenNotFoundException(
@@ -125,11 +135,33 @@ public class VitaldatenService {
         }
     }
 
-    private Vitaldaten saveVitaldaten(Vitaldaten vitaldaten) {
-        return Optional.ofNullable(vitaldatenRepository.save(vitaldaten))
-                .orElseThrow(() -> new RuntimeException("Fehler beim Speichern der Vitaldaten"));
+    // Konvertierung von Domänenmodell zu Persistenzmodell (Entity)
+    private VitaldatenEntity toEntity(Vitaldaten vitaldaten) {
+        VitaldatenEntity entity = new VitaldatenEntity();
+        entity.setId(vitaldaten.getId());
+        entity.setHerzfrequenz(vitaldaten.getHerzfrequenz());
+        entity.setAtemfrequenz(vitaldaten.getAtemfrequenz());
+        entity.setSystolisch(vitaldaten.getSystolisch());
+        entity.setDiastolisch(vitaldaten.getDiastolisch());
+        entity.setTemperatur(vitaldaten.getTemperatur());
+        entity.setDatum(vitaldaten.getDatum());
+        return entity;
     }
 
+    // Konvertierung von Persistenzmodell (Entity) zurück in Domänenmodell
+    private Vitaldaten toDomainModel(VitaldatenEntity entity) {
+        return new Vitaldaten(
+                entity.getId(),
+                entity.getHerzfrequenz(),
+                entity.getAtemfrequenz(),
+                entity.getSystolisch(),
+                entity.getDiastolisch(),
+                entity.getTemperatur(),
+                entity.getDatum()
+        );
+    }
+
+    // Speichern der Vitaldaten und eventuelle Veröffentlichung
     private Vitaldaten publishVitaldatenEvent(Vitaldaten savedVitaldaten) {
         VitaldatenErstelltEvent event = new VitaldatenErstelltEvent(
                 savedVitaldaten.getId(),
@@ -144,16 +176,20 @@ public class VitaldatenService {
         return savedVitaldaten;
     }
 
+    // Finden der Vitaldaten für einen bestimmten Patienten
     public List<Vitaldaten> findByPatientId(UUID patientId) {
-        return vitaldatenRepository.findByPatientId(patientId);
+        return vitaldatenRepository.findByPatientId(patientId)
+                .stream()
+                .map(this::toDomainModel)
+                .toList();
     }
 
+    // Löschen der Vitaldaten eines Patienten
     public void deleteVitaldaten(UUID patientId, UUID vitaldatenId) {
-        Optional<Vitaldaten> optionalVitaldaten = vitaldatenRepository.findById(vitaldatenId);
-        if (optionalVitaldaten.isEmpty() || !optionalVitaldaten.get().getPatient().getId().equals(patientId)) {
+        Optional<VitaldatenEntity> optionalEntity = vitaldatenRepository.findById(vitaldatenId);
+        if (optionalEntity.isEmpty() || !optionalEntity.get().getPatient().getId().equals(patientId)) {
             throw new VitaldatenNotFoundException(
-                    String.format("Vitaldaten mit ID %s nicht gefunden für Patient mit ID %s",
-                            vitaldatenId, patientId)
+                    String.format("Vitaldaten mit ID %s nicht gefunden für Patient mit ID %s", vitaldatenId, patientId)
             );
         }
         vitaldatenRepository.deleteByPatientIdAndId(patientId, vitaldatenId);

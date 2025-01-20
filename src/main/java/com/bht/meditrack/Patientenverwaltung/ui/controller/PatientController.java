@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class PatientController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
+    public ResponseEntity<Optional<Patient>> createPatient(@RequestBody Patient patient) {
         return Optional.ofNullable(patient)
                 .map(p -> UUID.randomUUID())
                 .map(id -> {
@@ -48,7 +47,7 @@ public class PatientController {
     }
 
     @PatchMapping(path = "/upsert", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Patient> updatePatient(
+    public ResponseEntity<Optional<Patient>> updatePatient(
             @RequestParam final UUID patientId,
             @RequestBody final Patient patient) {
         return Optional.ofNullable(patientId)
