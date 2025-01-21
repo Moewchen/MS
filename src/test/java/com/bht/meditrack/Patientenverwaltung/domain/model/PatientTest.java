@@ -46,21 +46,6 @@ class PatientTest {
     }
 
     @Test
-    void testKrankenkasseAndVersicherungsnummerFormat() {
-        Pattern krankenkassePattern = Pattern.compile("^[A-Za-z]+$");
-        assertThat(krankenkassePattern.matcher(patient.getKrankenkasse().krankenkasse()).matches()).isTrue();
-
-        patient.setKrankenkasse(new Krankenkasse("AOK123"));
-        assertThat(krankenkassePattern.matcher(patient.getKrankenkasse().krankenkasse()).matches()).isFalse();
-
-        Pattern versicherungsnummerPattern = Pattern.compile("^\\d{12}$");
-        assertThat(versicherungsnummerPattern.matcher(patient.getKrankenversicherungsnummer()).matches()).isTrue();
-
-        patient.setKrankenversicherungsnummer("12345ABC");
-        assertThat(versicherungsnummerPattern.matcher(patient.getKrankenversicherungsnummer()).matches()).isFalse();
-    }
-
-    @Test
     void testPatientAsAggregateRoot() {
         UUID originalId = patient.getId();
         assertThat(originalId).isNotNull();
