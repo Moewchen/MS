@@ -6,6 +6,8 @@ Die Einführung funktionaler Programmierung führte zu einer deutlichen Verbesse
 Besonders in der Behandlung von Datenströmen und bei der Fehlerbehandlung zeigte sich der Mehrwert.
 Eine klarere Trennung von Verantwortlichkeiten und reduzierte die Fehleranfälligkeit durch Null-Pointer-Exceptions erheblich.
 
+Beispiel 1 - upsert-Methode in VitaldatenService:
+---------------------------------------------------
 <table><tr><td><img src="/images/vorVitaldatenService.PNG" /></td><td><img src="/images/nachVitaldatenService.PNG" /></td></tr></table>
 Erwartete Verbesserungen:
 
@@ -13,6 +15,11 @@ Erwartete Verbesserungen:
 - Reduzierte Fehleranfälligkeit (Bessere Null-Safety durch Optional)
 - Klare Verbesserung von Validation, Business-Logik und Event Handling
 - Bessere Erweiterbarkeit für neue Validierungen
+
+Beispiel 2 - 
+---------------------------------------------------
+Beispiel 3 -
+---------------------------------------------------
 
 Technologieeinsatz und LLM-Unterstützung
 ----------------------------------------
