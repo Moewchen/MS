@@ -5,6 +5,7 @@ import com.bht.meditrack.shared.domain.valueobjects.Adresse;
 import com.bht.meditrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.meditrack.shared.domain.valueobjects.Personendaten;
 import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,6 +24,7 @@ public class PatientEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Nullable
     @Embedded
     private Krankenkasse krankenkasse;
     private String krankenversicherungsnummer;
