@@ -2,7 +2,7 @@ package com.bht.meditrack.Patientenverwaltung.application.services;
 
 import com.bht.meditrack.Patientenverwaltung.domain.events.PatientEntferntEvent;
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
-import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse1;
+import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
 import com.bht.meditrack.Patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.meditrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.meditrack.shared.domain.valueobjects.Personendaten;

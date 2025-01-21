@@ -24,7 +24,7 @@ class PatientTest {
     void setUp() {
         patient = new Patient();
         patient.setId(UUID.randomUUID());
-        patient.setKrankenkasse(new Krankenkasse1("AOK"));
+        patient.setKrankenkasse(new Krankenkasse("AOK"));
         patient.setKrankenversicherungsnummer("123456789012");
         patient.setPersonendaten(new Personendaten("Max", "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)));
         patient.setKontaktdaten(new Kontaktdaten("max.mustermann@example.com", "01234567890"));
@@ -38,7 +38,7 @@ class PatientTest {
         assertThat(patient.getKrankenkasse().krankenkasse()).isEqualTo("AOK");
         assertThat(patient.getKrankenversicherungsnummer()).isEqualTo("123456789012");
 
-        patient.setKrankenkasse(new Krankenkasse1("Techniker"));
+        patient.setKrankenkasse(new Krankenkasse("Techniker"));
         patient.setKrankenversicherungsnummer("987654321098");
 
         assertThat(patient.getKrankenkasse().krankenkasse()).isEqualTo("Techniker");
@@ -50,7 +50,7 @@ class PatientTest {
         Pattern krankenkassePattern = Pattern.compile("^[A-Za-z]+$");
         assertThat(krankenkassePattern.matcher(patient.getKrankenkasse().krankenkasse()).matches()).isTrue();
 
-        patient.setKrankenkasse(new Krankenkasse1("AOK123"));
+        patient.setKrankenkasse(new Krankenkasse("AOK123"));
         assertThat(krankenkassePattern.matcher(patient.getKrankenkasse().krankenkasse()).matches()).isFalse();
 
         Pattern versicherungsnummerPattern = Pattern.compile("^\\d{12}$");
@@ -72,15 +72,15 @@ class PatientTest {
     @Test
     void testPatientListWithStreamsAndLambdas() {
         List<Patient> patients = List.of(
-                new Patient(UUID.randomUUID(), new Krankenkasse1("AOK"), "123456789012",
+                new Patient(UUID.randomUUID(), new Krankenkasse("AOK"), "123456789012",
                         new Personendaten("Max", "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)),
                         new Kontaktdaten("max.mustermann@example.com", "01234567890"),
                         new Adresse("Musterstraße", "1", "12345", "Musterstadt")),
-                new Patient(UUID.randomUUID(), new Krankenkasse1("TK"), "987654321098",
+                new Patient(UUID.randomUUID(), new Krankenkasse("TK"), "987654321098",
                         new Personendaten("Anna", "Anders", "Prof.", LocalDate.of(1990, 2, 10)),
                         new Kontaktdaten("anna.anders@example.com", "087654321"),
                         new Adresse("Hauptstraße", "2", "22222", "Musterstadt")),
-                new Patient(UUID.randomUUID(), new Krankenkasse1("AOK"), "112233445566",
+                new Patient(UUID.randomUUID(), new Krankenkasse("AOK"), "112233445566",
                         new Personendaten("Erika", "Meier", "Dr.", LocalDate.of(1980, 3, 5)),
                         new Kontaktdaten("erika.meier@example.com", "076543210"),
                         new Adresse("Nebenstraße", "3", "33333", "Musterstadt"))
@@ -91,21 +91,21 @@ class PatientTest {
                 .toList();
 
         assertThat(aokPatients).hasSize(2);
-        assertThat(aokPatients).extracting(Patient::getKrankenkasse).extracting(Krankenkasse1::krankenkasse).containsOnly("AOK");
+        assertThat(aokPatients).extracting(Patient::getKrankenkasse).extracting(Krankenkasse::krankenkasse).containsOnly("AOK");
     }
 
     @Test
     void testPatientListToSet() {
         List<Patient> patients = List.of(
-                new Patient(UUID.randomUUID(), new Krankenkasse1("AOK"), "123456789012",
+                new Patient(UUID.randomUUID(), new Krankenkasse("AOK"), "123456789012",
                         new Personendaten("Max", "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)),
                         new Kontaktdaten("max.mustermann@example.com", "01234567890"),
                         new Adresse("Musterstraße", "1", "12345", "Musterstadt")),
-                new Patient(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"), new Krankenkasse1("TK"), "987654321098",
+                new Patient(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"), new Krankenkasse("TK"), "987654321098",
                         new Personendaten("Anna", "Anders", "Prof.", LocalDate.of(1990, 2, 10)),
                         new Kontaktdaten("anna.anders@example.com", "087654321"),
                         new Adresse("Hauptstraße", "2", "22222", "Musterstadt")),
-                new Patient(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"), new Krankenkasse1("TK"), "987654321098",
+                new Patient(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"), new Krankenkasse("TK"), "987654321098",
                         new Personendaten("Anna", "Anders", "Prof.", LocalDate.of(1990, 2, 10)),
                         new Kontaktdaten("anna.anders@example.com", "087654321"),
                         new Adresse("Hauptstraße", "2", "22222", "Musterstadt"))

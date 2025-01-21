@@ -1,0 +1,144 @@
+2025-01-19T19:26:22.346+01:00  INFO 32079 --- [main] com.bht.meditrack.MediTrackApplication   : Starting MediTrackApplication using Java 21.0.4 with PID 32079 (/Users/zhasmina.dimova/Documents/uni/MS/target/classes started by zhasmina.dimova in /Users/zhasmina.dimova/Documents/uni/MS)
+2025-01-19T19:26:22.402+01:00  INFO 32079 --- [main] com.bht.meditrack.MediTrackApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-01-19T19:26:23.239+01:00  INFO 32079 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-19T19:26:23.280+01:00  INFO 32079 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 35 ms. Found 3 JPA repository interfaces.
+2025-01-19T19:26:23.842+01:00  INFO 32079 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-19T19:26:23.854+01:00  INFO 32079 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-19T19:26:23.854+01:00  INFO 32079 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2025-01-19T19:26:23.899+01:00  INFO 32079 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-19T19:26:23.900+01:00  INFO 32079 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1464 ms
+2025-01-19T19:26:24.320+01:00  INFO 32079 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-19T19:26:24.359+01:00  INFO 32079 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-01-19T19:26:24.377+01:00  INFO 32079 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-19T19:26:24.611+01:00  INFO 32079 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-19T19:26:24.960+01:00  WARN 32079 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-01-19T19:26:25.511+01:00  INFO 32079 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-19T19:26:25.636+01:00  INFO 32079 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:26:26.207+01:00  WARN 32079 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-19T19:26:27.606+01:00  WARN 32079 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-01-19T19:26:27.609+01:00  INFO 32079 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:26:27.721+01:00  INFO 32079 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-01-19T19:26:27.732+01:00 ERROR 32079 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-01-19T19:27:16.229+01:00  INFO 32145 --- [main] com.bht.meditrack.MediTrackApplication   : Starting MediTrackApplication using Java 21.0.4 with PID 32145 (/Users/zhasmina.dimova/Documents/uni/MS/target/classes started by zhasmina.dimova in /Users/zhasmina.dimova/Documents/uni/MS)
+2025-01-19T19:27:16.231+01:00  INFO 32145 --- [main] com.bht.meditrack.MediTrackApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-01-19T19:27:16.894+01:00  INFO 32145 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-19T19:27:16.938+01:00  INFO 32145 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 3 JPA repository interfaces.
+2025-01-19T19:27:17.471+01:00  INFO 32145 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-19T19:27:17.491+01:00  INFO 32145 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-19T19:27:17.492+01:00  INFO 32145 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2025-01-19T19:27:17.536+01:00  INFO 32145 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-19T19:27:17.536+01:00  INFO 32145 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1284 ms
+2025-01-19T19:27:18.035+01:00  INFO 32145 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-19T19:27:18.086+01:00  INFO 32145 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-01-19T19:27:18.110+01:00  INFO 32145 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-19T19:27:18.277+01:00  INFO 32145 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-19T19:27:18.658+01:00  WARN 32145 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-01-19T19:27:19.300+01:00  INFO 32145 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-19T19:27:19.399+01:00  INFO 32145 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:27:20.037+01:00  WARN 32145 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-19T19:27:21.680+01:00  WARN 32145 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-01-19T19:27:21.683+01:00  INFO 32145 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:27:21.718+01:00  INFO 32145 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-01-19T19:27:21.749+01:00 ERROR 32145 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-01-19T19:29:02.558+01:00  INFO 32695 --- [main] com.bht.meditrack.MediTrackApplication   : Starting MediTrackApplication using Java 21.0.4 with PID 32695 (/Users/zhasmina.dimova/Documents/uni/MS/target/classes started by zhasmina.dimova in /Users/zhasmina.dimova/Documents/uni/MS)
+2025-01-19T19:29:02.559+01:00  INFO 32695 --- [main] com.bht.meditrack.MediTrackApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-01-19T19:29:03.292+01:00  INFO 32695 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-19T19:29:03.335+01:00  INFO 32695 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 39 ms. Found 3 JPA repository interfaces.
+2025-01-19T19:29:03.826+01:00  INFO 32695 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-19T19:29:03.835+01:00  INFO 32695 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-19T19:29:03.835+01:00  INFO 32695 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2025-01-19T19:29:03.864+01:00  INFO 32695 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-19T19:29:03.864+01:00  INFO 32695 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1286 ms
+2025-01-19T19:29:04.138+01:00  INFO 32695 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-19T19:29:04.168+01:00  INFO 32695 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-01-19T19:29:04.185+01:00  INFO 32695 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-19T19:29:04.314+01:00  INFO 32695 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-19T19:29:04.476+01:00  WARN 32695 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-01-19T19:29:04.926+01:00  INFO 32695 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-19T19:29:05.026+01:00  INFO 32695 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:29:05.564+01:00  WARN 32695 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-19T19:29:06.669+01:00  WARN 32695 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-01-19T19:29:06.671+01:00  INFO 32695 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:29:06.686+01:00  INFO 32695 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-01-19T19:29:06.694+01:00 ERROR 32695 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2025-01-19T19:31:58.089+01:00  INFO 33420 --- [main] com.bht.meditrack.MediTrackApplication   : Starting MediTrackApplication using Java 21.0.4 with PID 33420 (/Users/zhasmina.dimova/Documents/uni/MS/target/classes started by zhasmina.dimova in /Users/zhasmina.dimova/Documents/uni/MS)
+2025-01-19T19:31:58.090+01:00  INFO 33420 --- [main] com.bht.meditrack.MediTrackApplication   : No active profile set, falling back to 1 default profile: "default"
+2025-01-19T19:32:00.394+01:00  INFO 33420 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-01-19T19:32:00.433+01:00  INFO 33420 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 33 ms. Found 3 JPA repository interfaces.
+2025-01-19T19:32:00.918+01:00  INFO 33420 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-01-19T19:32:00.926+01:00  INFO 33420 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-01-19T19:32:00.926+01:00  INFO 33420 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.31]
+2025-01-19T19:32:00.957+01:00  INFO 33420 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-01-19T19:32:00.958+01:00  INFO 33420 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 2847 ms
+2025-01-19T19:32:01.208+01:00  INFO 33420 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-01-19T19:32:01.240+01:00  INFO 33420 --- [main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-01-19T19:32:01.259+01:00  INFO 33420 --- [main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-01-19T19:32:01.411+01:00  INFO 33420 --- [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-01-19T19:32:01.579+01:00  WARN 33420 --- [main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-01-19T19:32:02.035+01:00  INFO 33420 --- [main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-01-19T19:32:02.100+01:00  INFO 33420 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:32:02.621+01:00  WARN 33420 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-01-19T19:32:03.754+01:00  WARN 33420 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2025-01-19T19:32:03.758+01:00  INFO 33420 --- [main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-01-19T19:32:03.778+01:00  INFO 33420 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-01-19T19:32:03.790+01:00 ERROR 33420 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+

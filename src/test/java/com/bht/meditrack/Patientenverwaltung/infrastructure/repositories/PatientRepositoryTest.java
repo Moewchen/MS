@@ -1,7 +1,7 @@
 package com.bht.meditrack.Patientenverwaltung.infrastructure.repositories;
 
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
-import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse1;
+import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
 import com.bht.meditrack.shared.domain.valueobjects.Adresse;
 import com.bht.meditrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.meditrack.shared.domain.valueobjects.Personendaten;
@@ -35,7 +35,7 @@ class PatientRepositoryTest {
         patientId = UUID.randomUUID();
         patient = new Patient();
         patient.setId(patientId);
-        patient.setKrankenkasse(new Krankenkasse1("AOK"));
+        patient.setKrankenkasse(new Krankenkasse("AOK"));
         patient.setKrankenversicherungsnummer("123456789012");
         patient.setPersonendaten(new Personendaten("Max", "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)));
         patient.setKontaktdaten(new Kontaktdaten("max.mustermann@example.com", "01234567890"));
