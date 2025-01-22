@@ -18,7 +18,7 @@ Erwartete Verbesserungen:
 
 Beispiel 2 - VitaldatenController
 ---------------------------------------------------
-<table><tr><td><img src="/images/vorVitaldatenService.PNG" /></td><td><img src="/images/VitContNachBearbeitet.PNG" /></td></tr></table>
+
 
 
 Beispiel 3 -
