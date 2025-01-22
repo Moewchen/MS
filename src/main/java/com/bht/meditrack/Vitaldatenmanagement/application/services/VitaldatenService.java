@@ -1,5 +1,7 @@
 package com.bht.meditrack.Vitaldatenmanagement.application.services;
 
+import com.bht.meditrack.Patientenverwaltung.infrastructure.persistence.PatientEntity;
+import com.bht.meditrack.Patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.meditrack.Vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
 import com.bht.meditrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 
@@ -21,6 +23,7 @@ public class VitaldatenService {
 
     private final PublisherEvent eventListener;
     private final VitaldatenRepository vitaldatenRepository;
+    private final PatientRepository patientRepository;
 
     private static final int MIN_HERZFREQUENZ = 20;
     private static final int MAX_HERZFREQUENZ = 220;
@@ -33,8 +36,9 @@ public class VitaldatenService {
     private static final float MIN_TEMPERATUR = 30.0f;
     private static final float MAX_TEMPERATUR = 45.0f;
 
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PatientRepository patientRepository, PublisherEvent eventPublisher) {
         this.vitaldatenRepository = Objects.requireNonNull(vitaldatenRepository, "Repository darf nicht null sein.");
+        this.patientRepository = Objects.requireNonNull(patientRepository, "PatientRepository darf nicht null sein.");
         this.eventListener = Objects.requireNonNull(eventPublisher, "EventPublisher darf nicht null sein.");
     }
 
@@ -51,7 +55,7 @@ public class VitaldatenService {
 
         // Speichern und Event veröffentlichen
         return Optional.of(vitaldaten)
-                .map(this::toEntity)       // Umwandlung von Domain zu Entity
+                .map(v -> toEntity(patientId, v))      // Umwandlung von Domain zu Entity
                 .map(vitaldatenRepository::save)
                 .map(this::toDomainModel)  // Rückwandlung von Entity zu Domain
                 .map(this::publishVitaldatenEvent);
@@ -136,7 +140,7 @@ public class VitaldatenService {
     }
 
     // Konvertierung von Domänenmodell zu Persistenzmodell (Entity)
-    private VitaldatenEntity toEntity(Vitaldaten vitaldaten) {
+    private VitaldatenEntity toEntity(UUID patientId, Vitaldaten vitaldaten) {
         VitaldatenEntity entity = new VitaldatenEntity();
         entity.setId(vitaldaten.getId());
         entity.setHerzfrequenz(vitaldaten.getHerzfrequenz());
@@ -145,6 +149,10 @@ public class VitaldatenService {
         entity.setDiastolisch(vitaldaten.getDiastolisch());
         entity.setTemperatur(vitaldaten.getTemperatur());
         entity.setDatum(vitaldaten.getDatum());
+
+        PatientEntity patientEntity = patientRepository.findById(patientId).orElseThrow(() -> new IllegalArgumentException("Patient mit ID " + patientId + " nicht gefunden"));
+        entity.setPatient(patientEntity);
+
         return entity;
     }
 
