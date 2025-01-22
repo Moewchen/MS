@@ -1,6 +1,5 @@
 package com.bht.meditrack.Patientenverwaltung.domain.model;
 import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
-import com.bht.meditrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import com.bht.meditrack.Vitaldatenmanagement.infrastructure.persistence.VitaldatenEntity;
 import com.bht.meditrack.shared.domain.valueobjects.Adresse;
 import com.bht.meditrack.shared.domain.valueobjects.Kontaktdaten;
@@ -11,10 +10,12 @@ import java.util.UUID;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Patient {
 
     private UUID id;

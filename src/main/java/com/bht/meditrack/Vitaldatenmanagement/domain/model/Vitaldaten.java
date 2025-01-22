@@ -1,18 +1,18 @@
 package com.bht.meditrack.Vitaldatenmanagement.domain.model;
 
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
+
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Vitaldaten {
 
     private UUID id;

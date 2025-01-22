@@ -140,7 +140,7 @@ public class VitaldatenService {
     }
 
     // Konvertierung von Domänenmodell zu Persistenzmodell (Entity)
-    private VitaldatenEntity toEntity(UUID patientId, Vitaldaten vitaldaten) {
+    VitaldatenEntity toEntity(UUID patientId, Vitaldaten vitaldaten) {
         VitaldatenEntity entity = new VitaldatenEntity();
         entity.setId(vitaldaten.getId());
         entity.setHerzfrequenz(vitaldaten.getHerzfrequenz());
@@ -168,6 +168,7 @@ public class VitaldatenService {
                 entity.getDatum()
         );
     }
+
 
     // Speichern der Vitaldaten und eventuelle Veröffentlichung
     private Vitaldaten publishVitaldatenEvent(Vitaldaten savedVitaldaten) {
