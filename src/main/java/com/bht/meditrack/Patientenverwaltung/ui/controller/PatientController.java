@@ -30,7 +30,7 @@ public class PatientController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Patient> createPatient(@RequestBody Patient patient) {
+    public ResponseEntity<Optional<Patient>> createPatient(@RequestBody Patient patient) {
         return Optional.ofNullable(patient)
                 .map(p -> {
                     if (p.getId() == null) {
@@ -43,7 +43,7 @@ public class PatientController {
     }
 
     @PatchMapping(path = "/upsert", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Patient> updatePatient(
+    public ResponseEntity<Optional<Patient>> updatePatient(
             @RequestParam final UUID patientId,
             @RequestBody final Patient patient) {
         return Optional.ofNullable(patientId)
