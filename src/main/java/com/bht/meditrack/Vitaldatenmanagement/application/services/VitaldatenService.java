@@ -1,11 +1,11 @@
 package com.bht.meditrack.Vitaldatenmanagement.application.services;
 
-import com.bht.meditrack.Patientenverwaltung.infrastructure.persistence.PatientEntity;
 import com.bht.meditrack.Patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.meditrack.Vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
 import com.bht.meditrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 
 import com.bht.meditrack.Vitaldatenmanagement.infrastructure.persistence.VitaldatenEntity;
+import com.bht.meditrack.Vitaldatenmanagement.infrastructure.persistence.VitaldatenMapper;
 import com.bht.meditrack.Vitaldatenmanagement.infrastructure.repositories.VitaldatenRepository;
 import com.bht.meditrack.PublisherEvent;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class VitaldatenService {
     // Methode, um Vitaldaten anhand der ID zu finden
     public Optional<Vitaldaten> findById(UUID id) {
         return vitaldatenRepository.findById(id)
-                .map(this::toDomainModel);  // Umwandlung von Entity zu Domain
+                .map(VitaldatenMapper::toVitaldatenDomain);  // Umwandlung von Entity zu Domain
     }
 
     // Methode zum Erstellen oder Aktualisieren von Vitaldaten
@@ -55,9 +55,9 @@ public class VitaldatenService {
 
         // Speichern und Event veröffentlichen
         return Optional.of(vitaldaten)
-                .map(v -> toEntity(patientId, v))      // Umwandlung von Domain zu Entity
+                .map(v -> VitaldatenMapper.toVitaldatenEntity(patientId, v))      // Umwandlung von Domain zu Entity
                 .map(vitaldatenRepository::save)
-                .map(this::toDomainModel)  // Rückwandlung von Entity zu Domain
+                .map(VitaldatenMapper::toVitaldatenDomain)  // Rückwandlung von Entity zu Domain
                 .map(this::publishVitaldatenEvent);
     }
 
@@ -139,36 +139,6 @@ public class VitaldatenService {
         }
     }
 
-    // Konvertierung von Domänenmodell zu Persistenzmodell (Entity)
-    VitaldatenEntity toEntity(UUID patientId, Vitaldaten vitaldaten) {
-        VitaldatenEntity entity = new VitaldatenEntity();
-        entity.setId(vitaldaten.getId());
-        entity.setHerzfrequenz(vitaldaten.getHerzfrequenz());
-        entity.setAtemfrequenz(vitaldaten.getAtemfrequenz());
-        entity.setSystolisch(vitaldaten.getSystolisch());
-        entity.setDiastolisch(vitaldaten.getDiastolisch());
-        entity.setTemperatur(vitaldaten.getTemperatur());
-        entity.setDatum(vitaldaten.getDatum());
-
-        PatientEntity patientEntity = patientRepository.findById(patientId).orElseThrow(() -> new IllegalArgumentException("Patient mit ID " + patientId + " nicht gefunden"));
-        entity.setPatient(patientEntity);
-
-        return entity;
-    }
-
-    // Konvertierung von Persistenzmodell (Entity) zurück in Domänenmodell
-    private Vitaldaten toDomainModel(VitaldatenEntity entity) {
-        return new Vitaldaten(
-                entity.getId(),
-                entity.getHerzfrequenz(),
-                entity.getAtemfrequenz(),
-                entity.getSystolisch(),
-                entity.getDiastolisch(),
-                entity.getTemperatur(),
-                entity.getDatum()
-        );
-    }
-
 
     // Speichern der Vitaldaten und eventuelle Veröffentlichung
     private Vitaldaten publishVitaldatenEvent(Vitaldaten savedVitaldaten) {
@@ -189,7 +159,7 @@ public class VitaldatenService {
     public List<Vitaldaten> findByPatientId(UUID patientId) {
         return vitaldatenRepository.findByPatientId(patientId)
                 .stream()
-                .map(this::toDomainModel)
+                .map(VitaldatenMapper::toVitaldatenDomain)
                 .toList();
     }
 

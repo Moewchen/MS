@@ -216,7 +216,7 @@ class VitaldatenServiceTest {
             validVitaldaten.setId(existingId);
 
             // Mappen der Domain-Daten in die Entity
-            VitaldatenEntity existingEntity = vitaldatenService.toEntity(patientId, validVitaldaten);
+            VitaldatenEntity existingEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
 
             // Repository Mocking
             when(vitaldatenRepository.findById(existingId)).thenReturn(Optional.of(existingEntity));
@@ -272,8 +272,8 @@ class VitaldatenServiceTest {
         @DisplayName("Should find vitaldaten by patient ID")
         void shouldFindVitaldatenByPatientId() {
             // Arrange
-            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten);
-            VitaldatenEntity anotherVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(createValidVitaldaten());
+            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
+            VitaldatenEntity anotherVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(createValidVitaldaten().getId(), createValidVitaldaten());
             List<VitaldatenEntity> vitaldatenEntities = Arrays.asList(validVitaldatenEntity, anotherVitaldatenEntity);
 
             List<Vitaldaten> expectedVitaldaten = VitaldatenMapper.toVitaldatenDomainList(vitaldatenEntities);
@@ -305,7 +305,7 @@ class VitaldatenServiceTest {
         @DisplayName("Should find vitaldaten by ID")
         void shouldFindVitaldatenById() {
             // Arrange
-            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten);
+            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
             when(vitaldatenRepository.findById(validVitaldaten.getId())).thenReturn(Optional.of(validVitaldatenEntity));
 
             // Act
@@ -325,7 +325,7 @@ class VitaldatenServiceTest {
         @DisplayName("Should delete existing vitaldaten successfully")
         void shouldDeleteExistingVitaldatenSuccessfully() {
             // Arrange
-            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten);
+            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
             validVitaldatenEntity.setPatient(patientEntity);
             when(vitaldatenRepository.findById(validVitaldaten.getId())).thenReturn(Optional.of(validVitaldatenEntity));
 
@@ -355,7 +355,7 @@ class VitaldatenServiceTest {
         void shouldThrowExceptionWhenDeletingVitaldatenWithWrongPatientId() {
             // Arrange
             UUID wrongPatientId = UUID.randomUUID();
-            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten);
+            VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
             validVitaldatenEntity.setPatient(patientEntity);
             when(vitaldatenRepository.findById(validVitaldatenEntity.getId()))
                     .thenReturn(Optional.of(validVitaldatenEntity));
@@ -381,8 +381,7 @@ class VitaldatenServiceTest {
             newVitaldaten.setPatient(PatientMapper.toPatientDomain(patientEntity));
 
             // Konvertierung
-            VitaldatenEntity newVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(newVitaldaten);
-            VitaldatenEntity savedVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten);
+            VitaldatenEntity savedVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
 
             //Mocking
             when(vitaldatenRepository.save(any(VitaldatenEntity.class))).thenReturn(savedVitaldatenEntity);

@@ -1,5 +1,4 @@
 package com.bht.meditrack.Vitaldatenmanagement.infrastructure.repositories;
-import com.bht.meditrack.Vitaldatenmanagement.domain.model.Vitaldaten;
 import com.bht.meditrack.Vitaldatenmanagement.infrastructure.persistence.VitaldatenEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
