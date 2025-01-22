@@ -1,6 +1,7 @@
 package com.bht.meditrack.Patientenverwaltung.application.services;
 
 
+
 import com.bht.meditrack.Patientenverwaltung.domain.events.PatientEntferntEvent;
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
 import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
@@ -9,7 +10,6 @@ import com.bht.meditrack.Patientenverwaltung.infrastructure.repositories.Patient
 import com.bht.meditrack.PublisherEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import java.util.List;
 import java.util.Objects;
@@ -22,11 +22,26 @@ public class PatientService {
     private final PatientRepository patientRepository;
     private final PublisherEvent eventPublisher;
 
+
     @Autowired // Constructor injection
     public PatientService(PatientRepository patientRepository, PublisherEvent eventPublisher) {
+
         this.patientRepository = Objects.requireNonNull(patientRepository, "Repository darf nicht null sein.");
-        this.eventPublisher = eventPublisher;
+        this.eventPublisher = Objects.requireNonNull(eventPublisher, "EventPublisher darf nicht null sein.");
     }
+
+    public Optional<Patient> findById(UUID id) {
+        return patientRepository.findById(id);
+    }
+
+    public Patient upsertPatient(UUID patientId, Patient patient) {
+        validateInput(patientId, patient);
+        return Optional.of(patient)
+                .map(this::savePatient)
+                .map(this::publishPatientEvent)
+                .orElseThrow(() -> new RuntimeException("Fehler beim Speichern des Patienten"));
+    }
+
 
     // Methode, um Patienten anhand der ID zu finden
     public Optional<Patient> findById(UUID id) {
@@ -47,12 +62,17 @@ public class PatientService {
 
     // Validierungen
     private void validateInput(UUID patientId, Patient patient) {
+
         if (patientId == null) {
             throw new IllegalArgumentException("PatientId darf nicht null sein.");
         }
+    }
+
+    private void validatePatient(Patient patient) {
         if (patient == null) {
             throw new IllegalArgumentException("Patient darf nicht null sein.");
         }
+
 
     }
 
@@ -80,6 +100,7 @@ public class PatientService {
     public void deletePatient(UUID patientId) {
         if (!patientRepository.existsById(patientId)) {
             throw new IllegalArgumentException("Patient nicht gefunden");
+
         }
         patientRepository.deleteById(patientId);
         eventPublisher.publishEvent(new PatientEntferntEvent(patientId));

@@ -5,12 +5,15 @@ import com.bht.meditrack.shared.domain.valueobjects.Adresse;
 import com.bht.meditrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.meditrack.shared.domain.valueobjects.Personendaten;
 
+
 import java.util.*;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+
 import java.util.regex.Pattern;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -59,6 +62,7 @@ class PatientTest {
                 new Patient(UUID.randomUUID(), new Krankenkasse("AOK"), "123456789012",
                         new Personendaten("Max", "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)),
                         new Kontaktdaten("max.mustermann@example.com", "01234567890"),
+
                         new Adresse("Musterstraße", "1", "12345", "Musterstadt"),
                         Collections.emptyList()),
                 new Patient(UUID.randomUUID(), new Krankenkasse("TK"), "987654321098",
@@ -71,6 +75,7 @@ class PatientTest {
                         new Kontaktdaten("erika.meier@example.com", "076543210"),
                         new Adresse("Nebenstraße", "3", "33333", "Musterstadt"),
                         Collections.emptyList())
+
         );
 
         List<Patient> aokPatients = patients.stream()
@@ -87,6 +92,7 @@ class PatientTest {
                 new Patient(UUID.randomUUID(), new Krankenkasse("AOK"), "123456789012",
                         new Personendaten("Max", "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)),
                         new Kontaktdaten("max.mustermann@example.com", "01234567890"),
+
                         new Adresse("Musterstraße", "1", "12345", "Musterstadt"),
                         Collections.emptyList()),
                 new Patient(UUID.fromString("550e8400-e29b-41d4-a716-446655440000"), new Krankenkasse("TK"), "987654321098",

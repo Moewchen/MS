@@ -13,5 +13,4 @@ public record Krankenkasse(String krankenkasse) {
             throw new IllegalArgumentException("Krankenkasse darf nur Buchstaben enthalten");
         }
     }
-
 }
