@@ -1,7 +1,9 @@
 package com.bht.meditrack.Patientenverwaltung.application.services;
 
 
+import com.bht.meditrack.Patientenverwaltung.domain.events.PatientEntferntEvent;
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
+import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
 import com.bht.meditrack.Patientenverwaltung.infrastructure.persistence.PatientMapper;
 import com.bht.meditrack.Patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.meditrack.PublisherEvent;
@@ -67,12 +69,20 @@ public class PatientService {
                 .toList();
     }
 
+    public List<Patient> findByKrankenkasse(String krankenkasse) {
+        return patientRepository.findByKrankenkasse(new Krankenkasse(krankenkasse))
+                .stream()
+                .map(PatientMapper::toPatientDomain)
+                .toList();
+    }
+
     // Löschen eines Patienten
     public void deletePatient(UUID patientId) {
         if (!patientRepository.existsById(patientId)) {
             throw new IllegalArgumentException("Patient nicht gefunden");
         }
         patientRepository.deleteById(patientId);
+        eventPublisher.publishEvent(new PatientEntferntEvent(patientId));
     }
 }
 
