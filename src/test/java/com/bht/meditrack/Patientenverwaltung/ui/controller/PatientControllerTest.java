@@ -2,6 +2,7 @@ package com.bht.meditrack.Patientenverwaltung.ui.controller;
 
 import com.bht.meditrack.Patientenverwaltung.application.services.PatientService;
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
+import com.bht.meditrack.Patientenverwaltung.infrastructure.persistence.PatientMapper;
 import com.bht.meditrack.shared.domain.valueobjects.Adresse;
 import com.bht.meditrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.meditrack.shared.domain.valueobjects.Personendaten;
@@ -55,10 +56,10 @@ class PatientControllerTest {
         patient.setAdresse(new Adresse("Musterstraße", "1", "12345", "Musterstadt"));
 
         // Mock the patient service
-        when(patientService.upsertPatient(any(UUID.class), any(Patient.class))).thenReturn(patient);
+        when(patientService.upsertPatient(any(UUID.class), any(Patient.class))).thenReturn(Optional.ofNullable(patient));
 
         // Call the controller method
-        ResponseEntity<Patient> response = patientController.createPatient(patient);
+        ResponseEntity<Optional<Patient>> response = patientController.createPatient(patient);
 
         // Log the response for debugging
         System.out.println("Response: " + response);
@@ -66,18 +67,18 @@ class PatientControllerTest {
         // Verify the response
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(patientId, response.getBody().getId());
+        assertEquals(patientId, response.getBody().get().getId());
     }
 
     @Test
     void updatePatient() {
-        when(patientService.upsertPatient(any(UUID.class), any(Patient.class))).thenReturn(patient);
+        when(patientService.upsertPatient(any(UUID.class), any(Patient.class))).thenReturn(Optional.ofNullable(patient));
 
-        ResponseEntity<Patient> response = patientController.updatePatient(patientId, patient);
+        ResponseEntity<Optional<Patient>> response = patientController.updatePatient(patientId, patient);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
-        assertEquals(patientId, response.getBody().getId());
+        assertEquals(patientId, response.getBody().get().getId());
     }
 
     @Test

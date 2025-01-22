@@ -2,6 +2,8 @@ package com.bht.meditrack.Patientenverwaltung.infrastructure.persistence;
 
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
 
+import java.util.Optional;
+
 public class PatientMapper {
     public static PatientEntity toPatientEntity(Patient patient) {
         PatientEntity entity = new PatientEntity();

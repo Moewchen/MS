@@ -2,6 +2,8 @@ package com.bht.meditrack.Patientenverwaltung.infrastructure.repositories;
 
 import com.bht.meditrack.Patientenverwaltung.domain.model.Patient;
 import com.bht.meditrack.Patientenverwaltung.domain.valueojects.Krankenkasse;
+import com.bht.meditrack.Patientenverwaltung.infrastructure.persistence.PatientEntity;
+import com.bht.meditrack.Patientenverwaltung.infrastructure.persistence.PatientMapper;
 import com.bht.meditrack.shared.domain.valueobjects.Adresse;
 import com.bht.meditrack.shared.domain.valueobjects.Kontaktdaten;
 import com.bht.meditrack.shared.domain.valueobjects.Personendaten;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,13 +43,13 @@ class PatientRepositoryTest {
         patient.setPersonendaten(new Personendaten("Max", "Mustermann", "Dr.", LocalDate.of(1985, 5, 20)));
         patient.setKontaktdaten(new Kontaktdaten("max.mustermann@example.com", "01234567890"));
         patient.setAdresse(new Adresse("Musterstraße", "1", "12345", "Musterstadt"));
-        patientRepository.save(patient);
+        patientRepository.save(PatientMapper.toPatientEntity(patient));
         System.out.println("Patient saved with ID: " + patientId);
     }
 
     @Test
     void findByKrankenkasse() {
-        List<Patient> patients = patientRepository.findByKrankenkasse(new Krankenkasse("AOK"));
+        List<PatientEntity> patients = patientRepository.findByKrankenkasse(new Krankenkasse("AOK"));
         assertFalse(patients.isEmpty());
         assertEquals("AOK", patients.get(0).getKrankenkasse().krankenkasse());
     }
@@ -54,7 +57,7 @@ class PatientRepositoryTest {
     @Test
     void deleteById() {
         patientRepository.deleteById(patientId);
-        Optional<Patient> deletedPatient = patientRepository.findById(patientId);
+        Optional<PatientEntity> deletedPatient = patientRepository.findById(patientId);
         assertFalse(deletedPatient.isPresent());
     }
 }
