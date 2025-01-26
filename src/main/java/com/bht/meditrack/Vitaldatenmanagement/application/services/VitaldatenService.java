@@ -1,7 +1,11 @@
 package com.bht.meditrack.Vitaldatenmanagement.application.services;
 
+import com.bht.meditrack.Patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.meditrack.Vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
 import com.bht.meditrack.Vitaldatenmanagement.domain.model.Vitaldaten;
+
+import com.bht.meditrack.Vitaldatenmanagement.infrastructure.persistence.VitaldatenEntity;
+import com.bht.meditrack.Vitaldatenmanagement.infrastructure.persistence.VitaldatenMapper;
 import com.bht.meditrack.Vitaldatenmanagement.infrastructure.repositories.VitaldatenRepository;
 import com.bht.meditrack.PublisherEvent;
 import org.springframework.stereotype.Service;
@@ -19,36 +23,45 @@ public class VitaldatenService {
 
     private final PublisherEvent eventListener;
     private final VitaldatenRepository vitaldatenRepository;
+    private final PatientRepository patientRepository;
 
-    private static final int MIN_HERZFREQUENZ = 30;
-    private static final int MAX_HERZFREQUENZ = 200;
+    private static final int MIN_HERZFREQUENZ = 20;
+    private static final int MAX_HERZFREQUENZ = 220;
     private static final int MIN_ATEMFREQUENZ = 5;
-    private static final int MAX_ATEMFREQUENZ = 40;
+    private static final int MAX_ATEMFREQUENZ = 60;
     private static final int MIN_SYSTOLISCH = 50;
     private static final int MAX_SYSTOLISCH = 250;
-    private static final int MIN_DIASTOLISCH = 30;
+    private static final int MIN_DIASTOLISCH = 40;
     private static final int MAX_DIASTOLISCH = 150;
     private static final float MIN_TEMPERATUR = 30.0f;
     private static final float MAX_TEMPERATUR = 45.0f;
 
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PatientRepository patientRepository, PublisherEvent eventPublisher) {
         this.vitaldatenRepository = Objects.requireNonNull(vitaldatenRepository, "Repository darf nicht null sein.");
+        this.patientRepository = Objects.requireNonNull(patientRepository, "PatientRepository darf nicht null sein.");
         this.eventListener = Objects.requireNonNull(eventPublisher, "EventPublisher darf nicht null sein.");
     }
 
+    // Methode, um Vitaldaten anhand der ID zu finden
     public Optional<Vitaldaten> findById(UUID id) {
-        return vitaldatenRepository.findById(id);
+        return vitaldatenRepository.findById(id)
+                .map(VitaldatenMapper::toVitaldatenDomain);  // Umwandlung von Entity zu Domain
     }
 
+    // Methode zum Erstellen oder Aktualisieren von Vitaldaten
     public Optional<Vitaldaten> upsertVitaldaten(UUID patientId, Vitaldaten vitaldaten) {
         validateInput(patientId, vitaldaten);
         validateExistingVitaldaten(vitaldaten);
 
+        // Speichern und Event veröffentlichen
         return Optional.of(vitaldaten)
-                .map(this::saveVitaldaten)
+                .map(v -> VitaldatenMapper.toVitaldatenEntity(patientId, v))      // Umwandlung von Domain zu Entity
+                .map(vitaldatenRepository::save)
+                .map(VitaldatenMapper::toVitaldatenDomain)  // Rückwandlung von Entity zu Domain
                 .map(this::publishVitaldatenEvent);
     }
 
+    // Validierungen
     private void validateInput(UUID patientId, Vitaldaten vitaldaten) {
         validatePatientId(patientId);
         validateHerzfrequenz(vitaldaten.getHerzfrequenz());
@@ -71,6 +84,7 @@ public class VitaldatenService {
         }
     }
 
+    // Validierungslogik für einzelne Felder (Herzfrequenz, Atemfrequenz, etc.)
     private void validateHerzfrequenz(short herzfrequenz) {
         if (herzfrequenz < MIN_HERZFREQUENZ || herzfrequenz > MAX_HERZFREQUENZ) {
             throw new InvalidVitaldatenException(
@@ -116,7 +130,7 @@ public class VitaldatenService {
         }
     }
 
-
+    // Überprüfen, ob die Vitaldaten bereits existieren
     private void validateExistingVitaldaten(Vitaldaten vitaldaten) {
         if (vitaldaten.getId() != null && !vitaldatenRepository.findById(vitaldaten.getId()).isPresent()) {
             throw new VitaldatenNotFoundException(
@@ -125,11 +139,8 @@ public class VitaldatenService {
         }
     }
 
-    private Vitaldaten saveVitaldaten(Vitaldaten vitaldaten) {
-        return Optional.ofNullable(vitaldatenRepository.save(vitaldaten))
-                .orElseThrow(() -> new RuntimeException("Fehler beim Speichern der Vitaldaten"));
-    }
 
+    // Speichern der Vitaldaten und eventuelle Veröffentlichung
     private Vitaldaten publishVitaldatenEvent(Vitaldaten savedVitaldaten) {
         VitaldatenErstelltEvent event = new VitaldatenErstelltEvent(
                 savedVitaldaten.getId(),
@@ -144,16 +155,20 @@ public class VitaldatenService {
         return savedVitaldaten;
     }
 
+    // Finden der Vitaldaten für einen bestimmten Patienten
     public List<Vitaldaten> findByPatientId(UUID patientId) {
-        return vitaldatenRepository.findByPatientId(patientId);
+        return vitaldatenRepository.findByPatientId(patientId)
+                .stream()
+                .map(VitaldatenMapper::toVitaldatenDomain)
+                .toList();
     }
 
+    // Löschen der Vitaldaten eines Patienten
     public void deleteVitaldaten(UUID patientId, UUID vitaldatenId) {
-        Optional<Vitaldaten> optionalVitaldaten = vitaldatenRepository.findById(vitaldatenId);
-        if (optionalVitaldaten.isEmpty() || !optionalVitaldaten.get().getPatient().getId().equals(patientId)) {
+        Optional<VitaldatenEntity> optionalEntity = vitaldatenRepository.findById(vitaldatenId);
+        if (optionalEntity.isEmpty() || !optionalEntity.get().getPatient().getId().equals(patientId)) {
             throw new VitaldatenNotFoundException(
-                    String.format("Vitaldaten mit ID %s nicht gefunden für Patient mit ID %s",
-                            vitaldatenId, patientId)
+                    String.format("Vitaldaten mit ID %s nicht gefunden für Patient mit ID %s", vitaldatenId, patientId)
             );
         }
         vitaldatenRepository.deleteByPatientIdAndId(patientId, vitaldatenId);
