@@ -5,7 +5,6 @@ import jakarta.persistence.Embeddable;
 public record Adresse (String strasse, String hausnummer, String plz, String ort){
 
     //Konstruktor mit Prüfung
-    //ToDo: Prüfungen vervollständigen
     public Adresse {
         if (strasse == null || strasse.trim().isEmpty()){
             throw new IllegalArgumentException("Straße darf nicht leer sein");
@@ -14,7 +13,6 @@ public record Adresse (String strasse, String hausnummer, String plz, String ort
         if (hausnummer == null || hausnummer.trim().isEmpty()){
             throw new IllegalArgumentException("Hausnummer darf nicht leer sein");
         }
-        //TODO spaeter umschreiben
         if (!isValidPLZ(plz)){
             throw new IllegalArgumentException("Ungültige PLZ: " + plz);
         }
