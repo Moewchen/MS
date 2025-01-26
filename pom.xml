@@ -116,10 +116,10 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.bht.meditrack.Arztverwaltung.application.ArztverwaltungApplication</mainClass>
-					<mainClass>com.bht.meditrack.Behandlungsmanagement.application.BehandlungApplication</mainClass>
-					<mainClass>com.bht.meditrack.Patientenverwaltung.application.PatientenverwaltungApplication</mainClass>
-					<mainClass>com.bht.meditrack.Vitaldatenmanagement.application.VitaldatenApplication</mainClass>
+					<mainClass>com.bht.meditrack.arztverwaltung.application.ArztverwaltungApplication</mainClass>
+					<mainClass>com.bht.meditrack.behandlungsmanagement.application.BehandlungApplication</mainClass>
+					<mainClass>com.bht.meditrack.patientenverwaltung.application.PatientenverwaltungApplication</mainClass>
+					<mainClass>com.bht.meditrack.vitaldatenmanagement.application.VitaldatenApplication</mainClass>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
