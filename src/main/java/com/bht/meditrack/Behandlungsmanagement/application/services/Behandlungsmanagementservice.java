@@ -12,7 +12,7 @@ import java.util.*;
     @Service
     public class Behandlungsmanagementservice {
 
-        private  BehandlungRepository behandlungRepository;
+        private final BehandlungRepository behandlungRepository;
         private final ApplicationEventPublisher eventPublisher;
 
         public Behandlungsmanagementservice(BehandlungRepository behandlungRepository, ApplicationEventPublisher eventPublisher) {

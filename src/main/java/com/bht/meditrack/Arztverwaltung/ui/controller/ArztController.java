@@ -13,7 +13,7 @@ import java.util.UUID;
 @RequestMapping("/aerzte")
 public class ArztController {
 
-    private ArztService arztService;
+    private final ArztService arztService;
 
     public ArztController(ArztService arztService) {
         this.arztService = arztService;
