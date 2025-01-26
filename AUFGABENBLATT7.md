@@ -8,7 +8,7 @@ Eine klarere Trennung von Verantwortlichkeiten und reduzierte die Fehleranfälli
 
 Beispiel 1 - upsert-Methode in VitaldatenService:
 ---------------------------------------------------
-<table><tr><td><img src="/images/vorVitaldatenService.PNG" /></td><td><img src="/images/nachVitaldatenService.PNG" /></td></tr></table>
+<table><tr><td><img src="/images/vorVitaldatenService.PNG"  alt="VitaldatenService vor" /></td><td><img src="/images/nachVitaldatenService.PNG"  alt="VitaldatenService nach"/></td></tr></table>
 Erwartete Verbesserungen:
 
 - Verbesserte Lesbarkeit und Wartbarkeit
@@ -21,8 +21,20 @@ Beispiel 2 - VitaldatenController
 
 
 
-Beispiel 3 -
+Beispiel 3 - PatientController
 ---------------------------------------------------
+<table><tr><td><img src="/images/getPatientById_PatientService_davor.png" alt="getPatientById davor"/></td><td><img src="/images/getPatientById_PatientService_danach.png" alt="getPatientById danach"/></td></tr></table>
+
+Verbesserungen:
+
+- Entfernt unnötige Debug-Ausgaben (Systemausgaben, Logger)
+- Komplexe Bedingungen in separate Methoden ausgelagert
+- Verwendung von Optional und Funktionaler Programmierung
+- Bessere Fehlerbehandlung und Zugriffskontrolle
+- Klare Trennung von Validierungs- und Abruf-Logik
+- Bessere Lesbarkeit und Wartbarkeit
+
+Die Methode ist nun modularer, sicherer und einfacher zu verstehen.
 
 Technologieeinsatz und LLM-Unterstützung
 ----------------------------------------
