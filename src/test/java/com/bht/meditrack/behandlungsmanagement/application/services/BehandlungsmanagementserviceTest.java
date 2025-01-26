@@ -30,18 +30,18 @@ class BehandlungsmanagementserviceTest {
     private Behandlungsmanagementservice service;
 
     private Behandlung behandlung;
-    private UUID Id;
+    private UUID id;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        Id = UUID.randomUUID();
+        id = UUID.randomUUID();
 
         behandlung = new Behandlung();
         behandlung.setId(UUID.randomUUID());
         behandlung.setBeschreibung("Initial Beschreibung");
-        behandlung.setPatient(Id);
+        behandlung.setPatient(id);
     }
 
     @Test
@@ -55,7 +55,7 @@ class BehandlungsmanagementserviceTest {
         // Assertions
         assertNotNull(result.getId(), "ID sollte nicht null sein.");
         assertEquals("Initial Beschreibung", result.getBeschreibung(), "Beschreibung sollte übereinstimmen.");
-        assertEquals(Id, result.getPatient(), "Patient-ID sollte übereinstimmen.");
+        assertEquals(id, result.getPatient(), "Patient-ID sollte übereinstimmen.");
 
         // Verify, dass das Event veröffentlicht wurde
         verify(eventPublisher, times(1)).publishEvent(any(BehandlungErstelltEvent.class));
@@ -67,16 +67,16 @@ class BehandlungsmanagementserviceTest {
         Behandlung behandlung2 = new Behandlung();
         behandlung2.setId(UUID.randomUUID());
         behandlung2.setBeschreibung("Beschreibung 2");
-        behandlung2.setPatient(Id);
+        behandlung2.setPatient(id);
 
         List<Behandlung> behandlungen = new ArrayList<>();
         behandlungen.add(behandlung);
         behandlungen.add(behandlung2);
 
-        when(behandlungRepository.getBehandlungenByPatientId(Id)).thenReturn(behandlungen);
+        when(behandlungRepository.getBehandlungenByPatientId(id)).thenReturn(behandlungen);
 
         // Teste das Abrufen von Behandlungen
-        List<Behandlung> result = service.getBehandlungenByPatientId(Id);
+        List<Behandlung> result = service.getBehandlungenByPatientId(id);
 
         // Assertions
         assertEquals(2, result.size(), "Es sollten zwei Behandlungen für diesen Patienten vorhanden sein.");

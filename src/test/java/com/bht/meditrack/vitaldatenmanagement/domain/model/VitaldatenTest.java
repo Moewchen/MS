@@ -13,8 +13,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class VitaldatenTest {
 
-    //Vitaldaten vitaldaten;
-
     private static final String UUID_PATTERN = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$";
     private static final Pattern UUID_REGEX = Pattern.compile(UUID_PATTERN);
 
@@ -48,8 +46,6 @@ class VitaldatenTest {
     @Test
     void testSetHerzfrequenz(){
         Vitaldaten vitaldaten = new Vitaldaten();
-        // max 220
-        // min 0
         short expectedHerzfrequenz = 220;
         vitaldaten.setHerzfrequenz(expectedHerzfrequenz);
 
@@ -79,8 +75,6 @@ class VitaldatenTest {
     @Test
     void testSetAtemfrequenz(){
         Vitaldaten vitaldaten = new Vitaldaten();
-        // max 70
-        // min 0
         byte expectedAtemfrequenz = 15;
         vitaldaten.setAtemfrequenz(expectedAtemfrequenz);
 
@@ -93,8 +87,7 @@ class VitaldatenTest {
     @Test
     void testSetSystolisch(){
         Vitaldaten vitaldaten = new Vitaldaten();
-        // max 300
-        // min 0
+
         short expectedSystolisch = 120;
         vitaldaten.setSystolisch(expectedSystolisch);
 
@@ -108,8 +101,7 @@ class VitaldatenTest {
     @Test
     void testSetDiastolisch(){
         Vitaldaten vitaldaten = new Vitaldaten();
-        // max 170
-        // min 0
+
         short expectedDiastolisch = 80;
         vitaldaten.setDiastolisch(expectedDiastolisch);
 
@@ -123,8 +115,7 @@ class VitaldatenTest {
     @Test
     void testSetTemperatur(){
         Vitaldaten vitaldaten = new Vitaldaten();
-        // max 45.9f
-        // min 0
+
         float expectedTemperatur = 36.9f;
         vitaldaten.setTemperatur(expectedTemperatur);
 
@@ -186,18 +177,6 @@ class VitaldatenTest {
         assertEquals(testDate2, actualDate2, "The second date should be set correctly");
     }
 
-    /*
-    @Test
-    void testInvalidHerzfrequenz() {
-        Vitaldaten vitaldaten = new Vitaldaten();
-        //short invalidHerzfrequenz = 300; // Ungültig, da der Maximalwert 220 beträgt
-        short invalidHerzfrequenz = 120;
-        assertThrows(InvalidVitaldatenException.class, () -> {
-            vitaldaten.setHerzfrequenz(invalidHerzfrequenz);
-        }, "Invalid value should throw an exception");
-    }
-
-     */
 
     @Test
     void testToString() {

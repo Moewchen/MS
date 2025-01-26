@@ -1,4 +1,4 @@
-package com.bht.meditrack.shared.ErrorHandling;
+package com.bht.meditrack.shared.errorhandling;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

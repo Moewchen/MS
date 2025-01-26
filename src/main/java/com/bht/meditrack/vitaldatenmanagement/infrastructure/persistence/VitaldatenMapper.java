@@ -8,6 +8,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class VitaldatenMapper {
+    private VitaldatenMapper() {
+    }
 
     public static VitaldatenEntity toVitaldatenEntity(UUID patientId, Vitaldaten vitaldaten) {
         VitaldatenEntity entity = new VitaldatenEntity();

@@ -7,14 +7,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-// ErrorHandling
+// errorhandling
 // Fehlerbehandlung von der eigentlichen Geschäftslogik trennen
 @Aspect
 @Component
 public class ErrorHandlingAspect {
     private static final Logger logger = LoggerFactory.getLogger(ErrorHandlingAspect.class);
 
-    // ErrorHandling für Services
+    // errorhandling für Services
     // rund um die Ausführung einer Methode
     @Around("execution(* com.bht.meditrack.vitaldatenmanagement.application.services.*.*(..))")
     public Object handleError(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -23,7 +23,7 @@ public class ErrorHandlingAspect {
         }
         catch (Exception exception) {
             //Speicherung in Log-Datei
-            logger.info("ErrorHandling {} : {}",
+            logger.info("errorhandling {} : {}",
                     joinPoint.getSignature(),
                     exception.getMessage()
             );

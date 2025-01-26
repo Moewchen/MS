@@ -43,7 +43,7 @@ class ArztRepositoryTest {
     }
 
     @Test
-    public void testSavedArzt(){
+    void testSavedArzt(){
         LocalDate date = LocalDate.of(1994, 12, 12);
         Arzt newArzt = new Arzt(
                 new Fachrichtung("Zahnarzt"),
@@ -56,7 +56,7 @@ class ArztRepositoryTest {
     }
 
     @Test
-    public void testFindArztById(){
+    void testFindArztById(){
         when(arztRepository.findById(arzt.getId())).thenReturn(Optional.of(arzt));
 
         Optional<Arzt> foundArzt = arztRepository.findById(arzt.getId());
@@ -64,5 +64,5 @@ class ArztRepositoryTest {
         assertEquals(arzt.getId(), foundArzt.get().getId());
         assertEquals(arzt.getPersonendaten().firstName(), foundArzt.get().getPersonendaten().firstName());
         assertEquals(arzt.getKontaktdaten().email(), foundArzt.get().getKontaktdaten().email());
-    };
+    }
 }

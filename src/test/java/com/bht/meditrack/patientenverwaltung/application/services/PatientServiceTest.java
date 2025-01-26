@@ -96,19 +96,6 @@ class PatientServiceTest {
         assertEquals(patientId, updatedPatient.get().getId(), "Patient ID should match");
     }
 
-    /*
-    @Test
-    void testDeletePatient() {
-        when(patientRepository.findById(patientId)).thenReturn(Optional.of(PatientMapper.toPatientEntity(patient)));
-        doNothing().when(patientRepository).deleteById(patientId);
-        doNothing().when(eventPublisher).publishEvent(any(PatientEntferntEvent.class));
-
-        patientService.deletePatient(patientId);
-
-        verify(patientRepository, times(1)).deleteById(patientId);
-        verify(eventPublisher, times(1)).publishEvent(any(PatientEntferntEvent.class));
-    }*/
-
     @Test
     void testDeletePatientNotFound() {
         when(patientRepository.findById(patientId)).thenReturn(Optional.empty());

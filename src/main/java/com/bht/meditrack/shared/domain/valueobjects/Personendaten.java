@@ -18,7 +18,6 @@ public record Personendaten(String firstName, String lastName, String titel, Loc
         if (titel == null || titel.trim().isEmpty()) {
             throw new IllegalArgumentException("Titel draf nicht leer sein");
         }
-        //TODO spaeter noch mal anders definieren
         if (!isValidBirthday(dateOfBirth)) {
             throw new IllegalArgumentException("Geburtsdatum darf nicht in der Zukunft liegen");
         }
@@ -26,7 +25,6 @@ public record Personendaten(String firstName, String lastName, String titel, Loc
 
 
     //Prüfung Geburtstag
-    //ToDo: Prüfung Geburtstag vervollständigen
     private static boolean isValidBirthday(LocalDate dateOfBirth) {
         if (dateOfBirth == null) return false;
         return dateOfBirth.isBefore(LocalDate.now());

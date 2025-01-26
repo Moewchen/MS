@@ -1,6 +1,5 @@
 package com.bht.meditrack.vitaldatenmanagement.application.services;
 
-import com.bht.meditrack.patientenverwaltung.infrastructure.repositories.PatientRepository;
 import com.bht.meditrack.vitaldatenmanagement.domain.events.VitaldatenErstelltEvent;
 import com.bht.meditrack.vitaldatenmanagement.domain.model.Vitaldaten;
 
@@ -23,7 +22,6 @@ public class VitaldatenService {
 
     private final PublisherEvent eventListener;
     private final VitaldatenRepository vitaldatenRepository;
-    private final PatientRepository patientRepository;
 
     private static final int MIN_HERZFREQUENZ = 20;
     private static final int MAX_HERZFREQUENZ = 220;
@@ -36,9 +34,8 @@ public class VitaldatenService {
     private static final float MIN_TEMPERATUR = 30.0f;
     private static final float MAX_TEMPERATUR = 45.0f;
 
-    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PatientRepository patientRepository, PublisherEvent eventPublisher) {
+    public VitaldatenService(VitaldatenRepository vitaldatenRepository, PublisherEvent eventPublisher) {
         this.vitaldatenRepository = Objects.requireNonNull(vitaldatenRepository, "Repository darf nicht null sein.");
-        this.patientRepository = Objects.requireNonNull(patientRepository, "PatientRepository darf nicht null sein.");
         this.eventListener = Objects.requireNonNull(eventPublisher, "EventPublisher darf nicht null sein.");
     }
 

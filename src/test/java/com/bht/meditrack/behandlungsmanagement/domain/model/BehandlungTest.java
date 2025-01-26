@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.UUID;
 
-public class BehandlungTest {
+ class BehandlungTest {
 
     private Behandlung behandlung;
     private Patient patient;
@@ -22,21 +22,21 @@ public class BehandlungTest {
         behandlung = new Behandlung(UUID.randomUUID(), "Initial Beschreibung", patient, arzt);
     }
     @Test
-    public void testSetAndGetBeschreibung() {
+     void testSetAndGetBeschreibung() {
         behandlung.setBeschreibung("Neue Beschreibung");
         assertEquals("Neue Beschreibung", behandlung.getBeschreibung(), "Die Beschreibung sollte korrekt gesetzt werden.");
     }
     @Test
-    public void testBehandlungWithNullArzt() {
+     void testBehandlungWithNullArzt() {
         Behandlung nullArztBehandlung = new Behandlung(UUID.randomUUID(), "Emergency", patient, null);
         assertNull(nullArztBehandlung.getArzt(), "Arzt should be null in case of invalid data.");
     }
     @Test
-    public void testGetPatientId() {
+     void testGetPatientId() {
         assertEquals(patient.getId(), behandlung.getPatientId(), "Die Patienten-ID sollte korrekt abgerufen werden.");
     }
     @Test
-    public void testSetAndGetArzt() {
+     void testSetAndGetArzt() {
         Arzt neuerArzt = new Arzt();
         neuerArzt.setId(UUID.randomUUID());
         behandlung.setArzt(neuerArzt);

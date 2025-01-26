@@ -11,7 +11,7 @@ import java.util.*;
 public class ArztService {
 
     private final ArztRepository arztRepository;
-    private final ApplicationEventPublisher eventPublisher;
+    final ApplicationEventPublisher eventPublisher;
 
     public ArztService(ArztRepository arztRepository, ApplicationEventPublisher eventPublisher) {
         this.arztRepository = Objects.requireNonNull(arztRepository,"Repository darf nicht null sein.");

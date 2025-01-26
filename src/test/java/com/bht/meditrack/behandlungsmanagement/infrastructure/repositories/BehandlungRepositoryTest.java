@@ -20,7 +20,7 @@ class BehandlungRepositoryTest {
         behandlung = new Behandlung(UUID.randomUUID(), "Initial Beschreibung", patient, null);
     }
     @Test
-    public void testCreateBehandlung() {
+     void testCreateBehandlung() {
         //Testen der Erstellung einer neuen Behandlung
         Behandlung createdBehandlung = behandlungRepository.createBehandlung(behandlung);
         assertNotNull(createdBehandlung.getId(), "ID sollte nicht null sein.");
@@ -28,7 +28,7 @@ class BehandlungRepositoryTest {
         assertTrue(behandlungRepository.findById(createdBehandlung.getId()).isPresent(), "Behandlung sollte im Repository vorhanden sein.");
     }
     @Test
-    public void testFindById() {
+     void testFindById() {
         //Testen Behandlung aufrufen
         behandlungRepository.createBehandlung(behandlung);
         Optional<Behandlung> foundBehandlung = behandlungRepository.findById(behandlung.getId());
@@ -36,7 +36,7 @@ class BehandlungRepositoryTest {
         assertEquals(behandlung.getBeschreibung(), foundBehandlung.get().getBeschreibung(), "Die Beschreibung sollte übereinstimmen.");
     }
     @Test
-    public void testUpdateBehandlung() {
+     void testUpdateBehandlung() {
         // esten der Aktualisierung einer bestehenden Behandlung
         behandlungRepository.createBehandlung(behandlung);
         String neueBeschreibung = "Aktualisierte Beschreibung";

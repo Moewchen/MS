@@ -123,11 +123,8 @@ class VitaldatenServiceTest {
         @ValueSource(bytes = {4, 61}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid atemfrequenz")
         void shouldNotCreateVitaldatenWithInvalidAtemfrequenz(byte atemfrequenz) {
-            // Arrange
             Vitaldaten vitaldaten = createValidVitaldaten();
             vitaldaten.setAtemfrequenz(atemfrequenz);
-
-            // Act & Assert
             InvalidVitaldatenException exception = assertThrows(
                     InvalidVitaldatenException.class,
                     () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
@@ -144,11 +141,8 @@ class VitaldatenServiceTest {
         @ValueSource(shorts = {49, 251}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid systolisch")
         void shouldNotCreateVitaldatenWithInvalidSystolisch(short systolisch) {
-            // Arrange
             Vitaldaten vitaldaten = createValidVitaldaten();
             vitaldaten.setSystolisch(systolisch);
-
-            // Act & Assert
             InvalidVitaldatenException exception = assertThrows(
                     InvalidVitaldatenException.class,
                     () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
@@ -165,11 +159,8 @@ class VitaldatenServiceTest {
         @ValueSource(shorts = {39, 151}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid diastolisch")
         void shouldNotCreateVitaldatenWithInvalidDiastolisch(short diastolisch) {
-            // Arrange
             Vitaldaten vitaldaten = createValidVitaldaten();
             vitaldaten.setDiastolisch(diastolisch);
-
-            // Act & Assert
             InvalidVitaldatenException exception = assertThrows(
                     InvalidVitaldatenException.class,
                     () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
@@ -186,11 +177,8 @@ class VitaldatenServiceTest {
         @ValueSource(floats = {29.9f, 45.1f}) // Testing boundary values
         @DisplayName("Should not create vitaldaten with invalid temperatur")
         void shouldNotCreateVitaldatenWithInvalidTemperatur(float temperatur) {
-            // Arrange
             Vitaldaten vitaldaten = createValidVitaldaten();
             vitaldaten.setTemperatur(temperatur);
-
-            // Act & Assert
             InvalidVitaldatenException exception = assertThrows(
                     InvalidVitaldatenException.class,
                     () -> vitaldatenService.upsertVitaldaten(UUID.randomUUID(), vitaldaten)
@@ -211,21 +199,12 @@ class VitaldatenServiceTest {
         @Test
         @DisplayName("Should update existing vitaldaten successfully")
         void shouldUpdateExistingVitaldatenSuccessfully() {
-            // Arrange
             UUID existingId = UUID.randomUUID();
             validVitaldaten.setId(existingId);
-
-            // Mappen der Domain-Daten in die Entity
             VitaldatenEntity existingEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
-
-            // Repository Mocking
             when(vitaldatenRepository.findById(existingId)).thenReturn(Optional.of(existingEntity));
             when(vitaldatenRepository.save(any(VitaldatenEntity.class))).thenReturn(existingEntity);
-
-            // Act
             Optional<Vitaldaten> result = vitaldatenService.upsertVitaldaten(patientId, validVitaldaten);
-
-            // Assert
             assertTrue(result.isPresent());
             assertEquals(existingId, result.get().getId());
             verify(eventPublisher).publishEvent(any(VitaldatenErstelltEvent.class));
@@ -234,15 +213,11 @@ class VitaldatenServiceTest {
         @Test
         @DisplayName("Should throw exception when updating non-existent vitaldaten")
         void shouldThrowExceptionWhenUpdatingNonExistentVitaldaten() {
-            // Arrange
             UUID nonExistentId = UUID.randomUUID();
             validVitaldaten.setId(nonExistentId);
             when(vitaldatenRepository.findById(nonExistentId)).thenReturn(Optional.empty());
-
-            // Act & Assert
             VitaldatenNotFoundException exception = assertThrows(VitaldatenNotFoundException.class,
                     () -> vitaldatenService.upsertVitaldaten(patientId, validVitaldaten));
-
             assertEquals("Vitaldaten mit ID " + nonExistentId + " nicht gefunden", exception.getMessage());
             verify(vitaldatenRepository, never()).save(any());
             verify(eventPublisher, never()).publishEvent(any());
@@ -251,10 +226,7 @@ class VitaldatenServiceTest {
         @Test
         @DisplayName("Should throw exception when vitaldaten have invalid herzfrequenz")
         void shouldThrowExceptionWhenVitaldatenHaveInvalidHerzfrequenz() {
-            // Arrange
             validVitaldaten.setHerzfrequenz((short) 250); // Ungültiger Wert
-
-            // Act & Assert
             InvalidVitaldatenException exception = assertThrows(InvalidVitaldatenException.class,
                     () -> vitaldatenService.upsertVitaldaten(patientId, validVitaldaten));
 
@@ -275,43 +247,26 @@ class VitaldatenServiceTest {
             VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
             VitaldatenEntity anotherVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(createValidVitaldaten().getId(), createValidVitaldaten());
             List<VitaldatenEntity> vitaldatenEntities = Arrays.asList(validVitaldatenEntity, anotherVitaldatenEntity);
-
             List<Vitaldaten> expectedVitaldaten = VitaldatenMapper.toVitaldatenDomainList(vitaldatenEntities);
-
-            // Mock das Repository
             when(vitaldatenRepository.findByPatientId(patientId)).thenReturn(vitaldatenEntities);
-
-            // Act
             List<Vitaldaten> result = vitaldatenService.findByPatientId(patientId);
-
-            // Assert
             assertEquals(expectedVitaldaten.size(), result.size());
         }
 
         @Test
         @DisplayName("Should return empty list when no vitaldaten found for patient")
         void shouldReturnEmptyListWhenNoVitaldatenFound() {
-            // Arrange
             when(vitaldatenRepository.findByPatientId(patientId)).thenReturn(List.of());
-
-            // Act
             List<Vitaldaten> result = vitaldatenService.findByPatientId(patientId);
-
-            // Assert
             assertTrue(result.isEmpty());
         }
 
         @Test
         @DisplayName("Should find vitaldaten by ID")
         void shouldFindVitaldatenById() {
-            // Arrange
             VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
             when(vitaldatenRepository.findById(validVitaldaten.getId())).thenReturn(Optional.of(validVitaldatenEntity));
-
-            // Act
             Optional<Vitaldaten> result = vitaldatenService.findById(validVitaldaten.getId());
-
-            // Assert
             assertTrue(result.isPresent());
             assertEquals(validVitaldaten.getId(), result.get().getId());
         }
@@ -324,27 +279,19 @@ class VitaldatenServiceTest {
         @Test
         @DisplayName("Should delete existing vitaldaten successfully")
         void shouldDeleteExistingVitaldatenSuccessfully() {
-            // Arrange
             VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
             validVitaldatenEntity.setPatient(patientEntity);
             when(vitaldatenRepository.findById(validVitaldaten.getId())).thenReturn(Optional.of(validVitaldatenEntity));
-
-            // Act
             assertDoesNotThrow(() ->
                     vitaldatenService.deleteVitaldaten(patientId, validVitaldaten.getId()));
-
-            // Assert
             verify(vitaldatenRepository).deleteByPatientIdAndId(patientId, validVitaldaten.getId());
         }
 
         @Test
         @DisplayName("Should throw exception when deleting non-existent vitaldaten")
         void shouldThrowExceptionWhenDeletingNonExistentVitaldaten() {
-            // Arrange
             UUID nonExistentId = UUID.randomUUID();
             when(vitaldatenRepository.findById(nonExistentId)).thenReturn(Optional.empty());
-
-            // Act & Assert
             assertThrows(VitaldatenNotFoundException.class,
                     () -> vitaldatenService.deleteVitaldaten(patientId, nonExistentId));
             verify(vitaldatenRepository, never()).deleteByPatientIdAndId(any(), any());
@@ -353,14 +300,11 @@ class VitaldatenServiceTest {
         @Test
         @DisplayName("Should throw exception when deleting vitaldaten with wrong patient ID")
         void shouldThrowExceptionWhenDeletingVitaldatenWithWrongPatientId() {
-            // Arrange
             UUID wrongPatientId = UUID.randomUUID();
             VitaldatenEntity validVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
             validVitaldatenEntity.setPatient(patientEntity);
             when(vitaldatenRepository.findById(validVitaldatenEntity.getId()))
                     .thenReturn(Optional.of(validVitaldatenEntity));
-
-            // Act & Assert
             assertThrows(VitaldatenNotFoundException.class,
                     () -> vitaldatenService.deleteVitaldaten(wrongPatientId, validVitaldaten.getId())
             );
@@ -375,26 +319,15 @@ class VitaldatenServiceTest {
         @Test
         @DisplayName("Should publish event when creating vitaldaten")
         void shouldPublishEventWhenCreatingVitaldaten() {
-            // Arrange
             Vitaldaten newVitaldaten = createValidVitaldaten();
             newVitaldaten.setId(null); // Wichtig: Setze ID auf null für neue Vitaldaten
             newVitaldaten.setPatient(PatientMapper.toPatientDomain(patientEntity));
-
-            // Konvertierung
             VitaldatenEntity savedVitaldatenEntity = VitaldatenMapper.toVitaldatenEntity(validVitaldaten.getId(), validVitaldaten);
-
-            //Mocking
             when(vitaldatenRepository.save(any(VitaldatenEntity.class))).thenReturn(savedVitaldatenEntity);
             ArgumentCaptor<VitaldatenErstelltEvent> eventCaptor = ArgumentCaptor.forClass(VitaldatenErstelltEvent.class);
-
-            // Act
             Optional<Vitaldaten> result = vitaldatenService.upsertVitaldaten(patientId, newVitaldaten);
-
-            // Assert
             assertTrue(result.isPresent());
             verify(eventPublisher).publishEvent(eventCaptor.capture());
-
-            // Verifikation
             VitaldatenErstelltEvent capturedEvent = eventCaptor.getValue();
             assertEquals(validVitaldaten.getId(), capturedEvent.getId());
             assertEquals(validVitaldaten.getHerzfrequenz(), capturedEvent.getHerzfrequenz());
