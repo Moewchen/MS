@@ -18,7 +18,15 @@ Erwartete Verbesserungen:
 
 Beispiel 2 - VitaldatenController
 ---------------------------------------------------
+<table><tr><td><img src="/images/VitContVorBearbeitet.png" alt="VitaldatenVontroller davor"/></td><td><img src="/images/VitContNachBearbeitet.png" alt="VitaldatenController danach"/></td></tr></table>
 
+Verbesserungen:
+
+- Von Klasse mit @Autowired zu einem Java Record
+- Verwendet nun upsertVitaldatenFunction().apply() -> Logik wurde in eine separate Funktion ausgelagert
+- Komplexe Logik wurde in createVitaldatenFunction extrahiert -> Verwendet Functional Chaining mit .map() und .orElse() -> Direkte Verwendung von patientService.findById(patientId)
+- Vereinfacht durch Verwendung von toResponseEntity().apply() -> Bedingte Logik wurde in eine funktionale Methode verlagert
+- Ersetzt imperative Kontrollstrukturen durch funktionale Methoden wie .map() und .orElse() -> Bedingte Logik wird nun durch funktionale Operatoren gesteuert
 
 
 Beispiel 3 - PatientController
